@@ -1,0 +1,29 @@
+/**
+ * @style.css 
+ * @author Ali Kutluozen
+ *
+ * Styling of HTML elements
+ */
+
+body {
+    background: black;
+}
+
+#game-canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    margin: auto;
+    border: 1px solid black;
+    background: #ddd;
+    display: block;
+}
+
+#counter {
+    background: black;
+    position: fixed;
+    z-index: 100;
+    color: white;
+}
