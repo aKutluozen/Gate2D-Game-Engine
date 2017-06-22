@@ -9,15 +9,15 @@
 "use strict";
 
 // Queue the files needed first
-Loader.enqueue('core_modules/Entity.js');
-Loader.enqueue('core_modules/Video.js');
-Loader.enqueue('core_modules/GameObjects.js');
-Loader.enqueue('core_modules/Controls.js');
-Loader.enqueue('GameUpdate.js');
-Loader.enqueue('GameDraw.js');
-Loader.enqueue('Globals.js');
-Loader.enqueue('Objects.js');
-Loader.enqueue('core_modules/Engine.js');
+Loader.enqueue('entity', 'script', 'core_modules/Entity.js');
+Loader.enqueue('videoModule', 'script', 'core_modules/Video.js');
+Loader.enqueue('gameObjects', 'script', 'core_modules/GameObjects.js');
+Loader.enqueue('gameControls', 'script', 'core_modules/Controls.js');
+Loader.enqueue('gameUpdate', 'script', 'GameUpdate.js');
+Loader.enqueue('gameDraw', 'script', 'GameDraw.js');
+Loader.enqueue('gameGlobals', 'script', 'Globals.js');
+Loader.enqueue('objects', 'script', 'Objects.js');
+Loader.enqueue('engine', 'script', 'core_modules/Engine.js');
 
 // Load them all
 Loader.load(function () {
