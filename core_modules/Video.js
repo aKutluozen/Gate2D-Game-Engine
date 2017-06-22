@@ -6,23 +6,23 @@
  */
 
 var Video = (function () {
-    
+
     "use strict";
-    
+
     // Private local variables
 
-    let canvas,             // Real canvas that will be displayed
-        ctx,                // Real canvas context
-        buffer,             // Buffer that will be drawn on
-        bctx,               // Buffer context
-        width, height,      // Canvas/buffer width and height
-        
-        FPS,                // Frames per second to be set
-        counter,            // Frame count 
-        counterElement,     // DOM element that will display the FPS
-        then, now, first,   // Frame rate calculation variables
-        interval,           // Refreshing interval
-        dt, et;             // Delta time, Elapsed time
+    let canvas, // Real canvas that will be displayed
+        ctx, // Real canvas context
+        buffer, // Buffer that will be drawn on
+        bctx, // Buffer context
+        width, height, // Canvas/buffer width and height
+
+        FPS, // Frames per second to be set
+        counter, // Frame count 
+        counterElement, // DOM element that will display the FPS
+        then, now, first, // Frame rate calculation variables
+        interval, // Refreshing interval
+        dt, et; // Delta time, Elapsed time
 
     // Main video module to be exported
 
@@ -35,7 +35,7 @@ var Video = (function () {
         context: function () {
             return ctx;
         },
-        
+
         buffer: function () {
             return buffer;
         },
@@ -52,6 +52,10 @@ var Video = (function () {
             return dt;
         },
 
+        /**
+         * Shows the FPS for debugging purposes
+         * @param {number} timeElapsed - Elapsed time helps calculate the FPS
+         */
         showFPS: function (timeElapsed) {
             if (counterElement != '') {
                 counterElement.innerHTML =
@@ -61,7 +65,12 @@ var Video = (function () {
             }
         },
 
-        // Initializes the screen - This function must be called first!
+        /**
+         * Initializes the screen
+         * @param {number} w - Width of the screen
+         * @param {number} h - Height of the screen
+         * @param {number} fps - Frames per second
+         */
         setup: function (w, h, fps) {
             // Set up FPS
             counter = 0;
@@ -90,7 +99,9 @@ var Video = (function () {
             counterElement = document.getElementById('counter') || '';
         },
 
-        // Refreshes the screen on a given FPS
+        /**
+         * Refreshes the screen on a given FPS
+         */
         refresh: function () {
             // Calculate the delta time
             now = Date.now();
@@ -105,9 +116,11 @@ var Video = (function () {
                 this.showFPS(et);
             }
         },
-        
-        // Draws everything on the buffer to actual screen
-        render: function() {
+
+        /**
+         * Draws everything on the buffer to the actual screen
+         */
+        render: function () {
             ctx.drawImage(buffer, 0, 0);
         }
     }

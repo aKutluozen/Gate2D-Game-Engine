@@ -55,7 +55,7 @@ var Loader = (function () {
                 file.id = files[number].tag;
                 document.body.appendChild(file);
 
-                // Recursively call the next file for each successful load.
+                // Recursively calls the next file for each successful load
                 file.onload = function () {
                     document.body.appendChild(file);
                     console.log('Loaded: ' + files[number].filepath);
