@@ -7,7 +7,7 @@
 
 var GameObjects = (function () {
     
-    "use strict";
+    'use strict';
 
     // Private local variables
 

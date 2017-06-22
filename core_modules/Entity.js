@@ -5,41 +5,45 @@
  * Provides main game entities to be inherited from.
  */
 
-function Entity(x, y, width, height, tag, controlled, static) {    
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.tag = tag;
-    this.controlled = controlled;
-    this.collided = false;
+function Entity(x, y, width, height, tag, controlled, static) {
+    this.x = x || 0;
+    this.y = y || 0;
+    this.width = width || 0;
+    this.height = height || 0;
+    this.tag = tag || '';
+    this.controlled = controlled || false;
     this.static = false;
-    this.color = "rgb(" + r(0, 255) + "," + r(0, 255) + "," + r(0, 255) + ")";
-}
-
-function r(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
+    this.color = 'rgba(255, 128, 128, 0.25)';
+    this.image = Loader.getFile('charImg');
 }
 
 Entity.prototype = {
     draw: function (context, color) {
-        context.beginPath();
-        context.arc(this.x, this.y, 25, 0, 2 * Math.PI, false);
-        context.fillStyle = this.color;
-        context.fill();
-        context.lineWidth = 5;
-        context.strokeStyle = '#000000';
-        context.stroke();
+        if (Video.debug()) {
+            context.fillStyle = this.color;
+            context.fillRect(this.x, this.y, this.width, this.height);
+        }
     },
 
-    handleControls: function (input) {
-        this.x = Math.floor(input.x);
-        this.y = Math.floor(input.y);
+    handleKeyDown: function (input) {
+        // console.log(input, " down");
+    },
+    
+    handleKeyUp: function (input) {
+        // console.log(input, " up");
+    },
+    
+    handleMouseMovement: function (input) {
+        // console.log(input);  
+    },
+    
+    handleMouseDown: function (input) {
+        // console.log(input);  
     },
 
     anim: function (deltaTime) {
-        this.x += Math.floor(Math.random() * 0.5 * deltaTime);
-        this.y += Math.floor(Math.random() * 0.5 * deltaTime);
+        this.x += Math.floor(Math.random() * 0.2 * deltaTime);
+        this.y += Math.floor(Math.random() * 0.2 * deltaTime);
         if (this.x > Video.canvas().width) this.x = 0;
         if (this.y > Video.canvas().height) this.y = 0;
     }

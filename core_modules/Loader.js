@@ -7,7 +7,7 @@
 
 var Loader = (function () {
 
-    "use strict";
+    'use strict';
 
     // Private local variables
 
@@ -53,18 +53,17 @@ var Loader = (function () {
                 let file = document.createElement(files[number].filetype);
                 file.src = files[number].filepath;
                 file.id = files[number].tag;
-                document.body.appendChild(file);
+                document.getElementById('files').appendChild(file);
 
                 // Recursively calls the next file for each successful load
                 file.onload = function () {
-                    document.body.appendChild(file);
                     console.log('Loaded: ' + files[number].filepath);
                     return loadThis(++number);
                 }
 
                 // Unsuccessful case
                 file.onerror = function () {
-                    document.body.removeChild(file);
+                    document.getElementById('files').removeChild(file);
                     console.log('Problem loading ' + files[number].filepath);
                     return null;
                 }

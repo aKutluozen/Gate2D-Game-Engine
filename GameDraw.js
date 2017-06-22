@@ -8,7 +8,7 @@
 
 var GameDraw = function () {
     
-    "use strict";
+    'use strict';
     
     for (let i = 0; i < GameObjects.length(); i++) {
         GameObjects.objects()[i].draw(Video.bufferContext());

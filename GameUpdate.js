@@ -8,9 +8,9 @@
 
 var GameUpdate = function () {
     
-    "use strict";
+    'use strict';
     
     for (let i = 0; i < GameObjects.length(); i++) {
-        GameObjects.objects()[i].anim(Video.deltaTime());
+        //GameObjects.objects()[i].anim(Video.deltaTime());
     }
 }

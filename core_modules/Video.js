@@ -7,7 +7,7 @@
 
 var Video = (function () {
 
-    "use strict";
+    'use strict';
 
     // Private local variables
 
@@ -22,7 +22,9 @@ var Video = (function () {
         counterElement, // DOM element that will display the FPS
         then, now, first, // Frame rate calculation variables
         interval, // Refreshing interval
-        dt, et; // Delta time, Elapsed time
+        dt, et, // Delta time, Elapsed time
+
+        debug; // Toggles video debug mode
 
     // Main video module to be exported
 
@@ -50,6 +52,11 @@ var Video = (function () {
 
         deltaTime: function () {
             return dt;
+        },
+
+        debug: function (bool) {
+            if (bool == undefined) return debug;
+            else debug = bool;
         },
 
         /**
@@ -83,6 +90,8 @@ var Video = (function () {
             width = w || 640;
             height = h || 480;
 
+            debug = false;
+
             // Set up the buffer
             buffer = document.createElement('canvas');
             buffer.width = width;
@@ -112,8 +121,11 @@ var Video = (function () {
                 ctx.clearRect(0, 0, width, height);
                 bctx.clearRect(0, 0, width, height);
                 then = now - (dt % interval);
-                et = (then - first) / 1000;
-                this.showFPS(et);
+
+                if (debug) {
+                    et = (then - first) / 1000;
+                    this.showFPS(et);
+                }
             }
         },
 

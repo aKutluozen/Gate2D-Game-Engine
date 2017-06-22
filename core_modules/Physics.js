@@ -7,7 +7,7 @@
 
 var Physics = (function () {
 
-    "use strict";
+    'use strict';
     
     return {
         // Box collision check

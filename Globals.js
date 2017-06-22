@@ -7,7 +7,7 @@
 
 var Globals = (function() {    
         
-    "use strict";
+    'use strict';
     
     return {
         paused: false,

@@ -7,7 +7,7 @@
 
 var Engine = (function (GameUpdate, GameDraw, Video) {
         
-    "use strict";
+    'use strict';
     
     // Private local variables
     
@@ -16,7 +16,9 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
     // Game settings
     
     Video.setup(640, 360, 60);
-    Controls.initControls(GameObjects.objects);
+    Video.debug(true);
+    Controls.initKeyboardControls(GameObjects.objects());
+    Controls.initMouseControls(GameObjects.objects());
     
     // Engine functions to be exported
 
