@@ -10,4 +10,5 @@ Creating game objects:
 - Create an <object-name>.js file containing the main logic for that specific object. (Make sure the object has both draw and update methods!)
 - Add the file to the Bootstrap.js by using the Loader.enqueue() function.
 - Instantiate the object in GameEntities.js by using Objects.add() function. (All these objects can be reached by Objects.objectName)
+
 Your object should be ready to go!
