@@ -1,11 +1,11 @@
 /**
- * @GameObjects.js 
+ * @Objects.js 
  * @author Ali Kutluozen
  *
  * Provides an interface to add and keep track of game objects
  */
 
-var GameObjects = (function () {
+var Objects = (function () {
 
     'use strict';
 
@@ -16,7 +16,7 @@ var GameObjects = (function () {
     // Main objects module to be exported
 
     return {
-        // Basic accessors for video elements
+        // Basic accessors for object elements
         length: function () {
             return objects.length;
         },
@@ -33,7 +33,7 @@ var GameObjects = (function () {
             for (var i = 0; i < entities.length; i++) {
                 objects.push(entities[i]);
                 
-                // Also make them available to outside world through GameObjects
+                // Also make them available to outside world through Objects
                 this[entities[i].tag] = entities[i];
             }
         },

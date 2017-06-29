@@ -10,9 +10,11 @@ var GameDraw = function () {
     
     'use strict';
     
-    for (let i = 0; i < GameObjects.length(); i++) {
-        GameObjects.objects()[i].draw(Video.bufferContext());
+    for (let i = 0; i < Objects.length(); i++) {
+        Objects.objects()[i].draw(Video.bufferContext());
     }
+    
+    showHud(Video.bufferContext());
     
     Video.render();
 }

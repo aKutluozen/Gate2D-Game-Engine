@@ -10,7 +10,7 @@ var GameUpdate = function () {
     
     'use strict';
     
-    for (let i = 0; i < GameObjects.length(); i++) {
-        GameObjects.objects()[i].update();
+    for (let i = 0; i < Objects.length(); i++) {
+        Objects.objects()[i].update();
     }
 }
