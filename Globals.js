@@ -2,7 +2,7 @@
  * @Globals.js 
  * @author Ali Kutluozen
  *
- * All the global game variables must be declare here, within the return statement.
+ * All the global game variables must be declare here as key value pairs, within the return statement.
  */
 
 var Globals = (function() {    

@@ -11,16 +11,24 @@
 // Image and audio files must be loaded first!
 
 // Enqueueing the image files
-Loader.enqueue('charImg', 'img', 'test.jpg');
+Loader.enqueue('charImg', 'img', 'images/test.jpg');
 
 // Enqueueing the audio files
 // ..
 
-// Enqueueing the script files
+// Main object file Entity.js needs to be loaded before anything else inherits from it
 Loader.enqueue('entity', 'script', 'core_modules/Entity.js');
-Loader.enqueue('videoModule', 'script', 'core_modules/Video.js');
 Loader.enqueue('gameObjects', 'script', 'core_modules/GameObjects.js');
+
+// Enqueueing custom script files
+Loader.enqueue('padScript', 'script', 'pad.js');
+Loader.enqueue('ballScript', 'script', 'ball.js');
+
+// Enqueueing core script files
+Loader.enqueue('videoModule', 'script', 'core_modules/Video.js');
+
 Loader.enqueue('gameControls', 'script', 'core_modules/Controls.js');
+Loader.enqueue('gamePhysics', 'script', 'core_modules/Physics.js');
 Loader.enqueue('gameUpdate', 'script', 'GameUpdate.js');
 Loader.enqueue('gameDraw', 'script', 'GameDraw.js');
 Loader.enqueue('gameGlobals', 'script', 'Globals.js');
