@@ -36,7 +36,7 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
 
         // Main game loop
         run: function () {
-            if (!Globals.paused) {
+            if (!Globals.gamePaused) {
                 requestAnimationFrame(Engine.run);
                 Video.refresh();
                 GameUpdate();
