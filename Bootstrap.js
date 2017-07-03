@@ -11,7 +11,8 @@
 /* ************ LOADING ALL THE FILES **************************************** */
 
 // Enqueueing the image files
-Loader.enqueue('img_ball', 'img', 'images/ball.jpg');
+Loader.enqueue('imgBall', 'img', 'images/ball.png');
+Loader.enqueue('imgPoint', 'img', 'images/point.png');
 
 // Enqueueing the audio files
 
@@ -22,6 +23,7 @@ Loader.enqueue('entity', 'script', 'core_modules/Entity.js');
 Loader.enqueue('padScript', 'script', 'custom_objects/pad.js');
 Loader.enqueue('ballScript', 'script', 'custom_objects/ball.js');
 Loader.enqueue('hudScript', 'script', 'custom_objects/hud.js');
+Loader.enqueue('pointScript', 'script', 'custom_objects/point.js');
 
 // Enqueueing core script files - Do not change the order!
 Loader.enqueue('videoModule', 'script', 'core_modules/Video.js');
@@ -43,8 +45,7 @@ Loader.load(function () {
         screenWidth: 400,
         screenHeight: 400,
         screenFPS: 60,
-        mouseEnabled: true,
-        keyboardEnabled: true
+        mouseEnabled: true
     });
     
     Engine.run();

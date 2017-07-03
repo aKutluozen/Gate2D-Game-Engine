@@ -13,8 +13,8 @@
  * E.g., GameObject.player 
  */
 Objects.add([
-    new Pad(200, 320, 50, 10, 'pad', true),
-    new Ball(0, 50, 20, 20, 'ball'),
+    new Point(100, 200, 20, 20, 'point', true),
+    new Ball(200, 200, 20, 20, 'ball')
 ]);
 
 /**

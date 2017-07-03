@@ -8,6 +8,8 @@
 function Entity(x, y, width, height, tag, controlled, static) {
     this.x = x || 0;
     this.y = y || 0;
+    this.speed = 0;
+    this.rotation = 0;
     this.movement = {};
     this.width = width || 0;
     this.height = height || 0;
@@ -35,11 +37,11 @@ Entity.prototype = {
     },
     
     handleMouseMovement: function (input) {
-        this.movement = input;
+        //this.movement = input;
     },
     
     handleMouseDown: function (input) {
-        // console.log(input);  
+        this.movement = input;
     },
     
     update: function() {
