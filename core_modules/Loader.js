@@ -1,8 +1,10 @@
 /**
- * @Loader.js 
- * @author Ali Kutluozen
- *
- * Provides a basic interface for loading files
+ * Loader.js
+ * 
+ * @summary         Provides a basic interface for loading files
+ * @module          Loader
+ * @author          Ali Kutluozen
+ * @version         7/5/2017
  */
 
 var Loader = (function () {
@@ -17,10 +19,10 @@ var Loader = (function () {
 
     return {
         /**
-         * Adds a new file object to the queue to be loaded in order
-         * @param {string} tag - Tag name to be the id of the created DOM element
-         * @param {string} filetype - Type of the file as an HTML tag - E.g. script, img, audio, etc.
-         * @param {string} filepath - File path - E.g. 'modules/util.js'
+         * @description     Adds a new file object to the queue to be loaded in order
+         * @param {string}  tag - Tag name to be the id of the created DOM element
+         * @param {string}  filetype - Type of the file as an HTML tag - E.g. script, img, audio, etc.
+         * @param {string}  filepath - File path - E.g. 'modules/util.js'
          */
         enqueue: function (tag, filetype, filepath) {
             files.push({
@@ -32,7 +34,8 @@ var Loader = (function () {
 
         /**
          * Recursively loads each file in the queue ensuring that they are loaded in the right order
-         * Once everything is loaded, then executes a callback function
+         * Once everything is loaded, then executes a callback function.
+         *                  
          * @param {function} callback - Function to be executed upon success
          */
         load: function (callback) {
@@ -42,6 +45,7 @@ var Loader = (function () {
 
             // Internal recursive function
             function loadThis(number) {
+
                 // Base case: All the files have been loaded - Success!
                 if (number === files.length) {
                     console.log('All files have been successfully loaded!');
@@ -73,8 +77,8 @@ var Loader = (function () {
         },
 
         /**
-         * Returns the loaded file element for further use
-         * @param {string} tag - Tag/id name of the DOM element needed
+         * @description     Returns the loaded file element for further use
+         * @param {string}  tag - Tag/id name of the DOM element needed
          */
         getFile: function (tag) {
             return document.getElementById(tag);

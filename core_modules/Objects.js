@@ -1,8 +1,10 @@
 /**
- * @Objects.js 
- * @author Ali Kutluozen
- *
- * Provides an interface to add and keep track of game objects
+ * Objects.js 
+ * 
+ * @summary         Provides an interface to add and keep track of game objects
+ * @module          Objects
+ * @author          Ali Kutluozen
+ * @version         7/5/2017
  */
 
 var Objects = (function () {
@@ -16,31 +18,38 @@ var Objects = (function () {
     // Main objects module to be exported
 
     return {
-        // Basic accessors for object elements
+        /**
+         * @description     Returns the amount of game objects
+         * @returns {number}
+         */
         length: function () {
             return objects.length;
         },
 
+        /**
+         * @description     Returns the game objects array
+         * @returns {array}
+         */
         objects: function () {
             return objects;
         },
-        
+
         /**
-         * Adds an array of game objects
-         * @param {array} entities - An array of game objects
+         * @description     Adds an array of game objects
+         * @param {array}   entities - An array of game objects
          */
         add: function (entities) {
             for (var i = 0; i < entities.length; i++) {
                 objects.push(entities[i]);
-                
+
                 // Also make them available to outside world through Objects
                 this[entities[i].tag] = entities[i];
             }
         },
 
         /**
-         * Finds and returns a game object by tag
-         * @param {string} tag - Name of the game object
+         * @description     Finds and returns a game object by tag
+         * @param {string}  tag - Name of the game object
          */
         find: function (tag) {
             for (var i = 0; i < objects.length; i++) {

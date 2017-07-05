@@ -1,8 +1,10 @@
 /**
- * @Engine.js 
- * @author Ali Kutluozen
- *
- * This module brings the game loop elements together
+ * Engine.js 
+ *                  
+ * @summary         Brings the game loop elements together
+ * @module          Engine
+ * @author          Ali Kutluozen
+ * @version         7/5/2017
  */
 
 var Engine = (function (GameUpdate, GameDraw, Video) {
@@ -17,12 +19,11 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
 
     return {
         /**
-         * Sets up the game engine
-         * @param {Object} settings - An object of settings as key value pairs
+         * @description     Sets up the game engine
+         * @param {Object}  settings - An object of settings as key value pairs
          */
         setup: function (settings) {
             Video.setup(settings.screenWidth, settings.screenHeight, settings.screenFPS);
-            Video.debug(settings.screenDebug);
 
             if (settings.keyboardEnabled) {
                 Controls.initKeyboardControls(Objects.objects());
@@ -32,9 +33,13 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
                 Controls.initMouseControls(Objects.objects());
             }
 
+            Video.debug(settings.screenDebug);
+            Physics.debug(settings.physicsDebug);
         },
 
-        // Main game loop
+        /**
+         * @description     Runs the main game loop
+         */
         run: function () {
             if (!Globals.gamePaused) {
                 requestAnimationFrame(Engine.run);

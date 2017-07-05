@@ -1,8 +1,10 @@
 /**
- * @Video.js 
- * @author Ali Kutluozen
- *
- * Provides a basic interface for canvas API
+ * Video.js 
+ *                  
+ * @summary         Provides a basic interface for canvas API
+ * @module          Video     
+ * @author          Ali Kutluozen
+ * @version         7/5/2017
  */
 
 var Video = (function () {
@@ -10,58 +12,84 @@ var Video = (function () {
     'use strict';
 
     // Private local variables
+                        
+    let canvas,             // Real canvas that will be displayed
+        ctx,                // Real canvas context
+        buffer,             // Buffer that will be drawn on
+        bctx,               // Buffer context
+        width, height,      // Canvas/buffer width and height
 
-    let canvas, // Real canvas that will be displayed
-        ctx, // Real canvas context
-        buffer, // Buffer that will be drawn on
-        bctx, // Buffer context
-        width, height, // Canvas/buffer width and height
+        FPS,                // Frames per second to be set
+        counter,            // Frame count 
+        counterElement,     // DOM element that will display the FPS
+        then, now, first,   // Frame rate calculation variables
+        interval,           // Refreshing interval
+        dt, et,             // Delta time, Elapsed time
 
-        FPS, // Frames per second to be set
-        counter, // Frame count 
-        counterElement, // DOM element that will display the FPS
-        then, now, first, // Frame rate calculation variables
-        interval, // Refreshing interval
-        dt, et, // Delta time, Elapsed time
-
-        debug; // Toggles video debug mode
+        debug;              // Toggles video debug mode
 
     // Main video module to be exported
 
     return {
-        // Basic accessors for video elements
+        /**
+         * @description     Returns canvas
+         * @returns {object}
+         */
         canvas: function () {
             return canvas;
         },
-
+        
+        /**
+         * @description     Returns context
+         * @returns {object}
+         */
         context: function () {
             return ctx;
         },
-
+        
+        /**
+         * @description     Returns buffer
+         * @returns {object}
+         */
         buffer: function () {
             return buffer;
         },
-
+        
+        /**
+         * @description     Returns buffer context
+         * @returns {object}
+         */
         bufferContext: function () {
             return bctx;
         },
-
+        
+        /**
+         * @description     Returns frames per second
+         * @returns {object}
+         */
         FPS: function () {
             return FPS;
         },
-
+        
+        /**
+         * @description     Returns change in time
+         * @returns {object}
+         */
         deltaTime: function () {
             return dt;
         },
-
+        
+        /**
+         * @description     Toggles debug mode
+         */
         debug: function (bool) {
             if (bool == undefined) return debug;
             else debug = bool;
         },
 
         /**
-         * Shows the FPS for debugging purposes
-         * @param {number} timeElapsed - Elapsed time helps calculate the FPS
+         * @description     Shows the FPS for debugging purposes
+         * @param {number}  timeElapsed - Elapsed time helps calculate the FPS
          */
         showFPS: function (timeElapsed) {
             if (counterElement != '') {
@@ -72,11 +100,11 @@ var Video = (function () {
             }
         },
 
-        /**
-         * Initializes the screen
-         * @param {number} w - Width of the screen
-         * @param {number} h - Height of the screen
-         * @param {number} fps - Frames per second
+        /**   
+         * @description     Initializes the screen
+         * @param {number}  w - Width of the screen
+         * @param {number}  h - Height of the screen
+         * @param {number}  fps - Frames per second
          */
         setup: function (w, h, fps) {
             // Set up FPS
@@ -108,8 +136,8 @@ var Video = (function () {
             counterElement = document.getElementById('counter') || '';
         },
 
-        /**
-         * Refreshes the screen on a given FPS
+        /**             
+         * @description     Refreshes the screen on a given FPS
          */
         refresh: function () {
             // Calculate the delta time
@@ -130,7 +158,7 @@ var Video = (function () {
         },
 
         /**
-         * Draws everything on the buffer to the actual screen
+         * @description     Draws everything on the buffer to the actual screen
          */
         render: function () {
             ctx.drawImage(buffer, 0, 0);

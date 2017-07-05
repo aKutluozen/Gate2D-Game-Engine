@@ -1,9 +1,11 @@
 /**
  * @GameUpdate.js 
- * @author Ali Kutluozen
  *
  * GameUpdate function is placed in the game loop.
  * It is responsbile for execution of all the game logic.
+ * 
+ * @function        GameUpdate - Responsbile for execution of all the game logic 
+ * @author          Ali Kutluozen
  */
 
 var GameUpdate = function () {

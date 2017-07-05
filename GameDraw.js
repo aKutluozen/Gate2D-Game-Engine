@@ -1,9 +1,11 @@
 /**
  * @GameDraw.js 
- * @author Ali Kutluozen
  *
  * GameDraw function is placed in the game loop.
  * It is responsbile for all the drawing actions.
+ * 
+ * @function        GameDraw - Responsbile for all the drawing actions
+ * @author          Ali Kutluozen     
  */
 
 var GameDraw = function () {
