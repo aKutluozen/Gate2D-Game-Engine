@@ -68,7 +68,7 @@ var Loader = (function () {
                 // Unsuccessful case
                 file.onerror = function () {
                     document.getElementById('files').removeChild(file);
-                    console.log('Problem loading ' + files[number].filepath);
+                    console.error('Problem loading ' + files[number].filepath);
                     return null;
                 }
             }

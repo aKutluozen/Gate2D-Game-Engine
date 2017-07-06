@@ -24,7 +24,7 @@ var Physics = (function () {
         },
 
         /**
-         * @description     Creates an axis-aligned bounding box object with the necessary methods
+         * @description     Creates an axis-aligned bounding box area with the necessary methods
          * @param {number}  x - X position
          * @param {number}  y - Y position
          * @param {number}  width - Width of the collision area
@@ -72,6 +72,60 @@ var Physics = (function () {
                     thisEntity.y + thisEntity.height > otherEntity.y)
                     return true;
                 else return false;
+            };
+        },
+
+        /**
+         * @description     Creates a 2D circle collision area with the necessary methods
+         * @param {number}  x - X position
+         * @param {number}  y - Y position
+         * @param {number}  r - Radius of the collision area
+         */
+        CircleCollision: function (x, y, r) {
+            // Constructor
+            this.x = x || 0;
+            this.y = y || 0;
+            this.r = r || 0;
+
+            // Methods
+
+            /**
+             * @description     Draws the collision are on debug mode
+             * @param {object}  ctx - Context to draw on
+             */
+            this.draw = function (ctx) {
+                if (debug) {
+                    ctx.fillStyle = "rgba(244, 188, 66, 0.5)";
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+                    context.fill();
+                }
+            };
+
+            /**
+             * @description     Updates the location of collision area
+             * @param {number}  x - X position
+             * @param {number}  y - Y position
+             */
+            this.update = function (x, y) {
+                this.x = x;
+                this.y = y;
+            };
+
+            /**
+             * @description     Checks collision between 2 entities    
+             * @param {object}  thisEntity  - The object that will collide with the other object
+             * @param {object}  otherEntity - The object that will collide with the other object
+             */
+            this.checkCollision = function (thisEntity, otherEntity) {
+                if (thisEntity.r != undefined && otherEntity.r != undefined) {
+                    if (GameMath.hypotenuse(thisEntity.x - otherEntity.x, thisEntity.y - otherEntity.y) <
+                        thisEntity.r + otherEntity.r)
+                        return true;
+                    else return false;
+                } else {
+                    console.error('Both objects must have a radius!');
+                }
             };
         },
 

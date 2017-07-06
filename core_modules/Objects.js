@@ -39,7 +39,7 @@ var Objects = (function () {
          * @param {array}   entities - An array of game objects
          */
         add: function (entities) {
-            for (var i = 0; i < entities.length; i++) {
+            for (let i = 0; i < entities.length; i++) {
                 objects.push(entities[i]);
 
                 // Also make them available to outside world through Objects
@@ -52,7 +52,7 @@ var Objects = (function () {
          * @param {string}  tag - Name of the game object
          */
         find: function (tag) {
-            for (var i = 0; i < objects.length; i++) {
+            for (let i = 0; i < objects.length; i++) {
                 if (objects[i].tag == tag) {
                     return objects[i];
                 }

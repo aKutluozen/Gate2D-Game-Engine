@@ -18,12 +18,10 @@ Ball.prototype.draw = function (ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 }
 
-console.log(Math);
-
 Ball.prototype.update = function () {
     this.coll.update(this.x, this.y); // Always update the collision area position
 
-    var dist = GameMath.pythagorean(this.x - Objects.point.x, this.y - Objects.point.y);
+    var dist = GameMath.hypotenuse(this.x - Objects.point.x, this.y - Objects.point.y);
 
     if (dist > 40)
         Physics.moveTowards(this, Objects.point);

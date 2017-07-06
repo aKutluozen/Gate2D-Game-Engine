@@ -39,7 +39,7 @@ var Globals = (function () {
          * @param {array}   values - An array of game variables
          */
         add: function (values) {
-            for (var i = 0; i < values.length; i++) {
+            for (let i = 0; i < values.length; i++) {
                 globals.push(values[i]);
                 
                 // Also make them available to outside world through Globals
