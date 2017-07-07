@@ -8,7 +8,6 @@
  * @version         7/5/2017
  */
 
-var Game = {};
 'use strict';
 
 /* ************ LOADING ALL THE FILES **************************************** */
@@ -28,7 +27,6 @@ Loader.enqueue('boxScript', 'script', 'custom_objects/box.js');
 Loader.enqueue('ballScript', 'script', 'custom_objects/ball.js');
 Loader.enqueue('hudScript', 'script', 'custom_objects/hud.js');
 Loader.enqueue('pointScript', 'script', 'custom_objects/point.js');
-Loader.enqueue('roomScript', 'script', 'custom_objects/room.js');
 
 // Enqueueing core script files - Do not change the order!
 Loader.enqueue('mathLibrary', 'script', 'core_modules/Math.js');
@@ -41,6 +39,7 @@ Loader.enqueue('gameDraw', 'script', 'GameDraw.js');
 Loader.enqueue('gameGlobals', 'script', 'core_modules/Globals.js');
 Loader.enqueue('objects', 'script', 'GameEntities.js');
 Loader.enqueue('engine', 'script', 'core_modules/Engine.js');
+Loader.enqueue('sceneScript', 'script', 'core_modules/Scene.js');
 
 /* ************ SETTING UP AND RUNNING THE ENGINE *************************** */
 
@@ -53,6 +52,8 @@ Loader.load(function () {
         screenFPS: 60,
         mouseEnabled: true,
     });
+    
+    Physics.debug(true);
     
     Engine.run();
 });

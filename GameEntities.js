@@ -14,10 +14,8 @@
  * E.g., GameObject.player 
  */
 Objects.add([
-    new Room("Level 1", 800, 800, "imgBackground"),
-    new Point(100, 200, 20, 20, 'point', true),
-    new Ball(100, 100, 20, 20, 'ball'),
-    new Box(200, 200, 130, 100, 'box')
+    new Point(100, 200, 20, 20,'point', true),
+    new Ball(100, 100, 20, 20, 'ball')
 ]);
 
 /**

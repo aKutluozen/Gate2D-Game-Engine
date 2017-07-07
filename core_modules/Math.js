@@ -14,10 +14,12 @@ var GameMath = (function () {
     return {
         /**
          * @description     Returns the distance between 2 points
+         * @param {number}  a - Length of side a
+         * @param {number}  b - Length of side b
          * @returns {number}
          */
-        hypotenuse: function (sideA, sideB) {
-            return Math.sqrt(Math.pow(sideA, 2) + Math.pow(sideB, 2));
+        hypotenuse: function (a, b) {
+            return Math.sqrt(a * a + b * b);
         }
     }
 }());

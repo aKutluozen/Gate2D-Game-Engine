@@ -66,10 +66,10 @@ var Physics = (function () {
              * @param {object}  otherEntity - The object that will collide with the other object
              */
             this.checkCollision = function (thisEntity, otherEntity) {
-                if (thisEntity.x < otherEntity.x + otherEntity.width &&
-                    thisEntity.x + thisEntity.width > otherEntity.x &&
-                    thisEntity.y < otherEntity.y + otherEntity.height &&
-                    thisEntity.y + thisEntity.height > otherEntity.y)
+                if (thisEntity.coll.x < otherEntity.coll.x + otherEntity.coll.width &&
+                    thisEntity.coll.x + thisEntity.coll.width > otherEntity.coll.x &&
+                    thisEntity.coll.y < otherEntity.coll.y + otherEntity.coll.height &&
+                    thisEntity.coll.y + thisEntity.coll.height > otherEntity.coll.y)
                     return true;
                 else return false;
             };
@@ -85,7 +85,7 @@ var Physics = (function () {
             // Constructor
             this.x = x || 0;
             this.y = y || 0;
-            this.r = r || 0;
+            this.r = r/2 || 0;
 
             // Methods
 
@@ -98,7 +98,7 @@ var Physics = (function () {
                     ctx.fillStyle = "rgba(244, 188, 66, 0.5)";
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
-                    context.fill();
+                    ctx.fill();
                 }
             };
 
@@ -118,9 +118,9 @@ var Physics = (function () {
              * @param {object}  otherEntity - The object that will collide with the other object
              */
             this.checkCollision = function (thisEntity, otherEntity) {
-                if (thisEntity.r != undefined && otherEntity.r != undefined) {
-                    if (GameMath.hypotenuse(thisEntity.x - otherEntity.x, thisEntity.y - otherEntity.y) <
-                        thisEntity.r + otherEntity.r)
+                if (thisEntity.coll.r != undefined && otherEntity.coll.r != undefined) {
+                    if (GameMath.hypotenuse(thisEntity.coll.x - otherEntity.coll.x, thisEntity.coll.y - otherEntity.coll.y) <=
+                        (thisEntity.coll.r + otherEntity.coll.r))
                         return true;
                     else return false;
                 } else {
@@ -135,7 +135,7 @@ var Physics = (function () {
          * @param {object}  to - The target point
          */
         moveTowards: function (from, to) {
-            from.rotation = Math.atan2(from.y - to.y, from.x - to.x);
+            from.rotation = Math.atan2(from.y + from.height/2 - to.y - to.height/2, from.x + from.width/2 - to.x - to.width/2);
             from.x -= Math.cos(from.rotation) * from.speed;
             from.y -= Math.sin(from.rotation) * from.speed;
         }
