@@ -32,7 +32,9 @@ function Entity(x, y, width, height, tag, controlled, isStatic) {
     this.collided = false;
 }
 
-// A skeleton of methods available
+/**
+ * @description     Skeleton methods for an entity (Sort of like an interface pattern)
+ */
 Entity.prototype = {
 
     /**
@@ -47,20 +49,36 @@ Entity.prototype = {
         }
     },
 
+    /**
+     * @description     Passes the key down event as a parameter
+     * @param {object}  input - Event
+     */
     handleKeyDown: function (input) {
 
     },
 
+    /**
+     * @description     Passes the key up event as a parameter
+     * @param {object}  input - Event
+     */
     handleKeyUp: function (input) {
 
     },
 
+    /**
+     * @description     Passes the mouse movement event as a parameter
+     * @param {object}  input - Event
+     */
     handleMouseMovement: function (input) {
 
     },
 
+    /**
+     * @description     Passes the mouse movement event as a parameter
+     * @param {object}  input - Event
+     */
     handleMouseDown: function (input) {
-        this.movement = input;
+
     },
 
     update: function () {

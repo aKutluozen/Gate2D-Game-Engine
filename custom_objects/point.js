@@ -16,3 +16,7 @@ Point.prototype.update = function () {
     this.y = this.movement.y - this.height/2;
     this.coll.update(this.x + this.width/2, this.y + this.height/2);
 }
+
+Point.prototype.handleMouseDown = function (input) {
+    this.movement = input;
+}

@@ -21,6 +21,14 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
         /**
          * @description     Sets up the game engine
          * @param {Object}  settings - An object of settings as key value pairs
+         *                          
+         * @property {number}       settings.screenWidth - Name of the level      
+         * @property {number}       settings.screenHeight - Width of the level      
+         * @property {number}       settings.screenFPS - Height of the level 
+         * @property {boolean}      settings.keyboardEnabled - X offset of the level      
+         * @property {boolean}      settings.mouseEnabled - Y offset of the level 
+         * @property {boolean}      settings.screenDebug - Background image of the level 
+         * @property {boolean}      settings.physicsDebug - A list of objects that in the level
          */
         setup: function (settings) {
             Video.setup(settings.screenWidth, settings.screenHeight, settings.screenFPS);
@@ -35,6 +43,8 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
 
             Video.debug(settings.screenDebug);
             Physics.debug(settings.physicsDebug);
+
+            Levels.play(settings.startingLevel);
         },
 
         /**

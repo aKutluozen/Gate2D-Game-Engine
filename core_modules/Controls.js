@@ -22,7 +22,7 @@ var Controls = (function () {
             Video.canvas().addEventListener('mousemove', function (event) {
                 for (let i = 0; i < entities.length; i++) {
                     if (entities[i].controlled) {
-                        entities[i].handleMouseMovement(Controls.getMousePos(event));
+                        entities[i].handleMouseMovement(Controls.getMousePosition(event));
                     }
                 }
             });
@@ -30,7 +30,7 @@ var Controls = (function () {
             Video.canvas().addEventListener('mousedown', function (event) {
                 for (let i = 0; i < entities.length; i++) {
                     if (entities[i].controlled) {
-                        entities[i].handleMouseDown(Controls.getMousePos(event));
+                        entities[i].handleMouseDown(Controls.getMousePosition(event));
                     }
                 }
             });
@@ -40,7 +40,7 @@ var Controls = (function () {
          * @description     Helper function to get the mouse position on a canvas
          * @param {array}   event - Mouse event
          */
-        getMousePos: function (event) {
+        getMousePosition: function (event) {
             event.preventDefault();
             return {
                 x: event.pageX - Video.canvas().offsetLeft,

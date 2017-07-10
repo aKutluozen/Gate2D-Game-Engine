@@ -12,7 +12,11 @@ var GameUpdate = function () {
     
     'use strict';
     
-    for (let i = 0; i < Objects.length(); i++) {
-        Objects.objects()[i].update();
+    // Handles all the object specific action logic
+    for (let i = 0; i < Levels.currentLevel().objectsList.length; i++) {
+        Levels.currentLevel().objectsList[i].update();
     }
+    
+    // Add extra game logic here
+    // ...
 }

@@ -19,12 +19,14 @@ Ball.prototype.draw = function (ctx) {
 }
 
 Ball.prototype.update = function () {
-    this.coll.update(this.x + this.width/2, this.y + this.height/2); // Always update the collision area position
-    
-    if (this.coll.checkCollision(this, Objects.point)) {
-        this.collided = true;
-    } else {
-        this.collided = false;
-        Physics.moveTowards(this, Objects.point);
+    this.coll.update(this.x + this.width / 2, this.y + this.height / 2); // Always update the collision area position
+
+    if (Objects.point) {
+        if (this.coll.checkCollision(this, Objects.point)) {
+            this.collided = true;
+        } else {
+            this.collided = false;
+            Physics.moveTowards(this, Objects.point);
+        }
     }
 }

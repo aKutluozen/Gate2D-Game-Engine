@@ -16,6 +16,7 @@
 Loader.enqueue('imgBall', 'img', 'images/ball.png');
 Loader.enqueue('imgPoint', 'img', 'images/point.png');
 Loader.enqueue('imgBackground', 'img', 'images/bg.jpg');
+Loader.enqueue('imgBackground2', 'img', 'images/bg2.jpg');
 
 // Enqueueing the audio files
 
@@ -37,9 +38,9 @@ Loader.enqueue('Objects', 'script', 'core_modules/Objects.js');
 Loader.enqueue('gameUpdate', 'script', 'GameUpdate.js');
 Loader.enqueue('gameDraw', 'script', 'GameDraw.js');
 Loader.enqueue('gameGlobals', 'script', 'core_modules/Globals.js');
+Loader.enqueue('levels', 'script', 'core_modules/Levels.js');
 Loader.enqueue('objects', 'script', 'GameEntities.js');
 Loader.enqueue('engine', 'script', 'core_modules/Engine.js');
-Loader.enqueue('sceneScript', 'script', 'core_modules/Scene.js');
 
 /* ************ SETTING UP AND RUNNING THE ENGINE *************************** */
 
@@ -51,9 +52,8 @@ Loader.load(function () {
         screenHeight: 400,
         screenFPS: 60,
         mouseEnabled: true,
+        startingLevel: 'level1'
     });
-    
-    Physics.debug(true);
     
     Engine.run();
 });
