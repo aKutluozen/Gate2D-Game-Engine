@@ -12,13 +12,11 @@
 
 /* ************ LOADING ALL THE FILES **************************************** */
 
-// Enqueueing the image files
+// Enqueueing the external resources first (image, audio, etc.)
 Loader.enqueue('imgBall', 'img', 'images/ball.png');
 Loader.enqueue('imgPoint', 'img', 'images/point.png');
 Loader.enqueue('imgBackground', 'img', 'images/bg.jpg');
 Loader.enqueue('imgBackground2', 'img', 'images/bg2.jpg');
-
-// Enqueueing the audio files
 
 // Main object file Entity.js needs to be loaded before anything else inherits from it
 Loader.enqueue('entity', 'script', 'core_modules/Entity.js');
@@ -52,6 +50,7 @@ Loader.load(function () {
         screenHeight: 400,
         screenFPS: 60,
         mouseEnabled: true,
+        keyboardEnabled: true,
         startingLevel: 'level1'
     });
     

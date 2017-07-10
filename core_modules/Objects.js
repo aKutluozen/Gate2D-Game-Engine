@@ -43,17 +43,17 @@ var Objects = (function () {
                 objects.push(entities[i]);
 
                 // Also make them available to outside world through Objects
-                this[entities[i].tag] = entities[i];
+                this[entities[i].name] = entities[i];
             }
         },
 
         /**
-         * @description     Finds and returns a game object by tag
-         * @param {string}  tag - Name of the game object
+         * @description     Finds and returns a game object by name
+         * @param {string}  name - Name of the game object
          */
-        find: function (tag) {
+        findByName: function (name) {
             for (let i = 0; i < objects.length; i++) {
-                if (objects[i].tag == tag) {
+                if (objects[i].name == name) {
                     return objects[i];
                 }
             }

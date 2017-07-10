@@ -65,6 +65,14 @@ var Levels = (function () {
          */
         add: function (levelList) {
             for (let i = 0; i < levelList.length; i++) {
+                // Load the background image from the string
+                levelList[i].background = Loader.getFile(levelList[i].background);
+                
+                for (let j = 0; j < levelList[i].objectsList.length; j++) {
+                    // Convert string to object
+                    levelList[i].objectsList[j] = eval("Objects." + levelList[i].objectsList[j]);
+                }
+                
                 levels.push(levelList[i]);
 
                 // Also make them available to outside world through levels

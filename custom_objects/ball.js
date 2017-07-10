@@ -29,4 +29,14 @@ Ball.prototype.update = function () {
             Physics.moveTowards(this, Objects.point);
         }
     }
+    
+    for (let i = 0; i < Levels.currentLevel().objectsList.length; i++) {
+        if (Levels.currentLevel().objectsList[i].tag != 'wall')
+        if (this.coll.checkCollision(this, Levels.currentLevel().objectsList[i])) {
+            this.collided = true;
+        } else {
+            this.collided = false;
+        }
+    }
+
 }

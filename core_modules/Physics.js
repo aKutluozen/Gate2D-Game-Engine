@@ -85,7 +85,7 @@ var Physics = (function () {
             // Constructor
             this.x = x || 0;
             this.y = y || 0;
-            this.r = r/2 || 0;
+            this.r = r / 2 || 0;
 
             // Methods
 
@@ -135,9 +135,10 @@ var Physics = (function () {
          * @param {object}  to - The target point
          */
         moveTowards: function (from, to) {
-            from.rotation = Math.atan2(from.y + from.height/2 - to.y - to.height/2, from.x + from.width/2 - to.x - to.width/2);
+            from.rotation = Math.atan2(from.y + from.height / 2 - to.y - to.height / 2, from.x + from.width / 2 - to.x - to.width / 2);
             from.x -= Math.cos(from.rotation) * from.speed;
             from.y -= Math.sin(from.rotation) * from.speed;
+            return from.rotation;
         }
     }
 }());

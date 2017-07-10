@@ -7,13 +7,14 @@
  * @param {number}  y - Y position of the entity
  * @param {number}  width - Width of the entity
  * @param {number}  height - Height of the entity
- * @param {string}  tag - Name of the entity
+ * @param {string}  name - Name of the entity
+ * @param {string}  tag - Tag of the entity
  * @param {boolean} controlled - Decides if the entity is controlled or not
  * @param {boolean} isStatic - Decides if the entity is static or not
  * 
  * @author          Ali Kutluozen
  */
-function Entity(x, y, width, height, tag, controlled, isStatic) {
+function Entity(x, y, width, height, name, tag, controlled, isStatic) {
     this.x = x || 0;
     this.y = y || 0;
     this.speed = 0;
@@ -21,6 +22,7 @@ function Entity(x, y, width, height, tag, controlled, isStatic) {
     this.movement = {};
     this.width = width || 0;
     this.height = height || 0;
+    this.name = name || '';
     this.tag = tag || '';
     this.controlled = controlled || false;
     this.isStatic = isStatic || false;

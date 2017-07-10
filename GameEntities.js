@@ -14,8 +14,8 @@
  * E.g., GameObject.player 
  */
 Objects.add([
-    new Point(100, 200, 20, 20, 'point', true),
-    new Ball(100, 100, 20, 20, 'ball'),
+    new Point(100, 200, 20, 20, 'point', 'cursor', true),
+    new Ball(100, 100, 20, 20, 'ball', 'player'),
     // Instantiate custom game objects here
     // ...
 ]);
@@ -49,10 +49,22 @@ Levels.add([
         height: 400,
         x: 0,
         y: 0,
-        background: Loader.getFile('imgBackground'),
+        background: 'imgBackground',
         objectsList: [
-            Objects.ball,
-            Objects.point
+            'ball',
+            'point'
+        ]
+    },
+    {
+        tag: 'level2',
+        width: 500,
+        height: 250,
+        x: 0,
+        y: 0,
+        background: 'imgBackground2',
+        objectsList: [
+            
+            'point'
         ]
     },
     // Create custom levels here
