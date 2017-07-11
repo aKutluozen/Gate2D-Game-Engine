@@ -4,7 +4,7 @@
  * @summary         Provides basic physics functions
  * @module          Physics
  * @author          Ali Kutluozen
- * @version         7/5/2017
+ * @version         0.1.0
  */
 
 var Physics = (function () {
@@ -24,7 +24,8 @@ var Physics = (function () {
         },
 
         /**
-         * @description     Creates an axis-aligned bounding box area with the necessary methods
+         * Creates an axis-aligned bounding box area with the necessary methods
+         * 
          * @param {number}  x - X position
          * @param {number}  y - Y position
          * @param {number}  width - Width of the collision area
@@ -40,7 +41,8 @@ var Physics = (function () {
             // Methods
 
             /**
-             * @description     Draws the collision are on debug mode
+             * Draws the collision are on debug mode
+             * 
              * @param {object}  ctx - Context to draw on
              */
             this.draw = function (ctx) {
@@ -51,7 +53,8 @@ var Physics = (function () {
             };
 
             /**
-             * @description     Updates the location of collision area
+             * Updates the location of collision area
+             * 
              * @param {number}  x - X position
              * @param {number}  y - Y position
              */
@@ -61,9 +64,11 @@ var Physics = (function () {
             };
 
             /**
-             * @description     Checks collision between 2 entities    
+             * Checks collision between 2 entities    
+             * 
              * @param {object}  thisEntity  - The object that will collide with the other object
              * @param {object}  otherEntity - The object that will collide with the other object
+             * @returns {boolean}
              */
             this.checkCollision = function (thisEntity, otherEntity) {
                 if (thisEntity.coll.x < otherEntity.coll.x + otherEntity.coll.width &&
@@ -76,7 +81,8 @@ var Physics = (function () {
         },
 
         /**
-         * @description     Creates a 2D circle collision area with the necessary methods
+         * Creates a 2D circle collision area with the necessary methods
+         * 
          * @param {number}  x - X position
          * @param {number}  y - Y position
          * @param {number}  r - Radius of the collision area
@@ -90,7 +96,8 @@ var Physics = (function () {
             // Methods
 
             /**
-             * @description     Draws the collision are on debug mode
+             * Draws the collision are on debug mode
+             * 
              * @param {object}  ctx - Context to draw on
              */
             this.draw = function (ctx) {
@@ -103,7 +110,8 @@ var Physics = (function () {
             };
 
             /**
-             * @description     Updates the location of collision area
+             * Updates the location of collision area
+             * 
              * @param {number}  x - X position
              * @param {number}  y - Y position
              */
@@ -113,9 +121,11 @@ var Physics = (function () {
             };
 
             /**
-             * @description     Checks collision between 2 entities    
+             * Checks collision between 2 entities
+             * 
              * @param {object}  thisEntity  - The object that will collide with the other object
              * @param {object}  otherEntity - The object that will collide with the other object
+             * @returns {boolean}
              */
             this.checkCollision = function (thisEntity, otherEntity) {
                 if (thisEntity.coll.r != undefined && otherEntity.coll.r != undefined) {
@@ -130,9 +140,11 @@ var Physics = (function () {
         },
 
         /**
-         * @description     Moves a given object to a point
+         * Moves a given object to a point, return the rotation if needed
+         * 
          * @param {object}  from - The object that needs to move
          * @param {object}  to - The target point
+         * @returns {number}
          */
         moveTowards: function (from, to) {
             from.rotation = Math.atan2(from.y + from.height / 2 - to.y - to.height / 2, from.x + from.width / 2 - to.x - to.width / 2);

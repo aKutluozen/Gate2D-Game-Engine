@@ -4,7 +4,7 @@
  * @summary         Provides a basic interface for loading files
  * @module          Loader
  * @author          Ali Kutluozen
- * @version         7/5/2017
+ * @version         0.1.0
  */
 
 var Loader = (function () {
@@ -19,7 +19,8 @@ var Loader = (function () {
 
     return {
         /**
-         * @description     Adds a new file object to the queue to be loaded in order
+         * Adds a new file object to the queue to be loaded in order
+         * 
          * @param {string}  tag - Tag name to be the id of the created DOM element
          * @param {string}  filetype - Type of the file as an HTML tag - E.g. script, img, audio, etc.
          * @param {string}  filepath - File path - E.g. 'modules/util.js'
@@ -33,12 +34,12 @@ var Loader = (function () {
         },
 
         /**
-         * Recursively loads each file in the queue ensuring that they are loaded in the right order
+         * Recursively loads each file in the queue ensuring that they are loaded in the right order.
          * Once everything is loaded, then executes a callback function.
          *                  
          * @param {function} callback - Function to be executed upon success
          */
-        load: function (callback) {
+        loadAll: function (callback) {
 
             let flag = true, // Keeps track to see if anything failed at all
                 num = 0; // Number of files loaded
@@ -77,8 +78,49 @@ var Loader = (function () {
         },
 
         /**
-         * @description     Returns the loaded file element for further use
+         * Enqueues all the files and returns the module to be linked with loadAll function
+         * 
+         * @param   {Array}  filesCallback   - An array of objects of media resources to be loaded
+         * @param   {Array}  scriptsCallback - An array of objects of script resources to be loaded
+         * @returns {object}
+         */
+        addFiles: function (filesCallback, scriptsCallback) {
+
+            // Enqueueing the external resources first (image, audio, etc.)
+            for (let i = 0; i < filesCallback.length; i++) {
+                this.enqueue(filesCallback[i].name, filesCallback[i].type, filesCallback[i].path);
+            }
+
+            // Main object file Entity.js needs to be loaded before anything else inherits from it
+            this.enqueue('entity', 'script', 'core_modules/Entity.js');
+
+            // Enqueueing custom script files            
+            for (let i = 0; i < scriptsCallback.length; i++) {
+                this.enqueue(scriptsCallback[i].name, scriptsCallback[i].type, scriptsCallback[i].path);
+            }
+
+            // Enqueueing core script files - Do not change the order!
+            this.enqueue('mathLibrary', 'script', 'core_modules/Math.js');
+            this.enqueue('videoModule', 'script', 'core_modules/Video.js');
+            this.enqueue('gameControls', 'script', 'core_modules/Controls.js');
+            this.enqueue('gamePhysics', 'script', 'core_modules/Physics.js');
+            this.enqueue('Objects', 'script', 'core_modules/Objects.js');
+            this.enqueue('gameUpdate', 'script', 'GameUpdate.js');
+            this.enqueue('gameDraw', 'script', 'GameDraw.js');
+            this.enqueue('gameGlobals', 'script', 'core_modules/Globals.js');
+            this.enqueue('levels', 'script', 'core_modules/Levels.js');
+            this.enqueue('objects', 'script', 'GameEntities.js');
+            this.enqueue('engine', 'script', 'core_modules/Engine.js');
+
+            // To be chained with load function
+            return this;
+        },
+
+        /**
+         * Returns the loaded file element for further use
+         * 
          * @param {string}  tag - Tag/id name of the DOM element needed
+         * @returns {object}
          */
         getFile: function (tag) {
             return document.getElementById(tag);

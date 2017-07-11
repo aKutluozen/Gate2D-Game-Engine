@@ -4,7 +4,7 @@
  * @summary         Provides an interface to add and keep track of game levels
  * @module          Levels
  * @author          Ali Kutluozen
- * @version         7/10/2017
+ * @version         0.1.0
  */
 
 var Levels = (function () {
@@ -20,7 +20,8 @@ var Levels = (function () {
 
     return {
         /**
-         * @description     Returns the game levels array
+         * Returns the game levels array
+         * 
          * @returns {array}
          */
         levels: function () {
@@ -28,7 +29,8 @@ var Levels = (function () {
         },
 
         /**
-         * @description     Returns the current level
+         * Returns the current level
+         * 
          * @returns {object}
          */
         currentLevel: function () {
@@ -36,7 +38,8 @@ var Levels = (function () {
         },
 
         /**
-         * @description     Assigns the level to be played
+         * Assigns the level to be played
+         * 
          * @param {string}  tag - Name of the level to be played
          */
         play: function (tag) {
@@ -44,15 +47,17 @@ var Levels = (function () {
         },
 
         /**
-         * @description     Draws the background of the current level
-         * @param {object}  context - Context to draw on
+         * Draws the background of the current level
+         * 
+         * @param {object}  ctx - Context to draw on
          */
-        draw: function (context) {
-            context.drawImage(current.background, current.x, current.y, current.width, current.height);
+        draw: function (ctx) {
+            ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
         },
 
         /**
-         * @description     Adds an array of level objects
+         * Adds an array of level objects
+         * 
          * @param {array}   levelObjects - An array of game objects (singular: levelObject)
          *                                                
          * @property {string}   levelObject.tag - Name of the level      
@@ -81,8 +86,10 @@ var Levels = (function () {
         },
 
         /**
-         * @description     Finds and returns a level by tag
+         * Finds and returns a level by tag
+         * 
          * @param {string}  tag - Name of the level
+         * @returns {object}                     
          */
         find: function (tag) {
             for (let i = 0; i < levels.length; i++) {

@@ -16,6 +16,7 @@
 Objects.add([
     new Point(100, 200, 20, 20, 'point', 'cursor', true),
     new Ball(100, 100, 20, 20, 'ball', 'player'),
+    
     // Instantiate custom game objects here
     // ...
 ]);
@@ -25,15 +26,10 @@ Objects.add([
  * E.g., Globals.score 
  */
 Globals.add([
-    {
-        gamePaused: false
-    },
-    {
-        score: 0
-    },
-    {
-        level: 0
-    },
+    {gamePaused: false},
+    {score: 0},
+    {level: 0},
+    
     // Create custom game variables here as name-value pairs
     // ...
 ]);
@@ -63,7 +59,6 @@ Levels.add([
         y: 0,
         background: 'imgBackground2',
         objectsList: [
-            
             'point'
         ]
     },

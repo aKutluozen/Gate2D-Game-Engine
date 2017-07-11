@@ -4,7 +4,7 @@
  * @summary         Provides an interface to add and keep track of game variables
  * @module          Globals
  * @author          Ali Kutluozen
- * @version         7/5/2017
+ * @version         0.1.0
  */
 
 var Globals = (function () {
@@ -19,7 +19,8 @@ var Globals = (function () {
 
     return {
         /**
-         * @description     Returns the length of the globals array
+         * Returns the length of the globals array
+         * 
          * @returns {number}
          */
         length: function () {
@@ -27,7 +28,8 @@ var Globals = (function () {
         },
         
         /**
-         * @description     Returns the globals array
+         * Returns the globals array
+         * 
          * @returns {array}
          */
         globals: function () {
@@ -35,7 +37,8 @@ var Globals = (function () {
         },
         
         /**
-         * @description     Adds an array of game objects
+         * Adds an array of game objects
+         * 
          * @param {array}   values - An array of game variables
          */
         add: function (values) {

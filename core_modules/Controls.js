@@ -4,7 +4,7 @@
  * @summary         Provides basic control functionalities.
  * @module          Controls
  * @author          Ali Kutluozen
- * @version         7/5/2017
+ * @version         0.1.0
  */
 
 var Controls = (function () {
@@ -15,14 +15,17 @@ var Controls = (function () {
 
     return {
         /**
-         * @description     Sends mouse coordinates to whoever is listening
+         * Sends mouse coordinates to whoever is listening
+         * 
          * @param {Object}  entities - An array of game objects
          */
         initMouseControls: function (entities) {
+            let self = this; // Cache 'this'
+            
             Video.canvas().addEventListener('mousemove', function (event) {
                 for (let i = 0; i < entities.length; i++) {
                     if (entities[i].controlled) {
-                        entities[i].handleMouseMovement(Controls.getMousePosition(event));
+                        entities[i].handleMouseMovement(self.getMousePosition(event));
                     }
                 }
             });
@@ -30,15 +33,17 @@ var Controls = (function () {
             Video.canvas().addEventListener('mousedown', function (event) {
                 for (let i = 0; i < entities.length; i++) {
                     if (entities[i].controlled) {
-                        entities[i].handleMouseDown(Controls.getMousePosition(event));
+                        entities[i].handleMouseDown(self.getMousePosition(event));
                     }
                 }
             });
         },
 
         /**
-         * @description     Helper function to get the mouse position on a canvas
+         * Returns the x and y position of the mouse on canvas
+         * 
          * @param {array}   event - Mouse event
+         * @returns {object}
          */
         getMousePosition: function (event) {
             event.preventDefault();
@@ -49,7 +54,8 @@ var Controls = (function () {
         },
 
         /**
-         * @description     Sends keycodes to whoever is listening
+         * Sends keycodes to whoever is listening
+         * 
          * @param {array}   entities - An array of game objects
          */
         initKeyboardControls: function (entities) {

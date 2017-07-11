@@ -4,7 +4,7 @@
  * @summary         Provides a basic interface for canvas API
  * @module          Video     
  * @author          Ali Kutluozen
- * @version         7/5/2017
+ * @version         0.1.0
  */
 
 var Video = (function () {
@@ -32,7 +32,8 @@ var Video = (function () {
 
     return {
         /**
-         * @description     Returns canvas
+         * Returns canvas
+         * 
          * @returns {object}
          */
         canvas: function () {
@@ -40,7 +41,8 @@ var Video = (function () {
         },
         
         /**
-         * @description     Returns context
+         * Returns context
+         * 
          * @returns {object}
          */
         context: function () {
@@ -48,7 +50,8 @@ var Video = (function () {
         },
         
         /**
-         * @description     Returns buffer
+         * Returns buffer
+         * 
          * @returns {object}
          */
         buffer: function () {
@@ -56,7 +59,8 @@ var Video = (function () {
         },
         
         /**
-         * @description     Returns buffer context
+         * Returns buffer context
+         * 
          * @returns {object}
          */
         bufferContext: function () {
@@ -64,7 +68,8 @@ var Video = (function () {
         },
         
         /**
-         * @description     Returns frames per second
+         * Returns frames per second
+         * 
          * @returns {object}
          */
         FPS: function () {
@@ -72,7 +77,8 @@ var Video = (function () {
         },
         
         /**
-         * @description     Returns change in time
+         * Returns change in time
+         * 
          * @returns {object}
          */
         deltaTime: function () {
@@ -80,7 +86,9 @@ var Video = (function () {
         },
         
         /**
-         * @description     Toggles debug mode
+         * Toggles debug mode, returns the value if needed
+         * 
+         * @returns {boolean}
          */
         debug: function (bool) {
             if (bool == undefined) return debug;
@@ -88,7 +96,8 @@ var Video = (function () {
         },
 
         /**
-         * @description     Shows the FPS for debugging purposes
+         * Shows the FPS for debugging purposes
+         * 
          * @param {number}  timeElapsed - Elapsed time helps calculate the FPS
          */
         showFPS: function (timeElapsed) {
@@ -101,7 +110,8 @@ var Video = (function () {
         },
 
         /**   
-         * @description     Initializes the screen
+         * Initializes the screen
+         * 
          * @param {number}  w - Width of the screen
          * @param {number}  h - Height of the screen
          * @param {number}  fps - Frames per second
@@ -137,7 +147,7 @@ var Video = (function () {
         },
 
         /**             
-         * @description     Refreshes the screen on a given FPS
+         * Refreshes the screen on a given FPS
          */
         refresh: function () {
             // Calculate the delta time
@@ -158,7 +168,7 @@ var Video = (function () {
         },
 
         /**
-         * @description     Draws everything on the buffer to the actual screen
+         * Draws everything on the buffer to the actual screen
          */
         render: function () {
             ctx.drawImage(buffer, 0, 0);

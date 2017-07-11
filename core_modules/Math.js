@@ -4,7 +4,7 @@
  * @summary         Provides a basic math functions
  * @module          GameMath
  * @author          Ali Kutluozen
- * @version         7/5/2017
+ * @version         0.1.0
  */
 
 var GameMath = (function () {
@@ -13,7 +13,8 @@ var GameMath = (function () {
 
     return {
         /**
-         * @description     Returns the distance between 2 points
+         * Returns the distance between 2 points
+         * 
          * @param {number}  a - Length of side a
          * @param {number}  b - Length of side b
          * @returns {number}

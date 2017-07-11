@@ -4,7 +4,7 @@
  * @summary         Brings the game loop elements together
  * @module          Engine
  * @author          Ali Kutluozen
- * @version         7/5/2017
+ * @version         0.1.0
  */
 
 var Engine = (function (GameUpdate, GameDraw, Video) {
@@ -19,7 +19,8 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
 
     return {
         /**
-         * @description     Sets up the game engine
+         * Sets up the game engine
+         * 
          * @param {Object}  settings - An object of settings as key value pairs
          *                          
          * @property {number}       settings.screenWidth - Name of the level      
@@ -48,11 +49,11 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
         },
 
         /**
-         * @description     Runs the main game loop
+         * Runs the main game loop
          */
         run: function () {
             if (!Globals.gamePaused) {
-                requestAnimationFrame(Engine.run);
+                requestAnimationFrame(this.run.bind(this));
                 Video.refresh();
                 GameUpdate();
                 GameDraw();

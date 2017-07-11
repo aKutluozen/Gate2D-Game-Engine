@@ -4,7 +4,7 @@
  * @summary         Provides an interface to add and keep track of game objects
  * @module          Objects
  * @author          Ali Kutluozen
- * @version         7/5/2017
+ * @version         0.1.0
  */
 
 var Objects = (function () {
@@ -19,7 +19,8 @@ var Objects = (function () {
 
     return {
         /**
-         * @description     Returns the amount of game objects
+         * Returns the amount of game objects
+         * 
          * @returns {number}
          */
         length: function () {
@@ -27,7 +28,8 @@ var Objects = (function () {
         },
 
         /**
-         * @description     Returns the game objects array
+         * Returns the game objects array
+         * 
          * @returns {array}
          */
         objects: function () {
@@ -35,7 +37,8 @@ var Objects = (function () {
         },
 
         /**
-         * @description     Adds an array of game objects
+         * Adds an array of game objects
+         * 
          * @param {array}   entities - An array of game objects
          */
         add: function (entities) {
@@ -48,8 +51,10 @@ var Objects = (function () {
         },
 
         /**
-         * @description     Finds and returns a game object by name
+         * Finds and returns a game object by name
+         * 
          * @param {string}  name - Name of the game object
+         * @returns {object}  
          */
         findByName: function (name) {
             for (let i = 0; i < objects.length; i++) {
