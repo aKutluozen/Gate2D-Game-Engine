@@ -24,7 +24,7 @@ var GameDraw = function () {
     // ...
     
     // Draw the HUD on top of everything
-    showHud(Video.bufferContext());
+    drawOnHUD(Video.bufferContext());
     
     // Let the video engine render the screen
     Video.render();
