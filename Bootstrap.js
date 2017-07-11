@@ -39,5 +39,7 @@ Loader.addFiles(
         startingLevel: 'level1'
     });
 
+    Timer.setup(function() { Timer.increaseTimeBy(1) }, 1000);
+
     Engine.run();
 });

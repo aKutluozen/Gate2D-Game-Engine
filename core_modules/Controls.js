@@ -20,12 +20,12 @@ var Controls = (function () {
          * @param {Object}  entities - An array of game objects
          */
         initMouseControls: function (entities) {
-            let self = this; // Cache 'this'
-            
+            let _this = this; // Cache 'this'
+
             Video.canvas().addEventListener('mousemove', function (event) {
                 for (let i = 0; i < entities.length; i++) {
                     if (entities[i].controlled) {
-                        entities[i].handleMouseMovement(self.getMousePosition(event));
+                        entities[i].handleMouseMovement(_this.getMousePosition(event));
                     }
                 }
             });
@@ -33,7 +33,7 @@ var Controls = (function () {
             Video.canvas().addEventListener('mousedown', function (event) {
                 for (let i = 0; i < entities.length; i++) {
                     if (entities[i].controlled) {
-                        entities[i].handleMouseDown(self.getMousePosition(event));
+                        entities[i].handleMouseDown(_this.getMousePosition(event));
                     }
                 }
             });
@@ -59,12 +59,16 @@ var Controls = (function () {
          * @param {array}   entities - An array of game objects
          */
         initKeyboardControls: function (entities) {
+            let _this = this; // Cache 'this'
+            
             document.addEventListener('keydown', function (event) {
                 for (let i = 0; i < entities.length; i++) {
                     if (entities[i].controlled) {
                         entities[i].handleKeyDown(event.keyCode);
                     }
                 }
+                
+                _this.keyboardListener(event.keyCode);
             });
 
             document.addEventListener('keyup', function (event) {
@@ -74,6 +78,17 @@ var Controls = (function () {
                     }
                 }
             });
+        },
+        
+        /**
+         * A general input manager for pausing, escaping, etc the game
+         * 
+         * @param {number}  input - Keycode number to be interpreted
+         */
+        keyboardListener: function (input) {
+            if (input === 27) {
+                Engine.pause(!Engine.pause());
+            }
         }
     }
 }());

@@ -111,6 +111,7 @@ var Loader = (function () {
             this.enqueue('levels', 'script', 'core_modules/Levels.js');
             this.enqueue('objects', 'script', 'GameEntities.js');
             this.enqueue('engine', 'script', 'core_modules/Engine.js');
+            this.enqueue('timer', 'script', 'core_modules/Timer.js');
 
             // To be chained with load function
             return this;

@@ -45,7 +45,8 @@ var Physics = (function () {
              * 
              * @param {object}  ctx - Context to draw on
              */
-            this.draw = function (ctx) {
+            this.draw = function () {
+                let ctx = Video.bufferContext();
                 if (debug) {
                     ctx.fillStyle = "rgba(244, 188, 66, 0.5)";
                     ctx.fillRect(this.x, this.y, this.height, this.width);
@@ -100,7 +101,8 @@ var Physics = (function () {
              * 
              * @param {object}  ctx - Context to draw on
              */
-            this.draw = function (ctx) {
+            this.draw = function () {
+                let ctx = Video.bufferContext();
                 if (debug) {
                     ctx.fillStyle = "rgba(244, 188, 66, 0.5)";
                     ctx.beginPath();

@@ -1,7 +1,7 @@
 /**
  * Objects.js 
  * 
- * @summary         Provides an interface to add and keep track of game objects
+ * @summary         Provides an interface to pool and keep track of game objects
  * @module          Objects
  * @author          Ali Kutluozen
  * @version         0.1.0

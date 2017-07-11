@@ -91,8 +91,9 @@ var Video = (function () {
          * @returns {boolean}
          */
         debug: function (bool) {
-            if (bool == undefined) return debug;
-            else debug = bool;
+            if (bool == undefined)
+                return debug;
+            debug = bool;
         },
 
         /**

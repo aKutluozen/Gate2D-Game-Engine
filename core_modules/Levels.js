@@ -51,8 +51,8 @@ var Levels = (function () {
          * 
          * @param {object}  ctx - Context to draw on
          */
-        draw: function (ctx) {
-            ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
+        draw: function () {
+            Video.bufferContext().drawImage(current.background, current.x, current.y, current.width, current.height);
         },
 
         /**

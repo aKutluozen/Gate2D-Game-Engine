@@ -6,6 +6,7 @@ function Box(x, y, width, height, radius, tag, controlled, isStatic) {
 
 Box.prototype = new Entity();
 
-Box.prototype.draw = function (ctx) {
+Box.prototype.draw = function () {
+    let ctx = Video.bufferContext();
     ctx.fillRect(this.x, this.y, this.width, this.height);
 }

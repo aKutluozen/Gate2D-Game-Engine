@@ -13,7 +13,7 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
 
     // Private local variables
 
-    let engine = {};
+    let gamePaused = false;
 
     // Engine functions to be exported
 
@@ -52,12 +52,23 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
          * Runs the main game loop
          */
         run: function () {
-            if (!Globals.gamePaused) {
-                requestAnimationFrame(this.run.bind(this));
+            if (!this.gamePaused) {
                 Video.refresh();
                 GameUpdate();
                 GameDraw();
             }
+            requestAnimationFrame(this.run.bind(this));
+        },
+
+        /**
+         * Pauses or unpauses the game, returns the value if needed
+         * 
+         * @returns {boolean}
+         */
+        pause: function (bool) {
+            if (bool == undefined)
+                return this.gamePaused;
+            this.gamePaused = bool;
         }
     }
 }(GameUpdate, GameDraw, Video));

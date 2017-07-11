@@ -46,7 +46,8 @@ Entity.prototype = {
      * @param {object}  ctx - Context to draw on
      * @param {string}  color   - Color of the entity box
      */
-    draw: function (ctx, color) {
+    draw: function (color) {
+        let ctx = Video.bufferContext();
         if (Video.debug()) {
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height);

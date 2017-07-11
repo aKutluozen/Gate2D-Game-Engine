@@ -13,7 +13,8 @@ function Ball(x, y, width, height, tag) {
 Ball.prototype = new Entity();
 
 // Define object methods
-Ball.prototype.draw = function (ctx) {
+Ball.prototype.draw = function () {
+    let ctx = Video.bufferContext();
     this.coll.draw(ctx);
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 }

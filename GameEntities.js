@@ -26,7 +26,6 @@ Objects.add([
  * E.g., Globals.score 
  */
 Globals.add([
-    {gamePaused: false},
     {score: 0},
     {level: 0},
     
