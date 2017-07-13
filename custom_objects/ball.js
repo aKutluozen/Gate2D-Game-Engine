@@ -3,7 +3,7 @@ function Ball(x, y, width, height, tag) {
     this.img = Loader.getFile('imgBall'); // Load the object image
 
     // Define object specific properties
-    this.speed = 2;
+    this.speed = 4;
 
     // Define collision area if one is needed
     this.coll = new Physics.CircleCollision(x, y, width);
@@ -15,7 +15,7 @@ Ball.prototype = new Entity();
 // Define object methods
 Ball.prototype.draw = function () {
     let ctx = Video.bufferContext();
-    this.coll.draw(ctx);
+    this.coll.draw();
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 }
 
@@ -30,14 +30,4 @@ Ball.prototype.update = function () {
             Physics.moveTowards(this, Objects.point);
         }
     }
-    
-    for (let i = 0; i < Levels.currentLevel().objectsList.length; i++) {
-        if (Levels.currentLevel().objectsList[i].tag != 'wall')
-        if (this.coll.checkCollision(this, Levels.currentLevel().objectsList[i])) {
-            this.collided = true;
-        } else {
-            this.collided = false;
-        }
-    }
-
 }

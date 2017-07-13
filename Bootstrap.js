@@ -13,6 +13,7 @@
 Loader.addFiles(
     // External resources
     [
+        {name: 'grid', type: 'img', path: 'images/grid.png'},
         {name: 'imgBall', type: 'img', path: 'images/ball.png'},
         {name: 'imgPoint', type: 'img', path: 'images/point.png'},
         {name: 'imgBackground', type: 'img', path: 'images/bg.jpg'},
@@ -33,7 +34,7 @@ Loader.addFiles(
     Engine.setup({
         screenWidth: 400,
         screenHeight: 400,
-        screenFPS: 60,
+        screenFPS: 2,
         mouseEnabled: true,
         keyboardEnabled: true,
         startingLevel: 'level1'

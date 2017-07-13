@@ -24,7 +24,7 @@ var GameDraw = function () {
     // ...
     
     // Draw the HUD on top of everything
-    drawOnHUD(Timer.time(), "Arial", 50, "white", 10, 10, "left", true, "black", 2);
+    drawOnHUD(Timer.time(), "Arial", 40, "white", 200, 10, "center", false);
     
     // Let the video engine render the screen
     Video.render();

@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Physics.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Physics.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Physics.js 
  * 
  * @summary         Provides basic physics functions
@@ -73,9 +101,9 @@ var Physics = (function () {
              * @returns {boolean}
              */
             this.checkCollision = function (thisEntity, otherEntity) {
-                if (thisEntity.coll.x < otherEntity.coll.x + otherEntity.coll.width &&
-                    thisEntity.coll.x + thisEntity.coll.width > otherEntity.coll.x &&
-                    thisEntity.coll.y < otherEntity.coll.y + otherEntity.coll.height &&
+                if (thisEntity.coll.x &lt; otherEntity.coll.x + otherEntity.coll.width &amp;&amp;
+                    thisEntity.coll.x + thisEntity.coll.width > otherEntity.coll.x &amp;&amp;
+                    thisEntity.coll.y &lt; otherEntity.coll.y + otherEntity.coll.height &amp;&amp;
                     thisEntity.coll.y + thisEntity.coll.height > otherEntity.coll.y)
                     return true;
                 else return false;
@@ -132,8 +160,8 @@ var Physics = (function () {
              * @returns {boolean}
              */
             this.checkCollision = function (thisEntity, otherEntity) {
-                if (thisEntity.coll.r != undefined && otherEntity.coll.r != undefined) {
-                    if (GameMath.hypotenuse(thisEntity.coll.x - otherEntity.coll.x, thisEntity.coll.y - otherEntity.coll.y) <=
+                if (thisEntity.coll.r != undefined &amp;&amp; otherEntity.coll.r != undefined) {
+                    if (GameMath.hypotenuse(thisEntity.coll.x - otherEntity.coll.x, thisEntity.coll.y - otherEntity.coll.y) &lt;=
                         (thisEntity.coll.r + otherEntity.coll.r))
                         return true;
                     else return false;
@@ -142,47 +170,7 @@ var Physics = (function () {
                 }
             };
         },
-        
-        /**
-         * Checks collision between a circle and a rectangle
-         * 
-         * @param {object}  circle - Any object that has a circleCollision property as collision area
-         * @param {object}  rect -  Any object that has a AABBCollision property as collision area
-         * @returns {boolean}
-         */
-        circRectCollision: function (circle, rect) {
-            
-            let circleDistX = Math.abs(circle.coll.x - (rect.coll.x + rect.coll.width/2)),
-                circleDistY = Math.abs(circle.coll.y - (rect.coll.y + rect.coll.height/2));
 
-            // Handle collision from left
-            if (circleDistX > (rect.coll.width / 2 + circle.coll.r)) {
-                return false;
-            }
-            
-            // From top
-            if (circleDistY > (rect.coll.height / 2 + circle.coll.r)) {
-                return false;
-            }
-
-            // From right
-            if (circleDistX <= (rect.coll.width / 2)) {
-                return true;
-            }
-            
-            // From bottom
-            if (circleDistY <= (rect.coll.height / 2)) {
-                return true;
-            }
-
-            // From corners
-            return (
-                Math.pow(circleDistX - rect.coll.width / 2, 2) + 
-                Math.pow(circleDistY - rect.coll.height / 2, 2) 
-                <= (Math.pow(circle.coll.r, 2))
-            );
-        },
-        
         /**
          * Moves a given object to a point, return the rotation if needed
          * 
@@ -192,9 +180,54 @@ var Physics = (function () {
          */
         moveTowards: function (from, to) {
             from.rotation = Math.atan2(from.y + from.height / 2 - to.y - to.height / 2, from.x + from.width / 2 - to.x - to.width / 2);
-            from.x -= Math.cos(from.rotation) * from.speed * Video.deltaTime()/1000;
-            from.y -= Math.sin(from.rotation) * from.speed * Video.deltaTime()/1000;
+            from.x -= Math.cos(from.rotation) * from.speed;
+            from.y -= Math.sin(from.rotation) * from.speed;
             return from.rotation;
         },
+
+        circRectCollision: function (circle, rect) {
+            let circleDistX = Math.abs(circle.coll.x - (rect.coll.x + rect.coll.width/2)),
+                circleDistY = Math.abs(circle.coll.y - (rect.coll.y + rect.coll.height/2));
+            //console.log(circleDistX, circleDistY)
+
+            if (circleDistX > (rect.coll.width / 2 + circle.coll.r)) {
+                return false;
+            }
+            if (circleDistY > (rect.coll.height / 2 + circle.coll.r)) {
+                return false;
+            }
+
+            if (circleDistX &lt;= (rect.coll.width / 2)) {
+                return true;
+            }
+            if (circleDistY &lt;= (rect.coll.height / 2)) {
+                return true;
+            }
+
+            return (Math.sqrt(circleDistX - rect.coll.width / 2) + Math.sqrt(circleDistY - rect.coll.height / 2) &lt;= (Math.sqrt(circle.coll.r)));
+        }
     }
 }());
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Controls.html">Controls</a></li><li><a href="module-Engine.html">Engine</a></li><li><a href="module-GameMath.html">GameMath</a></li><li><a href="module-Globals.html">Globals</a></li><li><a href="module-Levels.html">Levels</a></li><li><a href="module-Loader.html">Loader</a></li><li><a href="module-Objects.html">Objects</a></li><li><a href="module-Physics.html">Physics</a></li><li><a href="module-Timer.html">Timer</a></li><li><a href="module-Video.html">Video</a></li></ul><h3>Classes</h3><ul><li><a href="Entity.html">Entity</a></li><li><a href="module-Physics-AABBCollision.html">AABBCollision</a></li><li><a href="module-Physics-CircleCollision.html">CircleCollision</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jul 13 2017 09:27:29 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

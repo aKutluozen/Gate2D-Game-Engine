@@ -47,7 +47,7 @@ Levels.add([
         background: 'imgBackground',
         objectsList: [
             'ball',
-            'point'
+            'point',
         ]
     },
     {
