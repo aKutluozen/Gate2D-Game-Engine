@@ -47,10 +47,9 @@ var Physics = (function () {
              * @param {object}  ctx - Context to draw on
              */
             this.draw = function () {
-                let ctx = Video.bufferContext();
                 if (debug) {
-                    ctx.fillStyle = "rgba(244, 188, 66, 0.5)";
-                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                    Video.bufferContext().fillStyle = "rgba(244, 188, 66, 0.5)";
+                    Video.bufferContext().fillRect(this.x, this.y, this.width, this.height);
                 }
             };
 
@@ -104,12 +103,11 @@ var Physics = (function () {
              * @param {object}  ctx - Context to draw on
              */
             this.draw = function () {
-                let ctx = Video.bufferContext();
                 if (debug) {
-                    ctx.fillStyle = "rgba(244, 188, 66, 0.5)";
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
-                    ctx.fill();
+                    Video.bufferContext().fillStyle = "rgba(244, 188, 66, 0.5)";
+                    Video.bufferContext().beginPath();
+                    Video.bufferContext().arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+                    Video.bufferContext().fill();
                 }
             };
 
@@ -192,8 +190,8 @@ var Physics = (function () {
          */
         moveTowards: function (from, to) {
             from.rotation = Math.atan2(from.y + from.height / 2 - to.y - to.height / 2, from.x + from.width / 2 - to.x - to.width / 2);
-            from.x -= Math.cos(from.rotation) * from.speed * Video.deltaTime()/1000;
-            from.y -= Math.sin(from.rotation) * from.speed * Video.deltaTime()/1000;
+            from.x -= Math.cos(from.rotation) * from.speed;
+            from.y -= Math.sin(from.rotation) * from.speed;
             return from.rotation;
         },
     }

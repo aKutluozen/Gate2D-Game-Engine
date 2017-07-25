@@ -9,13 +9,13 @@
  */
 
 var GameDraw = function () {
-    
+
     'use strict';
     
-    // Draw the background of the Level first
+    // Draw the background of the level first
     Levels.draw();
     
-    // Draw game objects
+    // Draw game objects that draw functions
     for (let i = 0; i < Levels.currentLevel().objectsList.length; i++) {
         Levels.currentLevel().objectsList[i].draw();
     }
@@ -24,7 +24,7 @@ var GameDraw = function () {
     // ...
     
     // Draw the HUD on top of everything
-    drawOnHUD(Timer.time(), "Arial", 40, "white", 200, 10, "center", false);
+    Video.drawText(Timer.formatTime(Timer.time()), "Arial", 40, "white", 320, 10, "center", false);
     
     // Let the video engine render the screen
     Video.render();

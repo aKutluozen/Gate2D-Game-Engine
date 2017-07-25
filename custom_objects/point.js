@@ -7,9 +7,8 @@ function Point(x, y, width, height, tag) {
 Point.prototype = new Entity();
 
 Point.prototype.draw = function () {
-    let ctx = Video.bufferContext();
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    this.coll.draw(ctx);
+    this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    this.coll.draw();
 }
 
 Point.prototype.update = function () {

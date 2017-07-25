@@ -22,25 +22,22 @@ Loader.addFiles(
 
     // External scripts
     [
+        {name: 'pointScript', type: 'script', path: 'custom_objects/point.js'},
         {name: 'boxScript', type: 'script', path: 'custom_objects/box.js'},
-        {name: 'ballScript', type: 'script', path: 'custom_objects/ball.js'},
-        {name: 'hudScript', type: 'script', path: 'custom_objects/hud.js'},
-        {name: 'pointScript', type: 'script', path: 'custom_objects/point.js'}
+        {name: 'ballScript', type: 'script', path: 'custom_objects/ball.js'}
     ]
 
 // Set up and run the engine when all the loading is done
 ).loadAll(function () {
     
     Engine.setup({
-        screenWidth: 400,
-        screenHeight: 400,
-        screenFPS: 2,
+        screenWidth: 480,
+        screenHeight: 480,
         mouseEnabled: true,
         keyboardEnabled: true,
         startingLevel: 'level1'
     });
 
-    Timer.setup(function() { Timer.increaseTimeBy(1) }, 1000);
-
+    Timer.setup(function() { Timer.increaseTimeBy(1) }, 1000);    
     Engine.run();
 });

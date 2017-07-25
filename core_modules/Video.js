@@ -25,6 +25,7 @@ var Video = (function () {
         then, now, first,   // Frame rate calculation variables
         interval,           // Refreshing interval
         dt, et,             // Delta time, Elapsed time
+        FPSdep = false,     // Toggles FPS dependency
 
         debug;              // Toggles video debug mode
 
@@ -122,7 +123,7 @@ var Video = (function () {
             counter = 0;
             then = Date.now();
             first = then;
-            FPS = fps || 60;
+            if (fps) FPS = fps; else FPSdep = true;
             interval = 1000 / FPS;
 
             // Set up canvas and context
@@ -149,22 +150,58 @@ var Video = (function () {
 
         /**             
          * Refreshes the screen on a given FPS
+         * 
+         * @param {boolean} isFPSDependent - Decides if refreshing is FPS dependent.
+         * If true, you must incorporate Video.deltaTime() in game physics.
          */
         refresh: function () {
-            // Calculate the delta time
-            now = Date.now();
-            dt = now - then;
-
-            // Limit the FPS
-            if (dt > interval) {
+            if (!FPSdep) {
                 ctx.clearRect(0, 0, width, height);
                 bctx.clearRect(0, 0, width, height);
-                then = now - (dt % interval);
+            } else {
+                // Calculate the delta time
+                now = Date.now();
+                dt = now - then;
 
-                if (debug) {
-                    et = (then - first) / 1000;
-                    this.showFPS(et);
+                // Limit the FPS
+                if (dt > interval) {
+                    ctx.clearRect(0, 0, width, height);
+                    bctx.clearRect(0, 0, width, height);
+                    then = now - (dt % interval);
+
+                    if (debug) {
+                        et = (then - first) / 1000;
+                        this.showFPS(et);
+                    }
                 }
+            }
+        },
+        
+        /**
+         * Draws a given string to the screen.
+         * 
+         * @param {string}  value - The string to be drawn
+         * @param {string}  font - Font of the text
+         * @param {number}  size - Size of the text in pixels
+         * @param {string}  color - Color of the text (Can be in format of rgb(...) or just "color-name")
+         * @param {number}  x - X position of the text
+         * @param {number}  y - Y position of the text
+         * @param {string}  align - Alignment (Can be "center", "left", or "right")
+         * @param {boolean} isStroked - If true (stroked text), next 2 parameters should be filled too to specify.
+         * @param {string}  strokeColor - Color of the stroke
+         * @param {number}  thickness - Thickness of the stroke
+         */
+        drawText: function(value, font, size, color, x, y, align, isStroked, strokeColor, thickness) {
+            bctx.font = size + "px " + font;
+            bctx.fillStyle = color;
+            bctx.textAlign = align;
+            bctx.textBaseline = "top";
+            bctx.fillText(value, x, y);
+
+            if (isStroked) {
+                bctx.strokeStyle = strokeColor;
+                bctx.lineWidth = thickness;
+                bctx.strokeText(value, x, y);
             }
         },
 

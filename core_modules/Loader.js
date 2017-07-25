@@ -91,27 +91,27 @@ var Loader = (function () {
                 this.enqueue(filesCallback[i].name, filesCallback[i].type, filesCallback[i].path);
             }
 
-            // Main object file Entity.js needs to be loaded before anything else inherits from it
+            // Enqueueing core script files - Do not change the order!
+            this.enqueue('mathLibrary', 'script', 'core_modules/Math.js');
+            this.enqueue('videoModule', 'script', 'core_modules/Video.js');
+            this.enqueue('gameControls', 'script', 'core_modules/Controls.js');
+            this.enqueue('gamePhysics', 'script', 'core_modules/Physics.js');
+            this.enqueue('gameUpdate', 'script', 'GameUpdate.js');
+            this.enqueue('gameDraw', 'script', 'GameDraw.js');
+            this.enqueue('gameGlobals', 'script', 'core_modules/Globals.js');
+            this.enqueue('levels', 'script', 'core_modules/Levels.js');
+            this.enqueue('engine', 'script', 'core_modules/Engine.js');
+            this.enqueue('timer', 'script', 'core_modules/Timer.js');
             this.enqueue('entity', 'script', 'core_modules/Entity.js');
 
             // Enqueueing custom script files            
             for (let i = 0; i < scriptsCallback.length; i++) {
                 this.enqueue(scriptsCallback[i].name, scriptsCallback[i].type, scriptsCallback[i].path);
             }
-
-            // Enqueueing core script files - Do not change the order!
-            this.enqueue('mathLibrary', 'script', 'core_modules/Math.js');
-            this.enqueue('videoModule', 'script', 'core_modules/Video.js');
-            this.enqueue('gameControls', 'script', 'core_modules/Controls.js');
-            this.enqueue('gamePhysics', 'script', 'core_modules/Physics.js');
-            this.enqueue('Objects', 'script', 'core_modules/Objects.js');
-            this.enqueue('gameUpdate', 'script', 'GameUpdate.js');
-            this.enqueue('gameDraw', 'script', 'GameDraw.js');
-            this.enqueue('gameGlobals', 'script', 'core_modules/Globals.js');
-            this.enqueue('levels', 'script', 'core_modules/Levels.js');
-            this.enqueue('objects', 'script', 'GameEntities.js');
-            this.enqueue('engine', 'script', 'core_modules/Engine.js');
-            this.enqueue('timer', 'script', 'core_modules/Timer.js');
+            
+            // Enqueueing more core script files that will import the game objects 
+            this.enqueue('gameObjects', 'script', 'core_modules/Objects.js');
+            this.enqueue('gameEntities', 'script', 'GameEntities.js');
 
             // To be chained with load function
             return this;

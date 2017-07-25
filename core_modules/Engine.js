@@ -32,8 +32,10 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
          * @property {boolean}      settings.physicsDebug - A list of objects that in the level
          */
         setup: function (settings) {
+            // Setup the video
             Video.setup(settings.screenWidth, settings.screenHeight, settings.screenFPS);
 
+            // Handle control setup
             if (settings.keyboardEnabled) {
                 Controls.initKeyboardControls(Objects.objects());
             }
@@ -42,10 +44,18 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
                 Controls.initMouseControls(Objects.objects());
             }
 
+            // Handle debug setup
             Video.debug(settings.screenDebug);
             Physics.debug(settings.physicsDebug);
-
-            Levels.play(settings.startingLevel);
+            
+            // Level setup
+            Levels.select(settings.startingLevel);
+            Levels.levelContext(Video.bufferContext());
+            
+            // Connect every object to the buffer context
+            for (let i = 0; i < Objects.length(); i++) {
+                Objects.objects()[i].setupDisplay();
+            }
         },
 
         /**

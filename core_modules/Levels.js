@@ -13,8 +13,9 @@ var Levels = (function () {
 
     // Private local variables
 
-    let levels = [],
-        current = null;
+    let levels = [],        // Array of levels
+        current = null,     // Cursor for the current level
+        ctx = null;         // Context that will have the level drawn on
 
     // Main levels module to be exported
 
@@ -38,11 +39,20 @@ var Levels = (function () {
         },
 
         /**
+         * Assigns the level context for levels to be drawn
+         * 
+         * @param {object}
+         */
+        levelContext: function (levelCtx) {
+            ctx = levelCtx;
+        },
+
+        /**
          * Assigns the level to be played
          * 
          * @param {string}  tag - Name of the level to be played
          */
-        play: function (tag) {
+        select: function (tag) {
             current = Levels.find(tag);
         },
 
@@ -52,7 +62,8 @@ var Levels = (function () {
          * @param {object}  ctx - Context to draw on
          */
         draw: function () {
-            Video.bufferContext().drawImage(current.background, current.x, current.y, current.width, current.height);
+            if (current.background.id != 'grid')
+                ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
         },
 
         /**
@@ -77,15 +88,28 @@ var Levels = (function () {
                     levelList[i].background = Loader.getFile('grid');
                 }
 
+                // Parse objects and place them in their spots within the level
                 for (let j = 0; j < levelList[i].objectsList.length; j++) {
-                    // Convert string to object
-                    levelList[i].objectsList[j] = eval("Objects." + levelList[i].objectsList[j]);
+                    // Assign data to objects
+                    let x = levelList[i].objectsList[j].x,
+                        y = levelList[i].objectsList[j].y,
+                        z = levelList[i].objectsList[j].z,
+                        obj = levelList[i].objectsList[j] = eval("Objects." + levelList[i].objectsList[j].name);
+                    // Convert to real object
+                    obj.x = x;
+                    obj.y = y;
+                    obj.z = z;
                 }
 
                 levels.push(levelList[i]);
 
                 // Also make them available to outside world through levels
                 this[levelList[i].tag] = levelList[i];
+
+                // Arrange the objectsList array based on z (depth) so it draws accordingly
+                levelList[i].objectsList = levelList[i].objectsList.sort(function (a, b) {
+                    return a.z - b.z;
+                });
             }
         },
 

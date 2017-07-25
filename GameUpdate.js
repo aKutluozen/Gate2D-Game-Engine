@@ -20,7 +20,7 @@ var GameUpdate = function () {
     // Add extra game logic here
     // ...
     
-    if (Timer.time() != 0 && Timer.time() % 5 == 0) {
+    /*if (Timer.time() != 0 && Timer.time() % 5 == 0) {
         Objects.ball.speed += 0.01;
-    }
+    }*/
 }

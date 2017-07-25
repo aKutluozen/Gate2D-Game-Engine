@@ -18,6 +18,7 @@
 function Entity(x, y, width, height, name, tag, controlled, isStatic) {
     this.x = x || 0;
     this.y = y || 0;
+    this.z = 0; // z determines the depth of an object
     this.speed = 0;
     this.rotation = 0;
     this.movement = {};
@@ -33,6 +34,7 @@ function Entity(x, y, width, height, name, tag, controlled, isStatic) {
         y: 0
     };
     this.collided = false;
+    this.ctx = null;
 }
 
 /**
@@ -47,10 +49,9 @@ Entity.prototype = {
      * @param {string}  color   - Color of the entity box
      */
     draw: function (color) {
-        let ctx = Video.bufferContext();
         if (Video.debug()) {
-            ctx.fillStyle = this.color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+            this.ctx.fillStyle = this.color;
+            this.ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     },
 
@@ -95,5 +96,12 @@ Entity.prototype = {
      */
     update: function () {
 
+    },
+    
+    /**
+     * Assigns buffer context to entity context
+     */
+    setupDisplay: function () {
+        this.ctx = Video.bufferContext();
     }
 }

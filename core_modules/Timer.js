@@ -49,6 +49,28 @@ var Timer = (function () {
         },
 
         /**
+         * Formats a given time in seconds as Hours:Minutes:Seconds
+         * 
+         * @param   {number}   time - Amount of seconds to be formatted
+         * @returns {string}
+         */
+        formatTime: function (time) {
+            // Hours, minutes and seconds
+            let hrs = ~~(time / 3600),
+                mins = ~~((time % 3600) / 60),
+                secs = time % 60,
+                ret = "";
+
+            if (hrs > 0) {
+                ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+            }
+
+            ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+            ret += "" + secs;
+            return ret;
+        },
+
+        /**
          * Sets up a timer
          * 
          * @param {function}    callback - The function that will be running at a given interval
