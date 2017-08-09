@@ -14,6 +14,7 @@ Loader.addFiles(
     // External resources
     [
         {name: 'grid', type: 'img', path: 'images/grid.png'},
+        {name: 'imgPad', type: 'img', path: 'images/pad.png'},
         {name: 'imgBall', type: 'img', path: 'images/ball.png'},
         {name: 'imgPoint', type: 'img', path: 'images/point.png'},
         {name: 'imgBackground', type: 'img', path: 'images/bg.jpg'},
@@ -22,9 +23,9 @@ Loader.addFiles(
 
     // External scripts
     [
-        {name: 'pointScript', type: 'script', path: 'custom_objects/point.js'},
         {name: 'boxScript', type: 'script', path: 'custom_objects/box.js'},
-        {name: 'ballScript', type: 'script', path: 'custom_objects/ball.js'}
+        {name: 'ballScript', type: 'script', path: 'custom_objects/ball.js'},
+        {name: 'padScript', type: 'script', path: 'custom_objects/pad.js'}
     ]
 
 // Set up and run the engine when all the loading is done

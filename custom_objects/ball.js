@@ -3,8 +3,8 @@ function Ball(x, y, width, height, tag) {
     this.img = Loader.getFile('imgBall'); // Load the object image
 
     // Define object specific properties
-    this.speed = 4;
-    this.controlled = true;
+    this.speedX = 2;
+    this.speedY = 2;
 
     // Define collision area if one is needed
     this.coll = new Physics.CircleCollision(x, y, width);
@@ -21,28 +21,11 @@ Ball.prototype.draw = function () {
 
 Ball.prototype.update = function () {
     this.coll.update(this.x + this.width / 2, this.y + this.height / 2); // Always update the collision area position
+    this.x += this.speedX;
+    this.y += this.speedY;
 
-    if (Objects.point) {
-        if (this.coll.checkCollision(this, Objects.point)) {
-            this.collided = true;
-        } else {
-            this.collided = false;
-            Physics.moveTowards(this, Objects.point);
-        }
+    if (Physics.circRectCollision(this, Objects.pad)) {
+        this.speedY = -this.speedY;
     }
-}
-
-Ball.prototype.handleKeyDown = function (input) {
-    if (input == 37) {
-        this.x -= this.speed;
-    }
-    if (input == 39) {
-        this.x += this.speed;
-    }
-    if (input == 40) {
-        this.y += this.speed;
-    }
-    if (input == 38) {
-        this.y -= this.speed;
-    }
+    //console.log(this.speedY);
 }

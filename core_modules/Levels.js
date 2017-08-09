@@ -58,12 +58,38 @@ var Levels = (function () {
 
         /**
          * Draws the background of the current level
-         * 
-         * @param {object}  ctx - Context to draw on
          */
         draw: function () {
-            if (current.background.id != 'grid')
+            if (current.background.id != 'grid') {
                 ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
+                
+                // THIS WHOLE THING HAS TO BE IN A ONE TIME SETUP FUNCTION< NOT DRAW CALL!!!!
+                
+                // Capture the grid size
+                let size = current.objectMap.gridSize;
+                
+                for (let yPos = 0; yPos < current.objectMap.height; yPos++) {
+                    for (let xPos = 0; xPos < current.objectMap.width; xPos++) {
+                        
+                        let objNum = current.objectMap.map[xPos + current.objectMap.width * yPos];
+                        
+                        //console.log(objNum);
+                        for (let i = 0; i < current.objectsList.length; i++) {
+                            //console.log(current.objectsList[i].levelID);
+                            if (objNum == current.objectsList[i].levelID) {
+                                // Draw that object on that position!
+                                //current.objectsList[i].draw();
+                            }
+                        }
+                        
+                        // This section will be gone
+                        if (current.objectMap.map[xPos + current.objectMap.width * yPos] === 1){
+                            // For now, just draw a square, fix it to draw given object!
+                            ctx.fillRect(xPos * size, yPos * size, size, size);
+                        }
+                    }
+                }
+            }
         },
 
         /**
@@ -94,13 +120,18 @@ var Levels = (function () {
                     let x = levelList[i].objectsList[j].x,
                         y = levelList[i].objectsList[j].y,
                         z = levelList[i].objectsList[j].z,
+                        levelID = levelList[i].objectsList[j].levelID,
                         obj = levelList[i].objectsList[j] = eval("Objects." + levelList[i].objectsList[j].name);
+                    
                     // Convert to real object
+                    // Assign them object x and y values only if they are not on the map with a levelID
                     obj.x = x;
-                    obj.y = y;
+                    obj.y = y;   
                     obj.z = z;
+                    obj.levelID = levelID;
                 }
-
+                
+                // Add level to the levels array
                 levels.push(levelList[i]);
 
                 // Also make them available to outside world through levels
