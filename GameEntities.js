@@ -48,7 +48,7 @@ Levels.add([
         background: 'imgBackground',
         objectsList: [
             {name: 'pad', levelID: 2, x: 200, y: 400, z: 0},
-            {name: 'ball', levelID: 3, z: 0},    
+            {name: 'ball', levelID: 3, x: 100, y: 100, z: 0},    
             {name: 'box', levelID: 1, x: 10, y: 10, z: 2},
         ],
         objectMap: {
@@ -58,11 +58,11 @@ Levels.add([
             map: [
                 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 1, 0, 0, 0, 3, 0, 0,
-                0, 1, 2, 1, 0, 0, 0, 0,
+                0, 1, 3, 1, 0, 0, 0, 0,
                 0, 1, 0, 0, 0, 0, 0, 0,
                 0, 1, 0, 0, 0, 0, 0, 0,
                 0, 1, 0, 0, 0, 0, 0, 0,
-                1, 1, 1, 1, 1, 1, 1, 1,
+                1, 1, 1, 1, 2, 1, 1, 1,
                 0, 1, 0, 0, 0, 0, 0, 0
             ]
         },

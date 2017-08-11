@@ -51,14 +51,15 @@ var Objects = (function () {
         },
 
         /**
-         * Finds and returns a game object by name
+         * Finds and returns a game object by a given property and value
          * 
-         * @param {string}  name - Name of the game object
+         * @param {string}  property - Property of the game object
+         * @param {string}  value - Value of the property
          * @returns {object}  
          */
-        findByName: function (name) {
+        findByProperty: function (property, value) {
             for (let i = 0; i < objects.length; i++) {
-                if (objects[i].name == name) {
+                if (objects[i][property] == value) {
                     return objects[i];
                 }
             }

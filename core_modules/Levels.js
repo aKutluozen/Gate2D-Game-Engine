@@ -54,6 +54,27 @@ var Levels = (function () {
          */
         select: function (tag) {
             current = Levels.find(tag);
+
+            // THIS WHOLE THING HAS TO BE IN A ONE TIME SETUP FUNCTION NOT DRAW CALL!!!!
+                
+            // Capture the grid size
+            let size = current.objectMap.gridSize;
+            
+            for (let yPos = 0; yPos < current.objectMap.height; yPos++) {
+                for (let xPos = 0; xPos < current.objectMap.width; xPos++) {
+                    
+                    let objNum = current.objectMap.map[xPos + current.objectMap.width * yPos];
+
+                    for (let i = 0; i < current.objectsList.length; i++) {
+                        if (objNum == current.objectsList[i].levelID) {
+                            //Draw the found object on that position
+                            let objectOnMap = Objects.findByProperty('levelID', objNum);
+                            objectOnMap.x = xPos * size;
+                            objectOnMap.y = yPos * size;
+                        }
+                    }
+                }
+            }
         },
 
         /**
@@ -62,33 +83,6 @@ var Levels = (function () {
         draw: function () {
             if (current.background.id != 'grid') {
                 ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
-                
-                // THIS WHOLE THING HAS TO BE IN A ONE TIME SETUP FUNCTION< NOT DRAW CALL!!!!
-                
-                // Capture the grid size
-                let size = current.objectMap.gridSize;
-                
-                for (let yPos = 0; yPos < current.objectMap.height; yPos++) {
-                    for (let xPos = 0; xPos < current.objectMap.width; xPos++) {
-                        
-                        let objNum = current.objectMap.map[xPos + current.objectMap.width * yPos];
-                        
-                        //console.log(objNum);
-                        for (let i = 0; i < current.objectsList.length; i++) {
-                            //console.log(current.objectsList[i].levelID);
-                            if (objNum == current.objectsList[i].levelID) {
-                                // Draw that object on that position!
-                                //current.objectsList[i].draw();
-                            }
-                        }
-                        
-                        // This section will be gone
-                        if (current.objectMap.map[xPos + current.objectMap.width * yPos] === 1){
-                            // For now, just draw a square, fix it to draw given object!
-                            ctx.fillRect(xPos * size, yPos * size, size, size);
-                        }
-                    }
-                }
             }
         },
 
@@ -97,8 +91,8 @@ var Levels = (function () {
          * 
          * @param {array}   levelObjects - An array of game objects (singular: levelObject)
          *                                                
-         * @property {string}   levelObject.tag - Name of the level      
-         * @property {number}   levelObject.width - Width of the level      
+         * @property {string}   levelObject.tag - Name of the level   
+         * @property {number}   levelObject.width - Width of the level
          * @property {number}   levelObject.height - Height of the level 
          * @property {number}   levelObject.x - X offset of the level      
          * @property {number}   levelObject.y - Y offset of the level 
