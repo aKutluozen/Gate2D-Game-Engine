@@ -13,9 +13,9 @@ var Levels = (function () {
 
     // Private local variables
 
-    let levels = [],        // Array of levels
-        current = null,     // Cursor for the current level
-        ctx = null;         // Context that will have the level drawn on
+    let levels = [], // Array of levels
+        current = null, // Cursor for the current level
+        ctx = null; // Context that will have the level drawn on
 
     // Main levels module to be exported
 
@@ -62,6 +62,10 @@ var Levels = (function () {
             // Temporary array of copy objects to be created
             let levelObjects = [];
 
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+
             for (let yPos = 0; yPos < current.objectMap.height; yPos++) {
                 for (let xPos = 0; xPos < current.objectMap.width; xPos++) {
 
@@ -70,16 +74,19 @@ var Levels = (function () {
 
                     // Get objects by their numbers, assign them their new information
                     if (objNum !== 0) {
-                        let newObj = Objects.clone(Objects.findByProperty('levelID', objNum));
-                        
-                        // Delete the ones that were added in the beginning
-                        //delete Objects[newObj.name];
 
-                        // Assign information to them with their new name
-                        //newObj.name += '__' + xPos * yPos + Math.random()*1 + 1000; // Anything after '__' will be cut in the Physics module
-                        newObj.x = xPos * size;
-                        newObj.y = yPos * size;
+                        let objFound = Objects.findByProperty('levelID', objNum);
 
+                        // Make an object out of what is found
+                        let newObj = eval('new ' +
+                            capitalizeFirstLetter(objFound.name) +
+                            '(' + xPos * size + ',' + yPos * size + ',' +
+                            objFound.z + ',' +
+                            objFound.width + ',' +
+                            objFound.height + ',"' +
+                            objFound.name + '")');
+
+                        // Add them to the lists
                         Objects.add(newObj);
                         levelObjects.push(newObj);
                     }
@@ -96,7 +103,7 @@ var Levels = (function () {
                 return a.z - b.z;
             });
 
-            console.log('Objects module: ', Objects, 'Original objects: ', Objects.objects(), 'Level objects: ', this.currentLevel().objectsList);
+            console.log('Original objects: ', Objects.objects(), 'Level objects: ', this.currentLevel().objectsList);
         },
 
         /**
@@ -133,17 +140,13 @@ var Levels = (function () {
                 // Parse objects and place them in their spots within the level
                 for (let j = 0; j < levelList[i].objectsList.length; j++) {
                     // Assign data to objects
-                    let x = levelList[i].objectsList[j].x,
-                        y = levelList[i].objectsList[j].y,
-                        z = levelList[i].objectsList[j].z,
+                    let z = levelList[i].objectsList[j].z,
                         width = levelList[i].objectsList[j].width,
                         height = levelList[i].objectsList[j].height,
                         levelID = levelList[i].objectsList[j].levelID,
                         obj = levelList[i].objectsList[j] = Objects.findByProperty('name', levelList[i].objectsList[j].name);
-                    
+
                     // Convert to real object, assign neccessary position values
-                    obj.x = x;
-                    obj.y = y;
                     obj.z = z;
                     obj.width = obj.coll.width = width;
                     obj.height = obj.coll.height = height;

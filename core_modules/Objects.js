@@ -39,7 +39,7 @@ var Objects = (function () {
         },
 
         get: function (name) {
-            return objects[name]; // make this object hing to outside worl open so collisions can work
+            return objects[name]; // make this object thing to outside world open so collisions can work
         },
 
         /**
@@ -69,6 +69,23 @@ var Objects = (function () {
         findByProperty: function (property, value) {
             for (let i = 0; i < objectsArray.length; i++) {
                 if (objectsArray[i][property] == value) {
+                    return objectsArray[i];
+                }
+            }
+            return null;
+        },
+
+        // !!! TRY AND MAKE THIS MORE EFFICIENT - DON"T SEARCH FOR EVERYTHING ALL THE TIME!
+        /**
+         * Finds and returns a game object if it is in a certain area
+         * 
+         * @param {number}  x - X position of the game object
+         * @param {number}  y - Y position of the game object
+         * @returns {object}  
+         */
+        findInPosition: function (x, y) {
+            for (let i = 0; i < objectsArray.length; i++) {
+                if (x > objectsArray[i].x && y > objectsArray[i].y && x < objectsArray[i].x + objectsArray[i].width && y < objectsArray[i].y + objectsArray[i].height) {
                     return objectsArray[i];
                 }
             }

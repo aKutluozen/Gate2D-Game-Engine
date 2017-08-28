@@ -159,11 +159,6 @@ var Physics = (function () {
          * @returns {boolean}
          */
         circRectCollision: function (circle, rect) {
-            // circle = circle.name.split('__')[0];
-            // rect = rect.name.split('__')[0];
-
-            // console.log('here', circle, rect);
-            
             let circleDistX = Math.abs(circle.coll.x - (rect.coll.x + rect.coll.width / 2)),
                 circleDistY = Math.abs(circle.coll.y - (rect.coll.y + rect.coll.height / 2));
 

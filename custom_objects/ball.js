@@ -1,11 +1,11 @@
 function Ball(x, y, z, width, height, tag) {
     Entity.apply(this, arguments); // Apply the inherited properties
     this.img = Loader.getFile('imgBall'); // Load the object image
-
+    
     // Define object specific properties
-    this.speedX = 2;
-    this.speedY = 2;
-    console.log(Objects.get('pad'));
+    this.speedX = -2;
+    this.speedY = -2;
+    this.controlled = true;
     // Define collision area if one is needed
     this.coll = new Physics.CircleCollision(x, y, z, width);
 }
@@ -24,15 +24,17 @@ Ball.prototype.update = function () {
     
     this.x += this.speedX;
     this.y += this.speedY;
-    
-    // if (Physics.circRectCollision(this, ) {
-    //     this.speedY = -2;
-    //     let distPadCenter = Objects.pad.x + Objects.pad.width / 2;
-    //     let distBallPadCenter = this.x + this.width / 2 - distPadCenter;
-    //     this.speedX = distBallPadCenter * 0.15;
-    // }
 
-    // if (Physics.circRectCollision(this, Objects.wall)) {
-    //     console.log("hit wall!");
-    // }
+    if (Objects.findInPosition(this.x, this.y) != null) {
+        let objFound = Objects.findInPosition(this.x, this.y);
+        if (objFound.name === 'wall' && Physics.circRectCollision(this, objFound)) {
+            if (objFound.x < this.x) {
+                this.speedX *= -1;
+            }
+            else if (objFound.y < this.y) {
+                this.speedY *= -1;
+            }
+        }
+    }
+    
 }
