@@ -53,28 +53,50 @@ var Levels = (function () {
          * @param {string}  tag - Name of the level to be played
          */
         select: function (tag) {
+            // Get the current level
             current = Levels.find(tag);
 
-            // THIS WHOLE THING HAS TO BE IN A ONE TIME SETUP FUNCTION NOT DRAW CALL!!!!
-                
             // Capture the grid size
             let size = current.objectMap.gridSize;
-            
+
+            // Temporary array of copy objects to be created
+            let levelObjects = [];
+
             for (let yPos = 0; yPos < current.objectMap.height; yPos++) {
                 for (let xPos = 0; xPos < current.objectMap.width; xPos++) {
-                    
+
+                    // Capture the numbers on the map
                     let objNum = current.objectMap.map[xPos + current.objectMap.width * yPos];
 
-                    for (let i = 0; i < current.objectsList.length; i++) {
-                        if (objNum == current.objectsList[i].levelID) {
-                            //Draw the found object on that position
-                            let objectOnMap = Objects.findByProperty('levelID', objNum);
-                            objectOnMap.x = xPos * size;
-                            objectOnMap.y = yPos * size;
-                        }
+                    // Get objects by their numbers, assign them their new information
+                    if (objNum !== 0) {
+                        let newObj = Objects.clone(Objects.findByProperty('levelID', objNum));
+                        
+                        // Delete the ones that were added in the beginning
+                        //delete Objects[newObj.name];
+
+                        // Assign information to them with their new name
+                        //newObj.name += '__' + xPos * yPos + Math.random()*1 + 1000; // Anything after '__' will be cut in the Physics module
+                        newObj.x = xPos * size;
+                        newObj.y = yPos * size;
+
+                        Objects.add(newObj);
+                        levelObjects.push(newObj);
                     }
                 }
             }
+
+            // Replace level object list and the Objects module with new level objects
+            this.currentLevel().objectsList = levelObjects.slice();
+            Objects.objects([]);
+            Objects.add(levelObjects);
+
+            // Arrange the objectsList array based on z (depth) so it draws accordingly
+            this.currentLevel().objectsList = this.currentLevel().objectsList.sort(function (a, b) {
+                return a.z - b.z;
+            });
+
+            console.log('Objects module: ', Objects, 'Original objects: ', Objects.objects(), 'Level objects: ', this.currentLevel().objectsList);
         },
 
         /**
@@ -87,7 +109,7 @@ var Levels = (function () {
         },
 
         /**
-         * Adds an array of level objects
+         * Adds an array of main level objects
          * 
          * @param {array}   levelObjects - An array of game objects (singular: levelObject)
          *                                                
@@ -114,27 +136,27 @@ var Levels = (function () {
                     let x = levelList[i].objectsList[j].x,
                         y = levelList[i].objectsList[j].y,
                         z = levelList[i].objectsList[j].z,
+                        width = levelList[i].objectsList[j].width,
+                        height = levelList[i].objectsList[j].height,
                         levelID = levelList[i].objectsList[j].levelID,
-                        obj = levelList[i].objectsList[j] = eval("Objects." + levelList[i].objectsList[j].name);
+                        obj = levelList[i].objectsList[j] = Objects.findByProperty('name', levelList[i].objectsList[j].name);
                     
-                    // Convert to real object
-                    // Assign them object x and y values only if they are not on the map with a levelID
+                    // Convert to real object, assign neccessary position values
                     obj.x = x;
-                    obj.y = y;   
+                    obj.y = y;
                     obj.z = z;
+                    obj.width = obj.coll.width = width;
+                    obj.height = obj.coll.height = height;
+                    obj.coll.z = z;
                     obj.levelID = levelID;
                 }
-                
+
                 // Add level to the levels array
                 levels.push(levelList[i]);
 
                 // Also make them available to outside world through levels
                 this[levelList[i].tag] = levelList[i];
 
-                // Arrange the objectsList array based on z (depth) so it draws accordingly
-                levelList[i].objectsList = levelList[i].objectsList.sort(function (a, b) {
-                    return a.z - b.z;
-                });
             }
         },
 

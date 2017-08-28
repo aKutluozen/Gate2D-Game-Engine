@@ -14,10 +14,10 @@
  * E.g., GameObject.player 
  */
 Objects.add([
-    new Pad(200, 400, 64, 16, 'pad', 'player'),
-    new Ball(0, 0, 20, 20, 'ball'),
-    new Box(0, 0, 50, 50, 'box'),
-
+    new Pad(0, 0, 0, 64, 16, 'pad', 'player'),
+    new Ball(0, 0, 0, 20, 20, 'ball'),
+    new Box(0, 0, 0, 50, 50, 'box'),
+    new Wall(11.5, 0, 0, 50, 50, 'wall')
     // Instantiate custom game objects here
     // ...
 ]);
@@ -27,9 +27,9 @@ Objects.add([
  * E.g., Globals.score 
  */
 Globals.add([
-    {score: 0},
-    {level: 0},
-    
+    { score: 0 },
+    { level: 0 },
+
     // Create custom game variables here as name-value pairs
     // ...
 ]);
@@ -47,23 +47,24 @@ Levels.add([
         y: 0,
         background: 'imgBackground',
         objectsList: [
-            {name: 'pad', levelID: 2, x: 200, y: 400, z: 0},
-            {name: 'ball', levelID: 3, x: 100, y: 100, z: 0},    
-            {name: 'box', levelID: 1, x: 10, y: 10, z: 2},
+            { name: 'pad', levelID: 2, width: 64, height: 8,  z: 0 },
+            { name: 'ball', levelID: 3, width: 10, height: 10, z: 0 },
+            { name: 'box', levelID: 1, width: 50, height: 50, z: 0 },
+            { name: 'wall', levelID: 4, width: 50, height: 50, z: 0 }
         ],
         objectMap: {
             width: 8,
             height: 8,
             gridSize: 50,
             map: [
-                0, 0, 0, 0, 0, 0, 0, 0,
-                0, 1, 0, 0, 0, 3, 0, 0,
-                0, 1, 3, 1, 0, 0, 0, 0,
-                0, 1, 0, 0, 0, 0, 0, 0,
-                0, 1, 0, 0, 0, 0, 0, 0,
-                0, 1, 0, 0, 0, 0, 0, 0,
-                1, 1, 1, 1, 2, 1, 1, 1,
-                0, 1, 0, 0, 0, 0, 0, 0
+                4, 4, 4, 4, 4, 4, 4, 4,
+                4, 1, 1, 1, 1, 1, 1, 4,
+                4, 1, 1, 1, 1, 1, 1, 4,
+                4, 1, 1, 1, 1, 1, 1, 4,
+                4, 3, 0, 0, 0, 0, 0, 4,
+                4, 0, 0, 0, 0, 0, 0, 4,
+                4, 0, 0, 0, 0, 0, 0, 4,
+                4, 0, 0, 0, 2, 0, 0, 4
             ]
         },
     },

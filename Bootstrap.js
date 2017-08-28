@@ -13,32 +13,35 @@
 Loader.addFiles(
     // External resources
     [
-        {name: 'grid', type: 'img', path: 'images/grid.png'},
-        {name: 'imgPad', type: 'img', path: 'images/pad.png'},
-        {name: 'imgBall', type: 'img', path: 'images/ball.png'},
-        {name: 'imgPoint', type: 'img', path: 'images/point.png'},
-        {name: 'imgBackground', type: 'img', path: 'images/bg.jpg'},
-        {name: 'imgBackground2', type: 'img', path: 'images/bg2.jpg'}
+        { name: 'grid', type: 'img', path: 'images/grid.png' },
+        { name: 'imgPad', type: 'img', path: 'images/pad.png' },
+        { name: 'imgBall', type: 'img', path: 'images/ball.png' },
+        { name: 'imgPoint', type: 'img', path: 'images/point.png' },
+        { name: 'imgBackground', type: 'img', path: 'images/bg.jpg' },
+        { name: 'imgBackground2', type: 'img', path: 'images/bg2.jpg' },
+        { name: 'imgBlock', type: 'img', path: 'images/block.png' }
     ],
 
     // External scripts
     [
-        {name: 'boxScript', type: 'script', path: 'custom_objects/box.js'},
-        {name: 'ballScript', type: 'script', path: 'custom_objects/ball.js'},
-        {name: 'padScript', type: 'script', path: 'custom_objects/pad.js'}
+        { name: 'boxScript', type: 'script', path: 'custom_objects/box.js' },
+        { name: 'ballScript', type: 'script', path: 'custom_objects/ball.js' },
+        { name: 'padScript', type: 'script', path: 'custom_objects/pad.js' },
+        { name: 'wallScript', type: 'script', path: 'custom_objects/wall.js' }
     ]
 
-// Set up and run the engine when all the loading is done
+    // Set up and run the engine when all the loading is done
 ).loadAll(function () {
-    
+
     Engine.setup({
-        screenWidth: 480,
-        screenHeight: 480,
+        screenWidth: 400,
+        screenHeight: 400,
         mouseEnabled: true,
         keyboardEnabled: true,
-        startingLevel: 'level1'
+        startingLevel: 'level1',
+        physicsDebug: true
     });
 
-    Timer.setup(function() { Timer.increaseTimeBy(1) }, 1000);    
+    Timer.setup(function () { Timer.increaseTimeBy(1) }, 1000);
     Engine.run();
 });

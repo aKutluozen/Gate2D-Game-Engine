@@ -12,7 +12,7 @@ var Video = (function () {
     'use strict';
 
     // Private local variables
-                        
+
     let canvas,             // Real canvas that will be displayed
         ctx,                // Real canvas context
         buffer,             // Buffer that will be drawn on
@@ -40,7 +40,7 @@ var Video = (function () {
         canvas: function () {
             return canvas;
         },
-        
+
         /**
          * Returns context
          * 
@@ -49,7 +49,7 @@ var Video = (function () {
         context: function () {
             return ctx;
         },
-        
+
         /**
          * Returns buffer
          * 
@@ -58,7 +58,7 @@ var Video = (function () {
         buffer: function () {
             return buffer;
         },
-        
+
         /**
          * Returns buffer context
          * 
@@ -67,7 +67,7 @@ var Video = (function () {
         bufferContext: function () {
             return bctx;
         },
-        
+
         /**
          * Returns frames per second
          * 
@@ -76,7 +76,7 @@ var Video = (function () {
         FPS: function () {
             return FPS;
         },
-        
+
         /**
          * Returns change in time
          * 
@@ -85,7 +85,7 @@ var Video = (function () {
         deltaTime: function () {
             return dt;
         },
-        
+
         /**
          * Toggles debug mode, returns the value if needed
          * 
@@ -176,7 +176,7 @@ var Video = (function () {
                 }
             }
         },
-        
+
         /**
          * Draws a given string to the screen.
          * 
@@ -191,7 +191,7 @@ var Video = (function () {
          * @param {string}  strokeColor - Color of the stroke
          * @param {number}  thickness - Thickness of the stroke
          */
-        drawText: function(value, font, size, color, x, y, align, isStroked, strokeColor, thickness) {
+        drawText: function (value, font, size, color, x, y, align, isStroked, strokeColor, thickness) {
             bctx.font = size + "px " + font;
             bctx.fillStyle = color;
             bctx.textAlign = align;

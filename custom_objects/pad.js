@@ -1,7 +1,7 @@
-function Pad (x, y, width, height, tag) {
+function Pad (x, y, z, width, height, tag) {
     Entity.apply(this, arguments); // Apply the inherited properties
     this.img = Loader.getFile('imgPad'); // Load the object image
-    this.coll = new Physics.AABBCollision(x, y, width, height);
+    this.coll = new Physics.AABBCollision(x, y, z, width, height);
     this.controlled = true;
 }
 
@@ -10,8 +10,9 @@ Pad.prototype = new Entity();
 
 // Define object methods
 Pad.prototype.draw = function () {
-    this.coll.draw();
     this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    //console.log(this.x);
+    this.coll.draw();
 }
 
 Pad.prototype.update = function () {

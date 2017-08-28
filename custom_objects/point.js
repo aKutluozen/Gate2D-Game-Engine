@@ -1,7 +1,7 @@
-function Point(x, y, width, height, tag) {
+function Point(x, y, z, width, height, tag) {
     Entity.apply(this, arguments);
     this.img = Loader.getFile('imgPoint');
-    this.coll = new Physics.CircleCollision(x, y, width);
+    this.coll = new Physics.CircleCollision(x, y, z, width);
 }
 
 Point.prototype = new Entity();

@@ -6,6 +6,7 @@
  * @constructor
  * @param {number}  x - X position of the entity
  * @param {number}  y - Y position of the entity
+ * @param {number}  z - Z/depth position of the entity
  * @param {number}  width - Width of the entity
  * @param {number}  height - Height of the entity
  * @param {string}  name - Name of the entity
@@ -15,13 +16,12 @@
  * 
  * @author          Ali Kutluozen
  */
-function Entity(x, y, width, height, name, tag, controlled, isStatic) {
+function Entity(x, y, z, width, height, name, tag, controlled, isStatic) {
     this.x = x || 0;
     this.y = y || 0;
-    this.z = 0; // z determines the depth of an object
+    this.z = z || 0;
     this.speed = 0;
     this.rotation = 0;
-    this.movement = {};
     this.width = width || 0;
     this.height = height || 0;
     this.name = name || '';
@@ -31,7 +31,8 @@ function Entity(x, y, width, height, name, tag, controlled, isStatic) {
     this.color = 'rgba(255, 128, 128, 0.25)';
     this.movement = {
         x: 0,
-        y: 0
+        y: 0,
+        Z: 0
     };
     this.collided = false;
     this.ctx = null;
@@ -90,14 +91,14 @@ Entity.prototype = {
     handleMouseDown: function (input) {
 
     },
-    
+
     /**
      * Update function of an entity
      */
     update: function () {
 
     },
-    
+
     /**
      * Assigns buffer context to entity context
      */

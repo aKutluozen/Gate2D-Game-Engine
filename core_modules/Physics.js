@@ -32,10 +32,11 @@ var Physics = (function () {
          * @param {number}  width - Width of the collision area
          * @param {number}  height - Height of the collision area
          */
-        AABBCollision: function (x, y, width, height) {
+        AABBCollision: function (x, y, z, width, height) {
             // Constructor
             this.x = x || 0;
             this.y = y || 0;
+            this.z = z || 0;
             this.width = width || 0;
             this.height = height || 0;
 
@@ -48,7 +49,7 @@ var Physics = (function () {
              */
             this.draw = function () {
                 if (debug) {
-                    Video.bufferContext().fillStyle = "rgba(244, 188, 66, 0.5)";
+                    Video.bufferContext().fillStyle = "rgba(244, 188, 66, 0.35)";
                     Video.bufferContext().fillRect(this.x, this.y, this.width, this.height);
                 }
             };
@@ -72,12 +73,16 @@ var Physics = (function () {
              * @returns {boolean}
              */
             this.checkCollision = function (thisEntity, otherEntity) {
-                if (thisEntity.coll.x < otherEntity.coll.x + otherEntity.coll.width &&
-                    thisEntity.coll.x + thisEntity.coll.width > otherEntity.coll.x &&
-                    thisEntity.coll.y < otherEntity.coll.y + otherEntity.coll.height &&
-                    thisEntity.coll.y + thisEntity.coll.height > otherEntity.coll.y)
-                    return true;
-                else return false;
+                if (thisEntity.coll.z === otherEntity.coll.z) {
+                    if (thisEntity.coll.x < otherEntity.coll.x + otherEntity.coll.width &&
+                        thisEntity.coll.x + thisEntity.coll.width > otherEntity.coll.x &&
+                        thisEntity.coll.y < otherEntity.coll.y + otherEntity.coll.height &&
+                        thisEntity.coll.y + thisEntity.coll.height > otherEntity.coll.y)
+                        return true;
+                    else return false;
+                } else {
+                    return;
+                }
             };
         },
 
@@ -89,10 +94,11 @@ var Physics = (function () {
          * @param {number}  y - Y position
          * @param {number}  r - Radius of the collision area
          */
-        CircleCollision: function (x, y, r) {
+        CircleCollision: function (x, y, z, r) {
             // Constructor
             this.x = x || 0;
             this.y = y || 0;
+            this.z = z || 0;
             this.r = r / 2 || 0;
 
             // Methods
@@ -104,7 +110,7 @@ var Physics = (function () {
              */
             this.draw = function () {
                 if (debug) {
-                    Video.bufferContext().fillStyle = "rgba(244, 188, 66, 0.5)";
+                    Video.bufferContext().fillStyle = "rgba(244, 188, 66, 0.75)";
                     Video.bufferContext().beginPath();
                     Video.bufferContext().arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
                     Video.bufferContext().fill();
@@ -130,17 +136,21 @@ var Physics = (function () {
              * @returns {boolean}
              */
             this.checkCollision = function (thisEntity, otherEntity) {
-                if (thisEntity.coll.r != undefined && otherEntity.coll.r != undefined) {
-                    if (GameMath.hypotenuse(thisEntity.coll.x - otherEntity.coll.x, thisEntity.coll.y - otherEntity.coll.y) <=
-                        (thisEntity.coll.r + otherEntity.coll.r))
-                        return true;
-                    else return false;
+                if (thisEntity.coll.z === otherEntity.coll.z) {
+                    if (thisEntity.coll.r != undefined && otherEntity.coll.r != undefined) {
+                        if (GameMath.hypotenuse(thisEntity.coll.x - otherEntity.coll.x, thisEntity.coll.y - otherEntity.coll.y) <=
+                            (thisEntity.coll.r + otherEntity.coll.r))
+                            return true;
+                        else return false;
+                    } else {
+                        console.error('Both objects must have a radius!');
+                    }
                 } else {
-                    console.error('Both objects must have a radius!');
+                    return;
                 }
             };
         },
-        
+
         /**
          * Checks collision between a circle and a rectangle
          * 
@@ -149,38 +159,46 @@ var Physics = (function () {
          * @returns {boolean}
          */
         circRectCollision: function (circle, rect) {
-            
-            let circleDistX = Math.abs(circle.coll.x - (rect.coll.x + rect.coll.width/2)),
-                circleDistY = Math.abs(circle.coll.y - (rect.coll.y + rect.coll.height/2));
+            // circle = circle.name.split('__')[0];
+            // rect = rect.name.split('__')[0];
 
-            // Handle collision from left
-            if (circleDistX > (rect.coll.width / 2 + circle.coll.r)) {
-                return false;
-            }
+            // console.log('here', circle, rect);
             
-            // From top
-            if (circleDistY > (rect.coll.height / 2 + circle.coll.r)) {
-                return false;
-            }
+            let circleDistX = Math.abs(circle.coll.x - (rect.coll.x + rect.coll.width / 2)),
+                circleDistY = Math.abs(circle.coll.y - (rect.coll.y + rect.coll.height / 2));
 
-            // From right
-            if (circleDistX <= (rect.coll.width / 2)) {
-                return true;
-            }
-            
-            // From bottom
-            if (circleDistY <= (rect.coll.height / 2)) {
-                return true;
-            }
+            if (circle.coll.z === rect.coll.z) {
+                // Handle collision from left
+                if (circleDistX > (rect.coll.width / 2 + circle.coll.r)) {
+                    return false;
+                }
 
-            // From corners
-            return (
-                Math.pow(circleDistX - rect.coll.width / 2, 2) + 
-                Math.pow(circleDistY - rect.coll.height / 2, 2) 
-                <= (Math.pow(circle.coll.r, 2))
-            );
+                // From top
+                if (circleDistY > (rect.coll.height / 2 + circle.coll.r)) {
+                    return false;
+                }
+
+                // From right
+                if (circleDistX <= (rect.coll.width / 2)) {
+                    return true;
+                }
+
+                // From bottom
+                if (circleDistY <= (rect.coll.height / 2)) {
+                    return true;
+                }
+
+                // From corners
+                return (
+                    Math.pow(circleDistX - rect.coll.width / 2, 2) +
+                    Math.pow(circleDistY - rect.coll.height / 2, 2)
+                    <= (Math.pow(circle.coll.r, 2))
+                );
+            } else {
+                return;
+            }
         },
-        
+
         /**
          * Moves a given object to a point, return the rotation if needed
          * 
