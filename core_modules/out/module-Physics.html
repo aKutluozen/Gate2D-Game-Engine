@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Physics - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Entity.html">Entity</a><ul class='methods'><li data-type='method'><a href="Entity.html#draw">draw</a></li><li data-type='method'><a href="Entity.html#handleKeyDown">handleKeyDown</a></li><li data-type='method'><a href="Entity.html#handleKeyUp">handleKeyUp</a></li><li data-type='method'><a href="Entity.html#handleMouseDown">handleMouseDown</a></li><li data-type='method'><a href="Entity.html#handleMouseMovement">handleMouseMovement</a></li><li data-type='method'><a href="Entity.html#setupDisplay">setupDisplay</a></li><li data-type='method'><a href="Entity.html#update">update</a></li></ul></li><li><a href="module-Physics-AABBCollision.html">AABBCollision</a><ul class='methods'><li data-type='method'><a href="module-Physics-AABBCollision.html#checkCollision">checkCollision</a></li><li data-type='method'><a href="module-Physics-AABBCollision.html#draw">draw</a></li><li data-type='method'><a href="module-Physics-AABBCollision.html#update">update</a></li></ul></li><li><a href="module-Physics-CircleCollision.html">CircleCollision</a><ul class='methods'><li data-type='method'><a href="module-Physics-CircleCollision.html#checkCollision">checkCollision</a></li><li data-type='method'><a href="module-Physics-CircleCollision.html#draw">draw</a></li><li data-type='method'><a href="module-Physics-CircleCollision.html#update">update</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-Controls.html">Controls</a><ul class='methods'><li data-type='method'><a href="module-Controls.html#~getMousePosition">getMousePosition</a></li><li data-type='method'><a href="module-Controls.html#~getTouchPosition">getTouchPosition</a></li><li data-type='method'><a href="module-Controls.html#~initKeyboardControls">initKeyboardControls</a></li><li data-type='method'><a href="module-Controls.html#~initMouseControls">initMouseControls</a></li><li data-type='method'><a href="module-Controls.html#~keyboardListener">keyboardListener</a></li></ul></li><li><a href="module-Engine.html">Engine</a><ul class='methods'><li data-type='method'><a href="module-Engine.html#~pause">pause</a></li><li data-type='method'><a href="module-Engine.html#~run">run</a></li><li data-type='method'><a href="module-Engine.html#~setup">setup</a></li></ul></li><li><a href="module-GameMath.html">GameMath</a><ul class='methods'><li data-type='method'><a href="module-GameMath.html#~hypotenuse">hypotenuse</a></li></ul></li><li><a href="module-Globals.html">Globals</a><ul class='methods'><li data-type='method'><a href="module-Globals.html#~add">add</a></li><li data-type='method'><a href="module-Globals.html#~globals">globals</a></li><li data-type='method'><a href="module-Globals.html#~length">length</a></li></ul></li><li><a href="module-Levels.html">Levels</a><ul class='methods'><li data-type='method'><a href="module-Levels.html#~add">add</a></li><li data-type='method'><a href="module-Levels.html#~currentLevel">currentLevel</a></li><li data-type='method'><a href="module-Levels.html#~draw">draw</a></li><li data-type='method'><a href="module-Levels.html#~find">find</a></li><li data-type='method'><a href="module-Levels.html#~levelContext">levelContext</a></li><li data-type='method'><a href="module-Levels.html#~levels">levels</a></li><li data-type='method'><a href="module-Levels.html#~select">select</a></li></ul></li><li><a href="module-Loader.html">Loader</a><ul class='methods'><li data-type='method'><a href="module-Loader.html#~addFiles">addFiles</a></li><li data-type='method'><a href="module-Loader.html#~enqueue">enqueue</a></li><li data-type='method'><a href="module-Loader.html#~getFile">getFile</a></li><li data-type='method'><a href="module-Loader.html#~loadAll">loadAll</a></li></ul></li><li><a href="module-Objects.html">Objects</a><ul class='methods'><li data-type='method'><a href="module-Objects.html#~add">add</a></li><li data-type='method'><a href="module-Objects.html#~findByProperty">findByProperty</a></li><li data-type='method'><a href="module-Objects.html#~findInPosition">findInPosition</a></li><li data-type='method'><a href="module-Objects.html#~length">length</a></li><li data-type='method'><a href="module-Objects.html#~objects">objects</a></li></ul></li><li><a href="module-Physics.html">Physics</a><ul class='methods'><li data-type='method'><a href="module-Physics.html#~circRectCollision">circRectCollision</a></li><li data-type='method'><a href="module-Physics.html#~moveTowards">moveTowards</a></li></ul></li><li><a href="module-Timer.html">Timer</a><ul class='methods'><li data-type='method'><a href="module-Timer.html#~decreaseTimeBy">decreaseTimeBy</a></li><li data-type='method'><a href="module-Timer.html#~formatTime">formatTime</a></li><li data-type='method'><a href="module-Timer.html#~increaseTimeBy">increaseTimeBy</a></li><li data-type='method'><a href="module-Timer.html#~setup">setup</a></li><li data-type='method'><a href="module-Timer.html#~time">time</a></li></ul></li><li><a href="module-Video.html">Video</a><ul class='methods'><li data-type='method'><a href="module-Video.html#~buffer">buffer</a></li><li data-type='method'><a href="module-Video.html#~bufferContext">bufferContext</a></li><li data-type='method'><a href="module-Video.html#~canvas">canvas</a></li><li data-type='method'><a href="module-Video.html#~context">context</a></li><li data-type='method'><a href="module-Video.html#~debug">debug</a></li><li data-type='method'><a href="module-Video.html#~deltaTime">deltaTime</a></li><li data-type='method'><a href="module-Video.html#~drawText">drawText</a></li><li data-type='method'><a href="module-Video.html#~FPS">FPS</a></li><li data-type='method'><a href="module-Video.html#~refresh">refresh</a></li><li data-type='method'><a href="module-Video.html#~render">render</a></li><li data-type='method'><a href="module-Video.html#~setup">setup</a></li><li data-type='method'><a href="module-Video.html#~showFPS">showFPS</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Physics</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Physics.js</div>
+        
+
+        
+            
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Physics.js.html">Physics.js</a>, <a href="Physics.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+    <dt class="tag-version">Version:</dt>
+    <dd class="tag-version"><ul class="dummy"><li>0.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Ali Kutluozen</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-Physics-AABBCollision.html">AABBCollision</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-Physics-CircleCollision.html">CircleCollision</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="~circRectCollision"><span class="type-signature">(inner) </span>circRectCollision<span class="signature">(circle, rect)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Physics.js.html">Physics.js</a>, <a href="Physics.js.html#line164">line 164</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Checks collision between a circle and a rectangle
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>circle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Any object that has a circleCollision property as collision area</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rect</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Any object that has a AABBCollision property as collision area</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~moveTowards"><span class="type-signature">(inner) </span>moveTowards<span class="signature">(from, to)</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Physics.js.html">Physics.js</a>, <a href="Physics.js.html#line207">line 207</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Moves a given object to a point, return the rotation if needed
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>from</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The object that needs to move</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>to</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The target point</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Aug 29 2017 09:38:00 GMT-0400 (Eastern Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Objects.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Entity.html">Entity</a><ul class='methods'><li data-type='method'><a href="Entity.html#draw">draw</a></li><li data-type='method'><a href="Entity.html#handleKeyDown">handleKeyDown</a></li><li data-type='method'><a href="Entity.html#handleKeyUp">handleKeyUp</a></li><li data-type='method'><a href="Entity.html#handleMouseDown">handleMouseDown</a></li><li data-type='method'><a href="Entity.html#handleMouseMovement">handleMouseMovement</a></li><li data-type='method'><a href="Entity.html#setupDisplay">setupDisplay</a></li><li data-type='method'><a href="Entity.html#update">update</a></li></ul></li><li><a href="module-Physics-AABBCollision.html">AABBCollision</a><ul class='methods'><li data-type='method'><a href="module-Physics-AABBCollision.html#checkCollision">checkCollision</a></li><li data-type='method'><a href="module-Physics-AABBCollision.html#draw">draw</a></li><li data-type='method'><a href="module-Physics-AABBCollision.html#update">update</a></li></ul></li><li><a href="module-Physics-CircleCollision.html">CircleCollision</a><ul class='methods'><li data-type='method'><a href="module-Physics-CircleCollision.html#checkCollision">checkCollision</a></li><li data-type='method'><a href="module-Physics-CircleCollision.html#draw">draw</a></li><li data-type='method'><a href="module-Physics-CircleCollision.html#update">update</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-Controls.html">Controls</a><ul class='methods'><li data-type='method'><a href="module-Controls.html#~getMousePosition">getMousePosition</a></li><li data-type='method'><a href="module-Controls.html#~getTouchPosition">getTouchPosition</a></li><li data-type='method'><a href="module-Controls.html#~initKeyboardControls">initKeyboardControls</a></li><li data-type='method'><a href="module-Controls.html#~initMouseControls">initMouseControls</a></li><li data-type='method'><a href="module-Controls.html#~keyboardListener">keyboardListener</a></li></ul></li><li><a href="module-Engine.html">Engine</a><ul class='methods'><li data-type='method'><a href="module-Engine.html#~pause">pause</a></li><li data-type='method'><a href="module-Engine.html#~run">run</a></li><li data-type='method'><a href="module-Engine.html#~setup">setup</a></li></ul></li><li><a href="module-GameMath.html">GameMath</a><ul class='methods'><li data-type='method'><a href="module-GameMath.html#~hypotenuse">hypotenuse</a></li></ul></li><li><a href="module-Globals.html">Globals</a><ul class='methods'><li data-type='method'><a href="module-Globals.html#~add">add</a></li><li data-type='method'><a href="module-Globals.html#~globals">globals</a></li><li data-type='method'><a href="module-Globals.html#~length">length</a></li></ul></li><li><a href="module-Levels.html">Levels</a><ul class='methods'><li data-type='method'><a href="module-Levels.html#~add">add</a></li><li data-type='method'><a href="module-Levels.html#~currentLevel">currentLevel</a></li><li data-type='method'><a href="module-Levels.html#~draw">draw</a></li><li data-type='method'><a href="module-Levels.html#~find">find</a></li><li data-type='method'><a href="module-Levels.html#~levelContext">levelContext</a></li><li data-type='method'><a href="module-Levels.html#~levels">levels</a></li><li data-type='method'><a href="module-Levels.html#~select">select</a></li></ul></li><li><a href="module-Loader.html">Loader</a><ul class='methods'><li data-type='method'><a href="module-Loader.html#~addFiles">addFiles</a></li><li data-type='method'><a href="module-Loader.html#~enqueue">enqueue</a></li><li data-type='method'><a href="module-Loader.html#~getFile">getFile</a></li><li data-type='method'><a href="module-Loader.html#~loadAll">loadAll</a></li></ul></li><li><a href="module-Objects.html">Objects</a><ul class='methods'><li data-type='method'><a href="module-Objects.html#~add">add</a></li><li data-type='method'><a href="module-Objects.html#~findByProperty">findByProperty</a></li><li data-type='method'><a href="module-Objects.html#~findInPosition">findInPosition</a></li><li data-type='method'><a href="module-Objects.html#~length">length</a></li><li data-type='method'><a href="module-Objects.html#~objects">objects</a></li></ul></li><li><a href="module-Physics.html">Physics</a><ul class='methods'><li data-type='method'><a href="module-Physics.html#~circRectCollision">circRectCollision</a></li><li data-type='method'><a href="module-Physics.html#~moveTowards">moveTowards</a></li></ul></li><li><a href="module-Timer.html">Timer</a><ul class='methods'><li data-type='method'><a href="module-Timer.html#~decreaseTimeBy">decreaseTimeBy</a></li><li data-type='method'><a href="module-Timer.html#~formatTime">formatTime</a></li><li data-type='method'><a href="module-Timer.html#~increaseTimeBy">increaseTimeBy</a></li><li data-type='method'><a href="module-Timer.html#~setup">setup</a></li><li data-type='method'><a href="module-Timer.html#~time">time</a></li></ul></li><li><a href="module-Video.html">Video</a><ul class='methods'><li data-type='method'><a href="module-Video.html#~buffer">buffer</a></li><li data-type='method'><a href="module-Video.html#~bufferContext">bufferContext</a></li><li data-type='method'><a href="module-Video.html#~canvas">canvas</a></li><li data-type='method'><a href="module-Video.html#~context">context</a></li><li data-type='method'><a href="module-Video.html#~debug">debug</a></li><li data-type='method'><a href="module-Video.html#~deltaTime">deltaTime</a></li><li data-type='method'><a href="module-Video.html#~drawText">drawText</a></li><li data-type='method'><a href="module-Video.html#~FPS">FPS</a></li><li data-type='method'><a href="module-Video.html#~refresh">refresh</a></li><li data-type='method'><a href="module-Video.html#~render">render</a></li><li data-type='method'><a href="module-Video.html#~setup">setup</a></li><li data-type='method'><a href="module-Video.html#~showFPS">showFPS</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Objects.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Objects.js 
+ * 
+ * @summary         Provides an interface to pool and keep track of game objects
+ * @module          Objects
+ * @author          Ali Kutluozen
+ * @version         0.1.0
+ */
+
+var Objects = (function () {
+
+    'use strict';
+
+    // Private local variables
+
+    let objectsArray = [],  // Array of game objects for internal use
+        objects = {}        // Game objects that will be presented to outside world
+
+    // Main objects module to be exported
+
+    return {
+        /**
+         * Returns the amount of game objects
+         * 
+         * @returns {number}
+         */
+        length: function () {
+            return objectsArray.length;
+        },
+
+        /**
+         * Returns the game objects array or assigns new objects
+         * 
+         * @param {array}   objs - An array of game objects
+         * @returns {array}
+         */
+        objects: function (objs) {
+            return objs === undefined ? objectsArray : objectsArray = objs.slice();
+        },
+
+        get: function (name) {
+            return objects[name]; // make this object thing to outside world open so collisions can work
+        },
+
+        /**
+         * Adds an array of game objects
+         * 
+         * @param {array}   entities - An array of game objects or a single object
+         */
+        add: function (entities) {
+            if (entities.constructor === Array) {
+                for (let i = 0; i &lt; entities.length; i++) {
+                    objectsArray.push(entities[i]);
+                    objects[entities[i].name] = entities[i];
+                }
+            } else {
+                objectsArray.push(entities);
+                objects[entities.name] = entities;
+            }
+        },
+
+        /**
+         * Finds and returns a game object by a given property and value
+         * 
+         * @param {string}  property - Property of the game object
+         * @param {string}  value - Value of the property
+         * @returns {object}  
+         */
+        findByProperty: function (property, value) {
+            for (let i = 0; i &lt; objectsArray.length; i++) {
+                if (objectsArray[i][property] == value) {
+                    return objectsArray[i];
+                }
+            }
+            return null;
+        },
+
+        // !!! TRY AND MAKE THIS MORE EFFICIENT - DON"T SEARCH FOR EVERYTHING ALL THE TIME!
+        /**
+         * Finds and returns a game object if it is in a certain area
+         * 
+         * @param {number}  x - X position of the game object
+         * @param {number}  y - Y position of the game object
+         * @returns {object}  
+         */
+        findInPosition: function (x, y) {
+            for (let i = 0; i &lt; objectsArray.length; i++) {
+                if (x > objectsArray[i].x &amp;&amp; y > objectsArray[i].y &amp;&amp; x &lt; objectsArray[i].x + objectsArray[i].width &amp;&amp; y &lt; objectsArray[i].y + objectsArray[i].height) {
+                    return objectsArray[i];
+                }
+            }
+            return null;
+        },
+
+        clone: function (item) {
+            if (!item) { return item; } // null, undefined values check
+
+            var types = [Number, String, Boolean],
+                result;
+
+            // normalizing primitives if someone did new String('aaa'), or new Number('444');
+            types.forEach(function (type) {
+                if (item instanceof type) {
+                    result = type(item);
+                }
+            });
+
+            if (typeof result == "undefined") {
+                if (Object.prototype.toString.call(item) === "[object Array]") {
+                    result = [];
+                    item.forEach(function (child, index, array) {
+                        result[index] = this.clone(child);
+                    });
+                } else if (typeof item == "object") {
+                    // testing that this is DOM
+                    if (item.nodeType &amp;&amp; typeof item.cloneNode == "function") {
+                        var result = item.cloneNode(true);
+                    } else if (!item.prototype) { // check that this is a literal
+                        if (item instanceof Date) {
+                            result = new Date(item);
+                        } else {
+                            // it is an object literal
+                            result = {};
+                            for (var i in item) {
+                                result[i] = this.clone(item[i]);
+                            }
+                        }
+                    } else {
+                        // depending what you would like here,
+                        // just keep the reference, or create new object
+                        if (false &amp;&amp; item.constructor) {
+                            // would not advice to do that, reason? Read below
+                            result = new item.constructor();
+                        } else {
+                            result = item;
+                        }
+                    }
+                } else {
+                    result = item;
+                }
+            }
+
+            return result;
+        }
+    }
+}());
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Aug 29 2017 09:38:00 GMT-0400 (Eastern Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
