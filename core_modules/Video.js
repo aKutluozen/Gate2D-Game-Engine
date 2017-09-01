@@ -111,6 +111,24 @@ var Video = (function () {
             }
         },
 
+        /**
+         * Returns the width of the canvas in pixels
+         * 
+         * @returns {number}
+         */
+        getScreenWidth: function () {
+            return canvas.width;
+        },
+
+        /**
+         * Returns the height of the canvas in pixels
+         * 
+         * @returns {number}
+         */
+        getScreenHeight: function () {
+            return canvas.height;
+        },
+
         /**   
          * Initializes the screen
          * 

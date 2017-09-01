@@ -19,7 +19,8 @@ Loader.addFiles(
         { name: 'imgPoint', type: 'img', path: 'images/point.png' },
         { name: 'imgBackground', type: 'img', path: 'images/bg.jpg' },
         { name: 'imgBackground2', type: 'img', path: 'images/bg2.jpg' },
-        { name: 'imgBlock', type: 'img', path: 'images/block.png' }
+        { name: 'imgBlock', type: 'img', path: 'images/block.png' },
+        { name: 'imgBricks', type: 'img', path: 'images/bricks.png' }
     ],
 
     // External scripts
@@ -34,12 +35,12 @@ Loader.addFiles(
 ).loadAll(function () {
 
     Engine.setup({
-        screenWidth: 400,
-        screenHeight: 400,
+        screenWidth: 320,
+        screenHeight: 240,
         mouseEnabled: true,
         keyboardEnabled: true,
         startingLevel: 'level1',
-        physicsDebug: true
+        physicsDebug: false
     });
 
     Timer.setup(function () { Timer.increaseTimeBy(1) }, 1000);

@@ -1,4 +1,4 @@
-function Ball(x, y, z, width, height, tag) {
+function Ball(x, y, z, width, height, name, tag, controlled) {
     Entity.apply(this, arguments); // Apply the inherited properties
     this.img = Loader.getFile('imgBall'); // Load the object image
     
@@ -6,8 +6,11 @@ function Ball(x, y, z, width, height, tag) {
     this.speedX = -2;
     this.speedY = -2;
     this.controlled = true;
+
     // Define collision area if one is needed
     this.coll = new Physics.CircleCollision(x, y, z, width);
+
+    this.whatIsAroundMe = [];
 }
 
 // Establish the inheritance
@@ -20,21 +23,17 @@ Ball.prototype.draw = function () {
 }
 
 Ball.prototype.update = function () {
+    whatIsAroundMe = Physics.searchAround(this); // Always keep an updated list of what is around
     this.coll.update(this.x + this.width / 2, this.y + this.height / 2); // Always update the collision area position
-    
-    this.x += this.speedX;
-    this.y += this.speedY;
 
-    if (Objects.findInPosition(this.x, this.y) != null) {
-        let objFound = Objects.findInPosition(this.x, this.y);
-        if (objFound.name === 'wall' && Physics.circRectCollision(this, objFound)) {
-            if (objFound.x < this.x) {
-                this.speedX *= -1;
-            }
-            else if (objFound.y < this.y) {
-                this.speedY *= -1;
-            }
-        }
+    if (other = Physics.isTouching(whatIsAroundMe, 'wall')) {
     }
-    
+
+    if (other = Physics.isTouching(whatIsAroundMe, 'box')) {
+    }
+}
+
+Ball.prototype.handleMouseMovement = function (input) {
+    this.x = input.x;
+    this.y = input.y;
 }

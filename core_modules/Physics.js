@@ -100,6 +100,8 @@ var Physics = (function () {
             this.y = y || 0;
             this.z = z || 0;
             this.r = r / 2 || 0;
+            this.width = r / 2 || 0;
+            this.height = r / 2 || 0;
 
             // Methods
 
@@ -155,10 +157,13 @@ var Physics = (function () {
          * Checks collision between a circle and a rectangle
          * 
          * @param {object}  circle - Any object that has a circleCollision property as collision area
-         * @param {object}  rect -  Any object that has a AABBCollision property as collision area
+         * @param {object}  rect -  Any object that has a AABBCollision property as collision area - MIGHT CHANGE TO A STRING
          * @returns {boolean}
          */
         circRectCollision: function (circle, rect) {
+
+            // Search around the circle for the rect object and assign rect to the found rect object!!!
+
             let circleDistX = Math.abs(circle.coll.x - (rect.coll.x + rect.coll.width / 2)),
                 circleDistY = Math.abs(circle.coll.y - (rect.coll.y + rect.coll.height / 2));
 
@@ -186,12 +191,58 @@ var Physics = (function () {
                 // From corners
                 return (
                     Math.pow(circleDistX - rect.coll.width / 2, 2) +
-                    Math.pow(circleDistY - rect.coll.height / 2, 2)
-                    <= (Math.pow(circle.coll.r, 2))
+                    Math.pow(circleDistY - rect.coll.height / 2, 2) <=
+                    (Math.pow(circle.coll.r, 2))
                 );
             } else {
                 return;
             }
+        },
+
+        /**
+         * Finds and returns an array of game object if it is in a certain area
+         * This function takes shape based on the shape of the given object (circle, rectangle)
+         * 
+         * @param {object}  obj - The object that the search is based around
+         * @returns {array}
+         */
+        searchAround: function (obj) {
+            let objectsAround = [];
+
+            if (obj.coll.r != undefined) {
+                for (let i = 0; i < Objects.length(); i++) {
+                    if (this.circRectCollision(obj, Objects.objects()[i])) {
+                        objectsAround.push(Objects.objects()[i]);
+                    }
+                }
+            } else {
+                for (let i = 0; i < Objects.length(); i++) {
+                    if (obj.coll.x + obj.coll.width > Objects.objects()[i].coll.x &&
+                        obj.coll.x < Objects.objects()[i].coll.x + Objects.objects()[i].coll.width &&
+                        obj.coll.y + obj.coll.height > Objects.objects()[i].coll.y &&
+                        obj.coll.y < Objects.objects()[i].coll.y + Objects.objects()[i].coll.height
+                    ) {
+                        objectsAround.push(Objects.objects()[i]);
+                    }
+                }
+            }
+            return objectsAround;
+        },
+
+        /**
+         * Returns an object from the collision list
+         * 
+         * @param {array}   surroundings - The list of collision items
+         * @param {string}  name - Name of the object needed
+         * @returns {number}
+         */
+        isTouching: function(surroundings, name) {
+            for (let i = 0; i < surroundings.length; i++) {
+                if (surroundings[i].name === name) {
+                    return surroundings[i];
+                }
+            }
+            return false;
         },
 
         /**

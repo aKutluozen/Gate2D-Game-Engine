@@ -13,9 +13,9 @@ var Levels = (function () {
 
     // Private local variables
 
-    let levels = [], // Array of levels
-        current = null, // Cursor for the current level
-        ctx = null; // Context that will have the level drawn on
+    let levels = [],        // Array of levels
+        current = null,     // Cursor for the current level
+        ctx = null;         // Context that will have the level drawn on
 
     // Main levels module to be exported
 
@@ -74,7 +74,6 @@ var Levels = (function () {
 
                     // Get objects by their numbers, assign them their new information
                     if (objNum !== 0) {
-
                         let objFound = Objects.findByProperty('levelID', objNum);
 
                         // Make an object out of what is found
@@ -102,16 +101,18 @@ var Levels = (function () {
             this.currentLevel().objectsList = this.currentLevel().objectsList.sort(function (a, b) {
                 return a.z - b.z;
             });
-
-            console.log('Original objects: ', Objects.objects(), 'Level objects: ', this.currentLevel().objectsList);
         },
 
         /**
          * Draws the background of the current level
          */
-        draw: function () {
+        draw: function (isTiled) {
             if (current.background.id != 'grid') {
-                ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
+                if (!isTiled) {
+                    ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
+                } else {
+                    
+                }
             }
         },
 
