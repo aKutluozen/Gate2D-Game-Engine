@@ -20,7 +20,7 @@ body {
     background-image: url('images/grid.png');
     display: block;
     cursor: none;
-    height: 100%;
+    height: auto;
     image-rendering: pixelated;
 }
 

@@ -64,26 +64,6 @@ var Physics = (function () {
                 this.x = x;
                 this.y = y;
             };
-
-            /**
-             * Checks collision between 2 entities    
-             * 
-             * @param {object}  thisEntity  - The object that will collide with the other object
-             * @param {object}  otherEntity - The object that will collide with the other object
-             * @returns {boolean}
-             */
-            this.checkCollision = function (thisEntity, otherEntity) {
-                if (thisEntity.coll.z === otherEntity.coll.z) {
-                    if (thisEntity.coll.x < otherEntity.coll.x + otherEntity.coll.width &&
-                        thisEntity.coll.x + thisEntity.coll.width > otherEntity.coll.x &&
-                        thisEntity.coll.y < otherEntity.coll.y + otherEntity.coll.height &&
-                        thisEntity.coll.y + thisEntity.coll.height > otherEntity.coll.y)
-                        return true;
-                    else return false;
-                } else {
-                    return;
-                }
-            };
         },
 
         /**
@@ -129,28 +109,48 @@ var Physics = (function () {
                 this.x = x;
                 this.y = y;
             };
+        },
 
-            /**
-             * Checks collision between 2 entities
-             * 
-             * @param {object}  thisEntity  - The object that will collide with the other object
-             * @param {object}  otherEntity - The object that will collide with the other object
-             * @returns {boolean}
-             */
-            this.checkCollision = function (thisEntity, otherEntity) {
-                if (thisEntity.coll.z === otherEntity.coll.z) {
-                    if (thisEntity.coll.r != undefined && otherEntity.coll.r != undefined) {
-                        if (GameMath.hypotenuse(thisEntity.coll.x - otherEntity.coll.x, thisEntity.coll.y - otherEntity.coll.y) <=
-                            (thisEntity.coll.r + otherEntity.coll.r))
-                            return true;
-                        else return false;
-                    } else {
-                        console.error('Both objects must have a radius!');
-                    }
+        /**
+         * Checks collision between 2 circular entities
+         * 
+         * @param {object}  thisEntity  - The object that will collide with the other object
+         * @param {object}  otherEntity - The object that will collide with the other object
+         * @returns {boolean}
+         */
+        checkCircleCollision: function (thisEntity, otherEntity) {
+            if (thisEntity.coll.z === otherEntity.coll.z) {
+                if (thisEntity.coll.r != undefined && otherEntity.coll.r != undefined) {
+                    if (GameMath.hypotenuse(thisEntity.coll.x - otherEntity.coll.x, thisEntity.coll.y - otherEntity.coll.y) <=
+                        (thisEntity.coll.r + otherEntity.coll.r))
+                        return true;
+                    else return false;
                 } else {
-                    return;
+                    console.error('Both objects must have a radius!');
                 }
-            };
+            } else {
+                return;
+            }
+        },
+        
+        /**
+         * Checks collision between 2 rectangular entities    
+         * 
+         * @param {object}  thisEntity  - The object that will collide with the other object
+         * @param {object}  otherEntity - The object that will collide with the other object
+         * @returns {boolean}
+         */
+        checkAABBCollision: function (thisEntity, otherEntity) {
+            if (thisEntity.coll.z === otherEntity.coll.z) {
+                if (thisEntity.coll.x < otherEntity.coll.x + otherEntity.coll.width &&
+                    thisEntity.coll.x + thisEntity.coll.width > otherEntity.coll.x &&
+                    thisEntity.coll.y < otherEntity.coll.y + otherEntity.coll.height &&
+                    thisEntity.coll.y + thisEntity.coll.height > otherEntity.coll.y)
+                    return true;
+                else return false;
+            } else {
+                return;
+            }
         },
 
         /**
@@ -160,7 +160,7 @@ var Physics = (function () {
          * @param {object}  rect -  Any object that has a AABBCollision property as collision area - MIGHT CHANGE TO A STRING
          * @returns {boolean}
          */
-        circRectCollision: function (circle, rect) {
+        checkCircleRectangleCollision: function (circle, rect) {
 
             // Search around the circle for the rect object and assign rect to the found rect object!!!
 
@@ -204,15 +204,27 @@ var Physics = (function () {
          * This function takes shape based on the shape of the given object (circle, rectangle)
          * 
          * @param {object}  obj - The object that the search is based around
+         * @param {object}  list - The list that will hold the found objects
          * @returns {array}
          */
-        searchAround: function (obj) {
-            let objectsAround = [];
+        searchAround: function (obj, list) {
+            list = [];
 
-            if (obj.coll.r != undefined) {
+            // Check if the object is a circular one
+            if (obj.coll.r !== undefined) {
                 for (let i = 0; i < Objects.length(); i++) {
-                    if (this.circRectCollision(obj, Objects.objects()[i])) {
-                        objectsAround.push(Objects.objects()[i]);
+                    
+                    // Check if surrounding objects are circular too
+                    if (Objects.objects()[i].coll.r !== undefined) {
+                        if (this.checkCircleCollision(obj, Objects.objects()[i])) {
+                            list.push(Objects.objects()[i]);
+                            console.log("circle to circle happening");
+                        }
+                    } else {
+                        if (this.checkCircleRectangleCollision(obj, Objects.objects()[i])) {
+                            list.push(Objects.objects()[i]);
+                            console.log("circle to rectangle happening");
+                        }
                     }
                 }
             } else {
@@ -222,11 +234,11 @@ var Physics = (function () {
                         obj.coll.y + obj.coll.height > Objects.objects()[i].coll.y &&
                         obj.coll.y < Objects.objects()[i].coll.y + Objects.objects()[i].coll.height
                     ) {
-                        objectsAround.push(Objects.objects()[i]);
+                        list.push(Objects.objects()[i]);
                     }
                 }
             }
-            return objectsAround;
+            return list;
         },
 
         /**
@@ -236,7 +248,7 @@ var Physics = (function () {
          * @param {string}  name - Name of the object needed
          * @returns {number}
          */
-        isTouching: function(surroundings, name) {
+        isTouching: function (surroundings, name) {
             for (let i = 0; i < surroundings.length; i++) {
                 if (surroundings[i].name === name) {
                     return surroundings[i];

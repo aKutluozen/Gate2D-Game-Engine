@@ -28,7 +28,8 @@ Loader.addFiles(
         { name: 'boxScript', type: 'script', path: 'custom_objects/box.js' },
         { name: 'ballScript', type: 'script', path: 'custom_objects/ball.js' },
         { name: 'padScript', type: 'script', path: 'custom_objects/pad.js' },
-        { name: 'wallScript', type: 'script', path: 'custom_objects/wall.js' }
+        { name: 'wallScript', type: 'script', path: 'custom_objects/wall.js' },
+        { name: 'pointScript', type: 'script', path: 'custom_objects/point.js' }
     ]
 
     // Set up and run the engine when all the loading is done
@@ -40,7 +41,7 @@ Loader.addFiles(
         mouseEnabled: true,
         keyboardEnabled: true,
         startingLevel: 'level1',
-        physicsDebug: false
+        physicsDebug: true
     });
 
     Timer.setup(function () { Timer.increaseTimeBy(1) }, 1000);

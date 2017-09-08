@@ -13,9 +13,9 @@ var Levels = (function () {
 
     // Private local variables
 
-    let levels = [],        // Array of levels
-        current = null,     // Cursor for the current level
-        ctx = null;         // Context that will have the level drawn on
+    let levels = [], // Array of levels
+        current = null, // Cursor for the current level
+        ctx = null; // Context that will have the level drawn on
 
     // Main levels module to be exported
 
@@ -106,13 +106,9 @@ var Levels = (function () {
         /**
          * Draws the background of the current level
          */
-        draw: function (isTiled) {
+        draw: function () {
             if (current.background.id != 'grid') {
-                if (!isTiled) {
-                    ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
-                } else {
-                    
-                }
+                ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
             }
         },
 
