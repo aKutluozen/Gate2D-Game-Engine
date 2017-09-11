@@ -209,7 +209,7 @@ var Physics = (function () {
          */
         searchAround: function (obj, list) {
             list = [];
-
+            
             // Check if the object is a circular one
             if (obj.coll.r !== undefined) {
                 for (let i = 0; i < Objects.length(); i++) {
@@ -218,12 +218,10 @@ var Physics = (function () {
                     if (Objects.objects()[i].coll.r !== undefined) {
                         if (this.checkCircleCollision(obj, Objects.objects()[i])) {
                             list.push(Objects.objects()[i]);
-                            console.log("circle to circle happening");
                         }
                     } else {
                         if (this.checkCircleRectangleCollision(obj, Objects.objects()[i])) {
                             list.push(Objects.objects()[i]);
-                            console.log("circle to rectangle happening");
                         }
                     }
                 }
@@ -238,6 +236,7 @@ var Physics = (function () {
                     }
                 }
             }
+            list.shift(); // remove the first element (obj itself)
             return list;
         },
 

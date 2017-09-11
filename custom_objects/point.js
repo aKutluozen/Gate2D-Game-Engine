@@ -22,17 +22,17 @@ Point.prototype.update = function () {
 
     this.coll.update(this.x + this.width / 2, this.y + this.height / 2); // Always update the collision area position
 
-    if (other = Physics.isTouching(this.whatIsAroundMe, 'wall')) {
-        console.log("touching! ", other);
-    }
+    // if (other = Physics.isTouching(this.whatIsAroundMe, 'wall')) {
+    //     console.log("touching! ", other);
+    // }
 
-    if (other = Physics.isTouching(this.whatIsAroundMe, 'box')) {
-        console.log("touching! ", other);
-    }
+    // if (other = Physics.isTouching(this.whatIsAroundMe, 'box')) {
+    //     console.log("touching! ", other);
+    // }
 
-    if (other = Physics.isTouching(this.whatIsAroundMe, 'ball')) {
-        console.log("touching! ", other);
-    }
+    // if (other = Physics.isTouching(this.whatIsAroundMe, 'ball')) {
+    //     console.log("touching! ", other);
+    // }
 }
 
 Point.prototype.handleMouseMovement = function (input) {
