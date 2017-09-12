@@ -5,8 +5,11 @@ function Ball(x, y, z, width, height, name, tag, controlled) {
     // Define object specific properties
     this.speedX = 0;
     this.speedY = 0;
+
     this.controlled = true;
     this.isJumping = false;
+    this.isFalling = false; // When the head hits a platform
+    this.yVelocity = 0; // This number is recharged and consumed every time player jumps
     this.jumpSpeed = 6;
     this.gravity = 0.25;
 
@@ -26,27 +29,34 @@ Ball.prototype.draw = function () {
 }
 
 Ball.prototype.update = function () {
+    // Always keep an updated list of what is around
+    this.whatIsAroundMe = Physics.searchAround(this, this.whatIsAroundMe);
     this.coll.update(this.x + this.width / 2, this.y + this.height / 2); // Always update the collision area position
-    this.x += this.speedX;
-    this.y += this.speedY;
 
-    if (this.isJumping) {
-        this.jumpSpeed -= this.gravity;
-        this.y -= this.jumpSpeed;
+    this.x += this.speedX;
+    this.y += this.yVelocity;
+
+    if (this.yVelocity <= this.jumpSpeed) {
+        this.yVelocity += this.gravity;
     }
 
-    this.whatIsAroundMe = Physics.searchAround(this, this.whatIsAroundMe); // Always keep an updated list of what is around
-
+    //console.log(this.whatIsAroundMe);
     if (other = Physics.isTouching(this.whatIsAroundMe, 'box')) {
-        if (this.coll.y + this.coll.width >= other.coll.y) {
-            this.jumpSpeed = 6; // Reset the jump speed
+        // Check if the platform is under the player
+        if (this.coll.y + this.coll.r >= other.coll.y) {
+            this.yVelocity = 0; // Reset the jump speed to 0
+            this.isJumping = false; // Not jumping anymore
+            this.isFalling = false; // Not fallign anymore
+            this.y = other.coll.y - this.coll.r * 2; // Place the player right on top of the platform
+        }
+        // Check if the platform is over the player
+        if (this.coll.y >= other.coll.y + other.coll.height) {
             this.isJumping = false;
-            //this.y -= this.jumpSpeed;
+            this.isFalling = true;
+            this.y = other.coll.y + other.coll.height + 1; // Place the player right under the platform
         }
-    } else {
-        if (!this.isJumping) {
-            this.y += this.jumpSpeed;
-        }
+
+        // Check for left and right
     }
 }
 
@@ -63,8 +73,10 @@ Ball.prototype.handleKeyDown = function (input) {
     if (input === 40) {
         this.speedY = 2;
     }
-    if (input === 32 && !this.isJumping) {
+    if (input === 32 && !this.isJumping && !this.isFalling) {
         this.isJumping = true;
+        this.yVelocity = -this.jumpSpeed;
+        this.y -= 1;
     }
 }
 
