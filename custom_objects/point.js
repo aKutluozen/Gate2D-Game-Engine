@@ -1,7 +1,7 @@
 function Point(x, y, z, width, height) {
     Entity.apply(this, arguments);
     this.img = Loader.getFile('imgPoint');
-    this.coll = new Physics.CircleCollision(x, y, z, width);
+    this.coll = new Physics.CircleCollision(x, y, z, width, height);
     this.controlled = true;
 
     this.whatIsAroundMe = [];
@@ -10,29 +10,15 @@ function Point(x, y, z, width, height) {
 Point.prototype = new Entity();
 
 Point.prototype.draw = function () {
-    this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    //this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     this.coll.draw();
 }
 
 Point.prototype.update = function () {
     this.x = this.movement.x;
     this.y = this.movement.y;
-
     this.whatIsAroundMe = Physics.searchAround(this, this.whatIsAroundMe); // Always keep an updated list of what is around
-
     this.coll.update(this.x + this.width / 2, this.y + this.height / 2); // Always update the collision area position
-
-    // if (other = Physics.isTouching(this.whatIsAroundMe, 'wall')) {
-    //     console.log("touching! ", other);
-    // }
-
-    // if (other = Physics.isTouching(this.whatIsAroundMe, 'box')) {
-    //     console.log("touching! ", other);
-    // }
-
-    // if (other = Physics.isTouching(this.whatIsAroundMe, 'ball')) {
-    //     console.log("touching! ", other);
-    // }
 }
 
 Point.prototype.handleMouseMovement = function (input) {

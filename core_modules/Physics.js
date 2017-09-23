@@ -132,7 +132,7 @@ var Physics = (function () {
                 return;
             }
         },
-        
+
         /**
          * Checks collision between 2 rectangular entities    
          * 
@@ -209,34 +209,47 @@ var Physics = (function () {
          */
         searchAround: function (obj, list) {
             list = [];
-            
-            // Check if the object is a circular one
+
+            // Searching object is a circular one
             if (obj.coll.r !== undefined) {
                 for (let i = 0; i < Objects.length(); i++) {
-                    
-                    // Check if surrounding objects are circular too
+
+                    // Circle to circle collision
                     if (Objects.objects()[i].coll.r !== undefined) {
-                        if (this.checkCircleCollision(obj, Objects.objects()[i])) {
-                            list.push(Objects.objects()[i]);
-                        }
-                    } else {
-                        if (this.checkCircleRectangleCollision(obj, Objects.objects()[i])) {
+                        if (this.checkCircleCollision(obj, Objects.objects()[i]) && Objects.objects()[i] != obj) {
                             list.push(Objects.objects()[i]);
                         }
                     }
-                }
-            } else {
-                for (let i = 0; i < Objects.length(); i++) {
-                    if (obj.coll.x + obj.coll.width > Objects.objects()[i].coll.x &&
-                        obj.coll.x < Objects.objects()[i].coll.x + Objects.objects()[i].coll.width &&
-                        obj.coll.y + obj.coll.height > Objects.objects()[i].coll.y &&
-                        obj.coll.y < Objects.objects()[i].coll.y + Objects.objects()[i].coll.height
-                    ) {
-                        list.push(Objects.objects()[i]);
+
+                    // Circle to rectangle collision
+                    else {
+                        if (this.checkCircleRectangleCollision(obj, Objects.objects()[i]) && Objects.objects()[i] != obj) {
+                            list.push(Objects.objects()[i]);
+                        }
                     }
                 }
             }
-            list.shift(); // remove the first element (obj itself)
+
+            // Searching object is a rectangular one
+            else {
+                for (let i = 0; i < Objects.length(); i++) {
+
+                    // Rectangle to circle collision
+                    if (Objects.objects()[i].coll.r !== undefined) {
+                        if (this.checkCircleRectangleCollision(Objects.objects()[i], obj) && Objects.objects()[i] != obj) {
+                            list.push(Objects.objects()[i]);
+                        }
+                    }
+
+                    // Rectangle to rectangle collision
+                    else {
+                        if (this.checkAABBCollision(obj, Objects.objects()[i]) && Objects.objects()[i] != obj) {
+                            list.push(Objects.objects()[i]);
+                        }
+                    }
+                }
+            }
+
             return list;
         },
 

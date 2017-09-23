@@ -13,9 +13,8 @@ Box.prototype.draw = function () {
 }
 
 Box.prototype.update = function () {
-    this.coll.update(this.x, this.y);
-    
     // if (Physics.circRectCollision(Objects.ball, this) === true) {
     //     this.x = -100;   
     // }
+    this.coll.update(this.x, this.y);
 }
