@@ -8,7 +8,7 @@ function Ball(x, y, z, width, height, name, tag, controlled) {
 
     this.controlled = true; // The object is controlled by input devices
     this.isJumping = false; // If the object is in the air, keeps it from jumping again
-    this.isFalling = false; // When the head hits a platform
+    this.isFalling = true; // When the head hits a platform
     this.yVelocity = 0; // This number is recharged and consumed every time player jumps
     this.jumpSpeed = 6; // Maximum speed for jump
     this.gravity = 0.25; // Gravity is added to the yVelocity until the max. jump speed 
@@ -37,53 +37,54 @@ Ball.prototype.update = function () {
         this.yVelocity += this.gravity;
     }
 
-    //console.log(this.x, this.coll.x, this.y, this.coll.y);
-    if (other = Physics.isTouching(this.whatIsAroundMe, 'box')) {
+    // Save the previous spot
+    var prevX = this.coll.x - this.speedX;
+    var prevY = this.coll.y - this.yVelocity;
 
-        // Check for vertical movement
-        if (Math.abs(this.yVelocity) > 0) {
-            // Check if the platform is under the player as a thin line
-            if (
-                this.coll.y + this.coll.r + this.yVelocity >= other.coll.y &&
-                this.coll.y + this.coll.r < other.coll.y + other.coll.height / 2
-            ) {
+    // If the object is supposed to respond to more than one instance, use a for loop
+    for (var i = 0; i < this.whatIsAroundMe.length; i++) {
+        var other = this.whatIsAroundMe[i];
+
+        if (other.name === 'box') {
+            // Collision from right
+            if (prevX + this.coll.r <= other.coll.x) {
+                this.x -= this.speedX;
+                this.speedX = 0;
+            }
+
+            // Collision from left
+            if (prevX - this.coll.r >= other.coll.x + other.coll.width) {
+                this.x -= this.speedX;
+                this.speedX = 0;
+            }
+
+            // Collision from top
+            if (prevY + this.coll.r <= other.coll.y) {
+                this.y = other.coll.y - this.coll.r * 2; // Place the player right on top of the platform
                 this.yVelocity = 0; // Reset the jump speed to 0
                 this.isJumping = false; // Not jumping anymore
                 this.isFalling = false; // Not falling anymore
-                this.y = other.coll.y - this.coll.r * 2; // Place the player right on top of the platform
-                console.log('standing on platform');
             }
 
-            // Check if the platform is over the player
-            if (
-                this.coll.y - this.coll.r - Math.abs(this.yVelocity) <= other.coll.y + other.coll.height &&
-                this.coll.y - this.coll.r > other.coll.y + other.coll.height - Math.abs(this.yVelocity)
-            ) {
-                console.log('falling');
+            // Collision from bottom
+            if (prevY - this.coll.r >= other.coll.y + other.coll.height) {
                 this.isJumping = false; // Not jumping anymore
                 this.isFalling = true; // Falling is happening, so the player can't jump
                 this.yVelocity = this.gravity; // Make yVelocity a small positive number to initiate the falling
                 this.y = other.coll.y + other.coll.height + Math.abs(this.yVelocity); // Place the player right under the platform
             }
+        } else {
+            this.isFalling = true;
         }
+    }
 
-        // Make sure the wall is on the same level
-        if (
-            this.coll.y - this.coll.r >= other.coll.y &&
-            this.coll.y + this.coll.r <= other.coll.y + other.coll.height
-        ) {
-            this.speedX = 0;
-        }
-
-    } else {
+    // Fall if there is nothing to hold on to
+    if (this.whatIsAroundMe.length === 0) {
         this.isFalling = true;
     }
 
     this.x += this.speedX;
     this.y += this.yVelocity;
-    //this.y += this.speedY;
-    // this.x = this.movement.x;
-    // this.y = this.movement.y;
 
     // Always update the collision area position and center it based on the object position
     this.coll.update(this.x + this.width / 2, this.y + this.height / 2);

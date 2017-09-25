@@ -256,7 +256,7 @@ var Physics = (function () {
         },
 
         /**
-         * Returns an object from the collision list
+         * Returns a single object from the collision list
          * 
          * @param {array}   surroundings - The list of collision items
          * @param {string}  name - Name of the object needed
