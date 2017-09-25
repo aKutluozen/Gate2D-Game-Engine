@@ -10,7 +10,7 @@ function Ball(x, y, z, width, height, name, tag, controlled) {
     this.isJumping = false;     // If the object is in the air, keeps it from jumping again
     this.isFalling = false;     // When the head hits a platform
     this.yVelocity = 0;         // This number is recharged and consumed every time player jumps
-    this.jumpSpeed = 8;         // Maximum speed for jump
+    this.jumpSpeed = 6;         // Maximum speed for jump
     this.gravity = 0.25;        // Gravity is added to the yVelocity until the max. jump speed 
 
     this.whatIsAroundMe = [];   // An empty list of colliding surrounding objects
@@ -39,7 +39,10 @@ Ball.prototype.update = function () {
     if (other = Physics.isTouching(this.whatIsAroundMe, 'box')) {
 
         // Check if the platform is under the player as a thin line
-        if (this.coll.y + this.coll.r + this.yVelocity >= other.coll.y && this.coll.y + this.coll.r < other.coll.y + this.yVelocity) {
+        if (
+            this.coll.y + this.coll.r + this.yVelocity >= other.coll.y &&
+            this.coll.y + this.coll.r < other.coll.y + this.yVelocity
+        ) {
             this.yVelocity = 0;     // Reset the jump speed to 0
             this.isJumping = false; // Not jumping anymore
             this.isFalling = false; // Not falling anymore
@@ -47,28 +50,30 @@ Ball.prototype.update = function () {
         }
 
         // Check if the platform is over the player
-        if (this.coll.y - this.yVelocity >= other.coll.y + other.coll.height) {
-            this.isJumping = false;
-            this.isFalling = true;
-            this.y = other.coll.y + other.coll.height + 1; // Place the player right under the platform
+        if (
+            this.coll.y - this.coll.r - Math.abs(this.yVelocity) <= other.coll.y + other.coll.height &&
+            this.coll.y - this.coll.r > other.coll.y + other.coll.height - Math.abs(this.yVelocity)
+        ) {
+            this.isJumping = false; // Not jumping anymore
+            this.isFalling = true;  // Falling is happening, so the player can't jump
+            this.yVelocity = this.gravity;     // Make yVelocity a small positive number to initiate the falling
+            this.y = other.coll.y + other.coll.height + Math.abs(this.yVelocity); // Place the player right under the platform
         }
-
-        // if (this.isJumping && this.coll.y - this.yVelocity >= other.coll.y + other.coll.height) {
-        //     // Check if the platform is on the right of the player
-        //     if (this.coll.x + this.coll.width >= other.coll.x) {
-        //         console.log("on the right");
-        //         this.speedX = 0;
-        //     }
-        //     // Check if the platform is on the left of the player
-        //     else if (this.coll.x <= other.coll.x + other.coll.width) {
-        //         console.log("on the left");
-        //         this.speedX = 0;
-        //     }
-        // }
+        
+        // Check if the platform is on the right of the player
+        if (this.coll.x + this.coll.r + Math.abs(this.speedX) >= other.coll.x) {
+            console.log("on the right");
+            this.speedX = -this.gravity;
+        }
+        
     }
     this.x += this.speedX;
     this.y += this.yVelocity;
     this.coll.update(this.x + this.width / 2, this.y + this.height / 2); // Always update the collision area position
+}
+
+Ball.prototype.handleMouseMovement = function (input) {
+    this.movement = input;
 }
 
 Ball.prototype.handleKeyDown = function (input) {
