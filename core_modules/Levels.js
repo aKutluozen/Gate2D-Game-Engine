@@ -75,7 +75,7 @@ var Levels = (function () {
                     // Get objects by their numbers, assign them their new information
                     if (objNum !== 0) {
                         let objFound = Objects.findByProperty('levelID', objNum);
-
+                        
                         // Make an object out of what is found
                         let newObj = eval('new ' +
                             capitalizeFirstLetter(objFound.name) +
@@ -134,6 +134,8 @@ var Levels = (function () {
                     levelList[i].background = Loader.getFile('grid');
                 }
 
+                // LEVEL ID PROBLEM WITH REPEATING OBJECTS!
+
                 // Parse objects and place them in their spots within the level
                 for (let j = 0; j < levelList[i].objectsList.length; j++) {
                     // Assign data to objects
@@ -156,8 +158,8 @@ var Levels = (function () {
 
                 // Also make them available to outside world through levels
                 this[levelList[i].tag] = levelList[i];
-
             }
+            console.log(levelList[0].objectsList);
         },
 
         /**
