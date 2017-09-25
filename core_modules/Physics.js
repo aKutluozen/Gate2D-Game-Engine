@@ -29,6 +29,7 @@ var Physics = (function () {
          * @constructor
          * @param {number}  x - X position
          * @param {number}  y - Y position
+         * @param {number}  z - Z position/depth
          * @param {number}  width - Width of the collision area
          * @param {number}  height - Height of the collision area
          */
@@ -72,6 +73,7 @@ var Physics = (function () {
          * @constructor
          * @param {number}  x - X position
          * @param {number}  y - Y position
+         * @param {number}  z - Z position/depth
          * @param {number}  r - Radius of the collision area
          */
         CircleCollision: function (x, y, z, r) {

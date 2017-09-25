@@ -41,7 +41,7 @@ Loader.addFiles(
         mouseEnabled: true,
         keyboardEnabled: true,
         startingLevel: 'level1',
-        physicsDebug: false
+        physicsDebug: true
     });
 
     Timer.setup(function () { Timer.increaseTimeBy(1) }, 1000);
