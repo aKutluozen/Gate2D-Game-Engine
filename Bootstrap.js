@@ -20,7 +20,8 @@ Loader.addFiles(
         { name: 'imgBackground', type: 'img', path: 'images/bg.jpg' },
         { name: 'imgBackground2', type: 'img', path: 'images/bg2.jpg' },
         { name: 'imgBlock', type: 'img', path: 'images/block.png' },
-        { name: 'imgBricks', type: 'img', path: 'images/bricks.png' }
+        { name: 'imgBricks', type: 'img', path: 'images/bricks.png' },
+        { name: 'imgCharacter', type: 'img', path: 'images/character.png' }
     ],
 
     // External scripts
@@ -41,7 +42,7 @@ Loader.addFiles(
         mouseEnabled: true,
         keyboardEnabled: true,
         startingLevel: 'level1',
-        physicsDebug: true
+        physicsDebug: false
     });
 
     Timer.setup(function () { Timer.increaseTimeBy(1) }, 1000);

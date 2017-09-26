@@ -1,6 +1,7 @@
 function Ball(x, y, z, width, height, name, tag, controlled) {
     Entity.apply(this, arguments); // Apply the inherited properties
     this.img = Loader.getFile('imgBall'); // Load the object image
+    this.sprite = Loader.getFile('imgCharacter');
 
     // Define object specific properties
     this.speedX = 0;
@@ -24,7 +25,8 @@ Ball.prototype = new Entity();
 
 // Define object methods
 Ball.prototype.draw = function () {
-    this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    //this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    this.ctx
     this.coll.draw();
 }
 
