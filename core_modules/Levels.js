@@ -62,10 +62,11 @@ var Levels = (function () {
             // Temporary array of copy objects to be created
             let levelObjects = [];
 
+            // One time function
             function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
-
+            
             for (let yPos = 0; yPos < current.objectMap.height; yPos++) {
                 for (let xPos = 0; xPos < current.objectMap.width; xPos++) {
 
@@ -75,8 +76,9 @@ var Levels = (function () {
                     // Get objects by their numbers, assign them their new information
                     if (objNum !== 0) {
                         let objFound = Objects.findByProperty('levelID', objNum);
+                        objFound = objFound.object;
                         
-                        // Make an object out of what is found
+                        // Instantiate new objects out of what is found
                         let newObj = eval('new ' +
                             capitalizeFirstLetter(objFound.name) +
                             '(' + xPos * size + ',' + yPos * size + ',' +
@@ -94,13 +96,16 @@ var Levels = (function () {
 
             // Replace level object list and the Objects module with new level objects
             this.currentLevel().objectsList = levelObjects.slice();
-            Objects.objects([]);
-            Objects.add(levelObjects);
 
             // Arrange the objectsList array based on z (depth) so it draws accordingly
             this.currentLevel().objectsList = this.currentLevel().objectsList.sort(function (a, b) {
                 return a.z - b.z;
             });
+
+            // Cleaning
+            Objects.objects([]);        // Empty the pool
+            Objects.add(levelObjects);  // Fill it with level game objects
+            levelObjects = [];          // Empty the temporary array
         },
 
         /**
@@ -134,25 +139,11 @@ var Levels = (function () {
                     levelList[i].background = Loader.getFile('grid');
                 }
 
-                // LEVEL ID PROBLEM WITH REPEATING OBJECTS!
-
-                // Parse objects and place them in their spots within the level
+                // Get objects from the objects list of a given level
+                // Add them to the global object pool
                 for (let j = 0; j < levelList[i].objectsList.length; j++) {
                     // Assign data to objects
-                    console.log(levelList[i].objectsList[j]);
-                    
-                    let z = levelList[i].objectsList[j].z,
-                        width = levelList[i].objectsList[j].width,
-                        height = levelList[i].objectsList[j].height,
-                        levelID = levelList[i].objectsList[j].levelID,
-                        obj = levelList[i].objectsList[j] = Objects.findByProperty('name', levelList[i].objectsList[j].name);
-                    
-                    // Convert to real object, assign neccessary position values
-                    obj.z = z;
-                    obj.width = obj.coll.width = width;
-                    obj.height = obj.coll.height = height;
-                    obj.coll.z = z;
-                    obj.levelID = levelID;
+                    Objects.add(levelList[i].objectsList[j]);
                 }
 
                 // Add level to the levels array
@@ -161,7 +152,6 @@ var Levels = (function () {
                 // Also make them available to outside world through levels
                 this[levelList[i].tag] = levelList[i];
             }
-            console.log(levelList[0].objectsList);
         },
 
         /**

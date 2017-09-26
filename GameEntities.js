@@ -10,19 +10,6 @@
 'use strict';
 
 /**
- * All the following added objects can be reached by Objects.<tagname>
- * E.g., GameObject.player 
- */
-Objects.add([
-    new Point(0, 0, 0, 0, 0, 'point'),
-    new Ball(5, 0, 0, 10, 10, 'ball'),
-    new Box(20, 0, 0, 50, 50, 'box'),
-    new Wall(0, 0, 0, 50, 50, 'wall')
-    // Instantiate custom game objects here
-    // ...
-]);
-
-/**
  * All the following added variables can be reached by Globals.<varname>
  * E.g., Globals.score 
  */
@@ -46,12 +33,12 @@ Levels.add([
         x: 0,
         y: 0,
         background: 'imgBackground',
+        // Instantiate objects for level here
         objectsList: [
-            { name: 'ball', tag: '1', levelID: 3, width: 12, height: 12, z: 0 },
-            { name: 'box', tag: '2', levelID: 1, width: 16, height: 16, z: 0 },
-            { name: 'box', tag: 'dif', levelID: 5, width: 16, height: 16, z: 0 },
-            { name: 'wall', tag: '3', levelID: 4, width: 16, height: 16, z: 0 },
-            { name: 'point', tag: '4', levelID: 2, width: 12, height: 12, z: 0 }
+            { object: new Ball(0, 0, 0, 12, 12, 'ball'), levelID: 3 },
+            { object: new Box(0, 0, 0, 32, 16, 'box', 'platformLong'), levelID: 2 },
+            { object: new Box(0, 0, 0, 16, 16, 'box', 'platformNormal'), levelID: 1 },
+            { object: new Box(0, 0, 0, 16, 16, 'box', 'platformWall'), levelID: 4 },
         ],
         objectMap: {
             width: 20,
@@ -63,11 +50,11 @@ Levels.add([
                 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
                 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
                 4, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-                4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 4,
+                4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 4,
                 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 4,
                 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 4,
-                4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 1, 0, 0, 4,
-                4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 5, 2, 0, 1, 0, 0, 4,
+                4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 3, 0, 1, 0, 0, 4,
+                4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 2, 0, 1, 0, 0, 4,
                 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 4,
                 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 4,
                 4, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
@@ -76,6 +63,7 @@ Levels.add([
             ]
         },
     },
+
     // Create custom levels here
     // ...
 ]);
