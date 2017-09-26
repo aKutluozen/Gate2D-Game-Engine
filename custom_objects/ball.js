@@ -19,7 +19,16 @@ function Ball(x, y, z, width, height, name, tag, controlled) {
     // Define collision area if one is needed
     this.coll = new Physics.CircleCollision(x, y, z, width);
 
-    this.animation = Sprites.setupAnimation(4, 60);
+    this.frame = 0;
+    this.frames = 4;
+    this.animation = window.setInterval( function() {
+        console.log(this.frame);
+        if (this.frame < this.frames) {
+            this.frame++;
+        } else {
+            this.frame = 0;
+        }
+    }, 1000/60);
 }
 
 // Establish the inheritance
@@ -28,7 +37,7 @@ Ball.prototype = new Entity();
 // Define object methods
 Ball.prototype.draw = function () {
     //this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    this.ctx.drawImage(this.sprite, 0, 0, 16, 16, this.x, this.y, this.width, this.height);
+    this.ctx.drawImage(this.sprite, this.frame * 16, 0, 16, 16, this.x, this.y, this.width, this.height);
     this.coll.draw();
 }
 

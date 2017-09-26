@@ -22,15 +22,23 @@ var Sprites = (function () {
         setupAnimation: function (frames, fps) {
             let frame = 0;
 
-            let animation = window.setInterval( function() {
+            let animation = window.setInterval(function () {
                 if (frame < frames) {
                     frame++;
                 } else {
                     frame = 0;
                 }
-            }, 1000/fps);
+            }, 1000 / fps);
 
-            
+            return frame;
+        },
+
+        animation: function (image, width, height, t) {
+            let frame = 0;
+
+            this.getFrame = function () {
+                return frame
+            }
         }
     }
 }());
