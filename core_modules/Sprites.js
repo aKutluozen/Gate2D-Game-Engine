@@ -19,8 +19,18 @@ var Sprites = (function () {
          * @param {number}  b - Length of side b
          * @returns {number}
          */
-        animate: function (image, width, height, isAnimated, fps) {
-            // Returns animation object with functions?
+        setupAnimation: function (frames, fps) {
+            let frame = 0;
+
+            let animation = window.setInterval( function() {
+                if (frame < frames) {
+                    frame++;
+                } else {
+                    frame = 0;
+                }
+            }, 1000/fps);
+
+            
         }
     }
 }());

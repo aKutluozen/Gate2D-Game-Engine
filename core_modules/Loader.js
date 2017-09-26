@@ -102,6 +102,7 @@ var Loader = (function () {
             this.enqueue('levels', 'script', 'core_modules/Levels.js');
             this.enqueue('engine', 'script', 'core_modules/Engine.js');
             this.enqueue('timer', 'script', 'core_modules/Timer.js');
+            this.enqueue('sprites', 'script', 'core_modules/Sprites.js');
             this.enqueue('entity', 'script', 'core_modules/Entity.js');
 
             // Enqueueing custom script files            
