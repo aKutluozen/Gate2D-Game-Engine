@@ -11,21 +11,26 @@
 var GameDraw = function () {
 
     'use strict';
-    
+
     // Draw the background of the level first
     Levels.draw();
-    
-    // Draw game objects that draw functions
+
+    // Draw game objects that have draw methods
     for (let i = 0; i < Levels.currentLevel().objectsList.length; i++) {
-        Levels.currentLevel().objectsList[i].draw();
+        // If there is a camera present, draw them only when they are in the view
+        if (Levels.currentLevel().camera) {
+            if (Video.isObjectInView(Levels.currentLevel().objectsList[i])) {
+                Levels.currentLevel().objectsList[i].draw();
+            }
+        } else Levels.currentLevel().objectsList[i].draw();
     }
-    
+
     // Add extra draw calls here
     // ...
-    
+
     // Draw the HUD on top of everything
-    Video.drawText(Timer.formatTime(Timer.time()), "Tahoma", 13, "white", Video.getScreenWidth()/2, 0, "center", false);
-    
+    Video.drawText(Timer.formatTime(Timer.time()), "Tahoma", 13, "white", Video.getScreenWidth() / 2, 0, "center", false);
+
     // Let the video engine render the screen
     Video.render();
 }

@@ -14,28 +14,29 @@ var Video = (function () {
     // Private local variables
 
     // General screen variables
-    let canvas,             // Real canvas that will be displayed
-        ctx,                // Real canvas context
-        buffer,             // Buffer that will be drawn on
-        bctx,               // Buffer context
-        width, height,      // Canvas/buffer width and height
+    let canvas, // Real canvas that will be displayed
+        ctx, // Real canvas context
+        buffer, // Buffer that will be drawn on
+        bctx, // Buffer context
+        width, height, // Canvas/buffer width and height
 
-        FPS,                // Frames per second to be set
-        counter,            // Frame count 
-        counterElement,     // DOM element that will display the FPS
-        then, now, first,   // Frame rate calculation variables
-        interval,           // Refreshing interval
-        dt, et,             // Delta time, Elapsed time
-        FPSdep = false,     // Toggles FPS dependency
+        FPS, // Frames per second to be set
+        counter, // Frame count 
+        counterElement, // DOM element that will display the FPS
+        then, now, first, // Frame rate calculation variables
+        interval, // Refreshing interval
+        dt, et, // Delta time, Elapsed time
+        FPSdep = false, // Toggles FPS dependency
 
-        debug;              // Toggles video debug mode
+        debug; // Toggles video debug mode
 
     // Camera variables
-    let cameraEnabled = false, 
-        cameraWidth,        // Camera width
-        cameraHeight,       // Camera height
-        cameraX,            // Camera center x
-        cameraY;            // Camera center y
+    let cameraEnabled = false,
+        cameraWidth, // Camera width
+        cameraHeight, // Camera height
+        cameraX, // Camera center x
+        cameraY, // Camera center y
+        cameraBleed; // Padding around the camera to prevent objects from not showing on the edges
 
     // Main video module to be exported
 
@@ -137,6 +138,51 @@ var Video = (function () {
             return canvas.height;
         },
 
+        /**
+         * Returns the width of the camera in pixels
+         * 
+         * @returns {number}
+         */
+        getCameraWidth: function () {
+            return cameraWidth;
+        },
+
+        /**
+         * Returns the height of the camera in pixels
+         * 
+         * @returns {number}
+         */
+        getCameraHeight: function () {
+            return cameraHeight;
+        },
+
+        /**
+         * Returns the x position of the camera
+         * 
+         * @returns {number}
+         */
+        getCameraX: function () {
+            return cameraX;
+        },
+
+        /**
+         * Returns the y position of the camera
+         * 
+         * @returns {number}
+         */
+        getCameraY: function () {
+            return cameraY;
+        },
+
+        /**
+         * Returns the number of bleed pixels of camera
+         * 
+         * @returns {number}
+         */
+        getCameraBleed: function () {
+            return cameraBleed;
+        },
+
         /**   
          * Initializes the screen
          * 
@@ -149,7 +195,8 @@ var Video = (function () {
             counter = 0;
             then = Date.now();
             first = then;
-            if (fps) FPS = fps; else FPSdep = true;
+            if (fps) FPS = fps;
+            else FPSdep = true;
             interval = 1000 / FPS;
 
             // Set up canvas and context
@@ -182,15 +229,16 @@ var Video = (function () {
          * @param {number}  height - Height of the area the camera is going to see
          * @param {number}  speed - Camera follow speed
          */
-        setupCamera: function (objectToFollow, width, height) {
-            // Turn the camera on
-            cameraEnabled = true;   
+        setupCamera: function (objectToFollow, width, height, bleed) {
+            // Turn the camera on 
+            cameraEnabled = true;
 
             // Assign camera settings
             cameraX = objectToFollow.x - width / 2;
             cameraY = objectToFollow.y - height / 2;
             cameraWidth = width;
             cameraHeight = height;
+            cameraBleed = bleed;
         },
 
         /**   
@@ -200,10 +248,47 @@ var Video = (function () {
          * @param {number}  y - Y position
          * @param {number}  objWidth - Width of the object to follow - Needed to center the camera
          * @param {number}  objHeigth - Height of the object to follow  - Needed to center the camera
+         * @param {number}  speed - Speed at which the camera will follow
          */
-        updateCamera: function (x, y, objWidth, objHeight) {
-            cameraX = x - cameraWidth / 2 + objWidth / 2;
-            cameraY = y - cameraHeight / 2 + objHeight / 2;
+        updateCamera: function (x, y, objWidth, objHeight, speed) {
+            // Stop following when near enough so it doesn't shake
+            if ((Math.round(cameraX) + cameraWidth / 2 - speed <= x && Math.round(cameraX) + cameraWidth / 2 + speed >= x) &&
+                (Math.round(cameraY) + cameraHeight / 2 - speed <= y && Math.round(cameraY) + cameraHeight / 2 + speed >= y)) {
+                return;
+            }
+
+            // Move towards that position
+            var rotation = Math.atan2(cameraY - y + cameraHeight / 2, cameraX - x + cameraWidth / 2);
+            cameraX -= Math.cos(rotation) * speed;
+            cameraY -= Math.sin(rotation) * speed;
+
+            // Also stop following when at the edge of screens
+            if (Math.round(cameraX) + cameraWidth >= buffer.width) {
+                cameraX = buffer.width - cameraWidth;
+            }
+            if (Math.round(cameraX) < 0) {
+                cameraX = 0;
+            }
+            if (Math.round(cameraY) + cameraHeight >= buffer.height) {
+                cameraY = buffer.height - cameraHeight;
+            }
+            if (Math.round(cameraY) < 0) {
+                cameraY = 0;
+            }
+        },
+
+        /**             
+         * Checks if a given object is in the view of the camera
+         * 
+         * @returns {boolean}
+         */
+        isObjectInView: function(object) {
+            return (
+                object.x > cameraX - cameraBleed &&
+                object.x < cameraX + cameraWidth + cameraBleed &&
+                object.y > cameraY - cameraBleed &&
+                object.y < cameraY + cameraHeight + cameraBleed
+            );
         },
 
         /**             
@@ -250,6 +335,13 @@ var Video = (function () {
          * @param {number}  thickness - Thickness of the stroke
          */
         drawText: function (value, font, size, color, x, y, align, isStroked, strokeColor, thickness) {
+
+            // Draw it according to the camera if there is one
+            if (cameraEnabled) {
+                x = cameraX + cameraWidth / 2;
+                y = cameraY;
+            }
+
             bctx.font = size + "px " + font;
             bctx.fillStyle = color;
             bctx.textAlign = align;
@@ -265,6 +357,7 @@ var Video = (function () {
 
         /**
          * Draws everything on the buffer to the actual screen
+         * Also handles drawing the camera if there is one
          */
         render: function () {
             if (!cameraEnabled) {

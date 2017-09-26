@@ -51,11 +51,11 @@ var Levels = (function () {
         /**
          * Assigns the level to be played
          * 
-         * @param {string}  tag - Name of the level to be played
+         * @param {string}  name - Name of the level to be played
          */
-        select: function (tag) {
+        select: function (name) {
             // Get the current level
-            current = Levels.find(tag);
+            current = Levels.find(name);
 
             // Capture the grid size
             let size = current.objectMap.gridSize;
@@ -112,7 +112,7 @@ var Levels = (function () {
             // Assign the camera if there is one
             if (current.camera) {
                 objToFollow = Objects.findByProperty('tag', current.camera.objectToFollow);
-                Video.setupCamera(objToFollow, current.camera.width, current.camera.height);
+                Video.setupCamera(objToFollow, current.camera.width, current.camera.height, current.camera.bleed);
             }
         },
 
@@ -124,7 +124,9 @@ var Levels = (function () {
             if (current.background.id != 'grid') {
                 ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
             }
-            Video.updateCamera(objToFollow.x, objToFollow.y, objToFollow.width, objToFollow.height)
+            if (current.camera) {
+                Video.updateCamera(objToFollow.coll.x, objToFollow.coll.y, objToFollow.width, objToFollow.height, current.camera.speed)
+            }
         },
 
         /**
@@ -132,7 +134,7 @@ var Levels = (function () {
          * 
          * @param {array}   levelObjects - An array of game objects (singular: levelObject)
          *                                                
-         * @property {string}   levelObject.tag - Name of the level   
+         * @property {string}   levelObject.name - Name of the level   
          * @property {number}   levelObject.width - Width of the level
          * @property {number}   levelObject.height - Height of the level 
          * @property {number}   levelObject.x - X offset of the level      
@@ -160,19 +162,19 @@ var Levels = (function () {
                 levels.push(levelList[i]);
 
                 // Also make them available to outside world through levels
-                this[levelList[i].tag] = levelList[i];
+                this[levelList[i].name] = levelList[i];
             }
         },
 
         /**
-         * Finds and returns a level by tag
+         * Finds and returns a level by name
          * 
-         * @param {string}  tag - Name of the level
+         * @param {string}  name - Name of the level
          * @returns {object}                     
          */
-        find: function (tag) {
+        find: function (name) {
             for (let i = 0; i < levels.length; i++) {
-                if (levels[i].tag == tag) {
+                if (levels[i].name == name) {
                     return levels[i];
                 }
             }

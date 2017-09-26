@@ -163,9 +163,6 @@ var Physics = (function () {
          * @returns {boolean}
          */
         checkCircleRectangleCollision: function (circle, rect) {
-
-            // Search around the circle for the rect object and assign rect to the found rect object!!!
-
             let circleDistX = Math.abs(circle.coll.x - (rect.coll.x + rect.coll.width / 2)),
                 circleDistY = Math.abs(circle.coll.y - (rect.coll.y + rect.coll.height / 2));
 

@@ -26,30 +26,39 @@ Globals.add([
  * E.g., Levels.intro1 
  */
 Levels.add([
+    // Level object
     {
-        tag: 'level1',
+        // Basic size and background information of a level
+        name: 'level1',
         width: 320,
         height: 240,
         x: 0,
         y: 0,
         background: 'imgBackground',
+
+        // Define a camera for the level
         camera: {
             objectToFollow: 'player',
-            width: 120,
-            height: 80,
-            speed: 0,
+            width: 240,
+            height: 160,
+            speed: 2,
+            bleed: 16 // Padding around the camera outside the screen
+            // bleed should be as big as the object most close to the end of the screen
         },
-        // Instantiate objects for level here
+
+        // Instantiate objects for the level, give them IDs to usei n the map
         objectsList: [
             { object: new Ball(0, 0, 0, 12, 12, 'ball', 'player'), levelID: 3 },
             { object: new Box(0, 0, 0, 32, 16, 'box', 'platformLong'), levelID: 2 },
             { object: new Box(0, 0, 0, 16, 16, 'box', 'platformNormal'), levelID: 1 },
             { object: new Box(0, 0, 0, 16, 16, 'box', 'platformWall'), levelID: 4 },
         ],
+
+        // Draw a map for the objects using their level IDs
         objectMap: {
-            width: 20,
-            height: 15,
-            gridSize: 16,
+            width: 20,      // Number of cells from left to right
+            height: 15,     // Number of cells from top to bottom
+            gridSize: 16,   // Size of the cells
             map: [
                 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
                 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
@@ -69,7 +78,6 @@ Levels.add([
             ]
         },
     },
-
     // Create custom levels here
     // ...
 ]);

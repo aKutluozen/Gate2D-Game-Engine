@@ -17,7 +17,6 @@ Point.prototype.draw = function () {
 Point.prototype.update = function () {
     this.x = this.movement.x;
     this.y = this.movement.y;
-    this.whatIsAroundMe = Physics.searchAround(this, this.whatIsAroundMe); // Always keep an updated list of what is around
     this.coll.update(this.x + this.width / 2, this.y + this.height / 2); // Always update the collision area position
 }
 
