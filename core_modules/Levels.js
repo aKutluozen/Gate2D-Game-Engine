@@ -139,12 +139,14 @@ var Levels = (function () {
                 // Parse objects and place them in their spots within the level
                 for (let j = 0; j < levelList[i].objectsList.length; j++) {
                     // Assign data to objects
+                    console.log(levelList[i].objectsList[j]);
+                    
                     let z = levelList[i].objectsList[j].z,
                         width = levelList[i].objectsList[j].width,
                         height = levelList[i].objectsList[j].height,
                         levelID = levelList[i].objectsList[j].levelID,
                         obj = levelList[i].objectsList[j] = Objects.findByProperty('name', levelList[i].objectsList[j].name);
-
+                    
                     // Convert to real object, assign neccessary position values
                     obj.z = z;
                     obj.width = obj.coll.width = width;

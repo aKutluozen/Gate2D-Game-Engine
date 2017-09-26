@@ -47,11 +47,11 @@ Levels.add([
         y: 0,
         background: 'imgBackground',
         objectsList: [
-            { name: 'ball', levelID: 3, width: 12, height: 12, z: 0 },
-            { name: 'box', levelID: 1, width: 16, height: 16, z: 0 },
+            { name: 'ball', tag: '1', levelID: 3, width: 12, height: 12, z: 0 },
+            { name: 'box', tag: '2', levelID: 1, width: 16, height: 16, z: 0 },
             { name: 'box', tag: 'dif', levelID: 5, width: 16, height: 16, z: 0 },
-            { name: 'wall', levelID: 4, width: 16, height: 16, z: 0 },
-            { name: 'point', levelID: 2, width: 12, height: 12, z: 0 }
+            { name: 'wall', tag: '3', levelID: 4, width: 16, height: 16, z: 0 },
+            { name: 'point', tag: '4', levelID: 2, width: 12, height: 12, z: 0 }
         ],
         objectMap: {
             width: 20,
