@@ -13,6 +13,7 @@ var Video = (function () {
 
     // Private local variables
 
+    // General screen variables
     let canvas,             // Real canvas that will be displayed
         ctx,                // Real canvas context
         buffer,             // Buffer that will be drawn on
@@ -28,6 +29,13 @@ var Video = (function () {
         FPSdep = false,     // Toggles FPS dependency
 
         debug;              // Toggles video debug mode
+
+    // Camera variables
+    let cameraEnabled = false, 
+        cameraWidth,        // Camera width
+        cameraHeight,       // Camera height
+        cameraX,            // Camera center x
+        cameraY;            // Camera center y
 
     // Main video module to be exported
 
@@ -166,6 +174,38 @@ var Video = (function () {
             counterElement = document.getElementById('counter') || '';
         },
 
+        /**   
+         * Sets up the camera, turns it on
+         * 
+         * @param {object}  objectToFollow - Object to follow
+         * @param {number}  width - Width of the area the camera is going to see
+         * @param {number}  height - Height of the area the camera is going to see
+         * @param {number}  speed - Camera follow speed
+         */
+        setupCamera: function (objectToFollow, width, height) {
+            // Turn the camera on
+            cameraEnabled = true;   
+
+            // Assign camera settings
+            cameraX = objectToFollow.x - width / 2;
+            cameraY = objectToFollow.y - height / 2;
+            cameraWidth = width;
+            cameraHeight = height;
+        },
+
+        /**   
+         * Keeps the camera position updated
+         * 
+         * @param {number}  x - X position
+         * @param {number}  y - Y position
+         * @param {number}  objWidth - Width of the object to follow - Needed to center the camera
+         * @param {number}  objHeigth - Height of the object to follow  - Needed to center the camera
+         */
+        updateCamera: function (x, y, objWidth, objHeight) {
+            cameraX = x - cameraWidth / 2 + objWidth / 2;
+            cameraY = y - cameraHeight / 2 + objHeight / 2;
+        },
+
         /**             
          * Refreshes the screen on a given FPS
          * 
@@ -227,7 +267,11 @@ var Video = (function () {
          * Draws everything on the buffer to the actual screen
          */
         render: function () {
-            ctx.drawImage(buffer, 0, 0);
+            if (!cameraEnabled) {
+                ctx.drawImage(buffer, 0, 0);
+            } else {
+                ctx.drawImage(buffer, cameraX, cameraY, cameraWidth, cameraHeight, 0, 0, canvas.width, canvas.height);
+            }
         }
     }
 })();

@@ -15,7 +15,8 @@ var Levels = (function () {
 
     let levels = [], // Array of levels
         current = null, // Cursor for the current level
-        ctx = null; // Context that will have the level drawn on
+        ctx = null, // Context that will have the level drawn on
+        objToFollow = null; // Game object to follow in case there is a camera
 
     // Main levels module to be exported
 
@@ -66,7 +67,7 @@ var Levels = (function () {
             function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
-            
+
             for (let yPos = 0; yPos < current.objectMap.height; yPos++) {
                 for (let xPos = 0; xPos < current.objectMap.width; xPos++) {
 
@@ -77,7 +78,7 @@ var Levels = (function () {
                     if (objNum !== 0) {
                         let objFound = Objects.findByProperty('levelID', objNum);
                         objFound = objFound.object;
-                        
+
                         // Instantiate new objects out of what is found
                         let newObj = eval('new ' +
                             capitalizeFirstLetter(objFound.name) +
@@ -85,7 +86,8 @@ var Levels = (function () {
                             objFound.z + ',' +
                             objFound.width + ',' +
                             objFound.height + ',"' +
-                            objFound.name + '")');
+                            objFound.name + '","' +
+                            objFound.tag + '")');
 
                         // Add them to the lists
                         Objects.add(newObj);
@@ -95,26 +97,34 @@ var Levels = (function () {
             }
 
             // Replace level object list and the Objects module with new level objects
-            this.currentLevel().objectsList = levelObjects.slice();
+            current.objectsList = levelObjects.slice();
 
             // Arrange the objectsList array based on z (depth) so it draws accordingly
-            this.currentLevel().objectsList = this.currentLevel().objectsList.sort(function (a, b) {
+            current.objectsList = current.objectsList.sort(function (a, b) {
                 return a.z - b.z;
             });
 
             // Cleaning
-            Objects.objects([]);        // Empty the pool
-            Objects.add(levelObjects);  // Fill it with level game objects
-            levelObjects = [];          // Empty the temporary array
+            Objects.objects([]); // Empty the pool
+            Objects.add(levelObjects); // Fill it with level game objects
+            levelObjects = []; // Empty the temporary array
+
+            // Assign the camera if there is one
+            if (current.camera) {
+                objToFollow = Objects.findByProperty('tag', current.camera.objectToFollow);
+                Video.setupCamera(objToFollow, current.camera.width, current.camera.height);
+            }
         },
 
         /**
          * Draws the background of the current level
+         * Also draws the camera if there is one
          */
         draw: function () {
             if (current.background.id != 'grid') {
                 ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
             }
+            Video.updateCamera(objToFollow.x, objToFollow.y, objToFollow.width, objToFollow.height)
         },
 
         /**

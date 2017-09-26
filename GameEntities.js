@@ -28,14 +28,20 @@ Globals.add([
 Levels.add([
     {
         tag: 'level1',
-        width: 640,
-        height: 480,
+        width: 320,
+        height: 240,
         x: 0,
         y: 0,
         background: 'imgBackground',
+        camera: {
+            objectToFollow: 'player',
+            width: 120,
+            height: 80,
+            speed: 0,
+        },
         // Instantiate objects for level here
         objectsList: [
-            { object: new Ball(0, 0, 0, 12, 12, 'ball'), levelID: 3 },
+            { object: new Ball(0, 0, 0, 12, 12, 'ball', 'player'), levelID: 3 },
             { object: new Box(0, 0, 0, 32, 16, 'box', 'platformLong'), levelID: 2 },
             { object: new Box(0, 0, 0, 16, 16, 'box', 'platformNormal'), levelID: 1 },
             { object: new Box(0, 0, 0, 16, 16, 'box', 'platformWall'), levelID: 4 },
@@ -53,7 +59,7 @@ Levels.add([
                 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 4,
                 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 4,
                 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 4,
-                4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 3, 0, 1, 0, 0, 4,
+                4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 3, 0, 1, 0, 1, 4,
                 4, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 2, 0, 1, 0, 0, 4,
                 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 4,
                 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 4,
