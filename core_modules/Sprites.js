@@ -15,29 +15,51 @@ var Sprites = (function () {
         /**
          * Returns animation object with functions
          * 
-         * @param {number}  a - Length of side a
-         * @param {number}  b - Length of side b
+         * @constructor
+         * @param {number}  fps - Frames per second of the animation
+         * @param {number}  frames - Amount of frames the animation has - Horizontally
          * @returns {number}
          */
-        setupAnimation: function (frames, fps) {
-            let frame = 0;
+        animation: function (fps, frames) {
+            // Local variables
+            var frame = 0,
+                animation = null,
+                states = [];
 
-            let animation = window.setInterval(function () {
-                if (frame < frames) {
-                    frame++;
-                } else {
-                    frame = 0;
-                }
-            }, 1000 / fps);
-
-            return frame;
-        },
-
-        animation: function (image, width, height, t) {
-            let frame = 0;
-
+            // Methods
             this.getFrame = function () {
-                return frame
+                return frame;
+            };
+
+            this.play = function () {
+                if (!animation) {
+                    animation = window.setInterval(function () {
+                        if (frame < frames) frame++;
+                        else frame = 0;
+                    }, 1000 / fps);
+                }
+            };
+
+            this.stop = function () {
+                window.clearInterval(animation);
+                animation = null;
+            };
+
+            this.createState = function (name, beginning, end) {
+                states.push({
+                    name: name,
+                    beginning: beginning,
+                    end: end
+                });
+            };
+
+            this.playState = function (name) {
+                for (let i = 0; i < states.length; i++) {
+                    if (states[i].name === name) {
+                        return states[i];
+                    }
+                }
+                return false;
             }
         }
     }

@@ -11,7 +11,7 @@ function Ball(x, y, z, width, height, name, tag, controlled) {
     this.isJumping = false; // If the object is in the air, keeps it from jumping again
     this.isFalling = true; // When the head hits a platform
     this.yVelocity = 0; // This number is recharged and consumed every time player jumps
-    this.jumpSpeed = 6; // Maximum speed for jump
+    this.jumpSpeed = 5; // Maximum speed for jump
     this.gravity = 0.25; // Gravity is added to the yVelocity until the max. jump speed 
 
     this.whatIsAroundMe = []; // An empty list of colliding surrounding objects
@@ -19,16 +19,13 @@ function Ball(x, y, z, width, height, name, tag, controlled) {
     // Define collision area if one is needed
     this.coll = new Physics.CircleCollision(x, y, z, width);
 
-    this.frame = 0;
-    this.frames = 4;
-    this.animation = window.setInterval( function() {
-        console.log(this.frame);
-        if (this.frame < this.frames) {
-            this.frame++;
-        } else {
-            this.frame = 0;
-        }
-    }, 1000/60);
+    this.animation = new Sprites.animation(12, 3);
+    this.animation.createState({
+        name: 'walkRight',
+        beginning: 0,
+        end: 3
+    });
+    console.log(this.animationRight);
 }
 
 // Establish the inheritance
@@ -36,8 +33,16 @@ Ball.prototype = new Entity();
 
 // Define object methods
 Ball.prototype.draw = function () {
+    //console.log(this.animation.getFrame());
     //this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    this.ctx.drawImage(this.sprite, this.frame * 16, 0, 16, 16, this.x, this.y, this.width, this.height);
+    if (this.speedX > 0) {
+        //this.animation.playState('walkRight');
+        this.ctx.drawImage(this.sprite, this.animation.getFrame() * 16, 0, 16, 16, this.x, this.y, this.width, this.height);
+    } else if (this.speedX < 0) {
+        this.ctx.drawImage(this.sprite, this.animation.getFrame() * 16, 16, 16, 16, this.x, this.y, this.width, this.height);
+    } else {
+        this.ctx.drawImage(this.sprite, 0, 32, 16, 16, this.x, this.y, this.width, this.height);
+    }
     this.coll.draw();
 }
 
@@ -109,10 +114,10 @@ Ball.prototype.handleMouseMovement = function (input) {
 
 Ball.prototype.handleKeyDown = function (input) {
     if (input === 39) {
-        this.speedX = 2;
+        this.speedX = 1;
     }
     if (input === 37) {
-        this.speedX = -2;
+        this.speedX = -1;
     }
     if (input === 38) {
         this.speedY = -2;
@@ -124,6 +129,7 @@ Ball.prototype.handleKeyDown = function (input) {
         this.isJumping = true;
         this.yVelocity = -this.jumpSpeed;
     }
+    this.animation.play();
 }
 
 Ball.prototype.handleKeyUp = function (input) {
@@ -139,4 +145,5 @@ Ball.prototype.handleKeyUp = function (input) {
     if (input === 40) {
         this.speedY = 0;
     }
+    this.animation.stop();
 }

@@ -48,7 +48,7 @@ Levels.add([
 
         // Instantiate objects for the level, give them IDs to usei n the map
         objectsList: [
-            { object: new Ball(0, 0, 0, 12, 12, 'ball', 'player'), levelID: 3 },
+            { object: new Ball(0, 0, 0, 16, 16, 'ball', 'player'), levelID: 3 },
             { object: new Box(0, 0, 0, 32, 16, 'box', 'platformLong'), levelID: 2 },
             { object: new Box(0, 0, 0, 16, 16, 'box', 'platformNormal'), levelID: 1 },
             { object: new Box(0, 0, 0, 16, 16, 'box', 'platformWall'), levelID: 4 },

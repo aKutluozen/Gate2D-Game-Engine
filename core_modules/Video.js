@@ -219,6 +219,10 @@ var Video = (function () {
             ctx = canvas.getContext('2d');
             document.body.appendChild(canvas);
             counterElement = document.getElementById('counter') || '';
+            ctx.msImageSmoothingEnabled = false;
+            ctx.mozImageSmoothingEnabled = false;
+            ctx.webkitImageSmoothingEnabled = false;
+            ctx.imageSmoothingEnabled = false;
         },
 
         /**   
