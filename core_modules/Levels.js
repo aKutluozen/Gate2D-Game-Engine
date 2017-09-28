@@ -15,7 +15,8 @@ var Levels = (function () {
 
     let levels = [], // Array of levels
         current = null, // Cursor for the current level
-        ctx = null; // Context that will have the level drawn on
+        ctx = null, // Context that will have the level drawn on
+        objToFollow = null; // Game object to follow in case there is a camera
 
     // Main levels module to be exported
 
@@ -50,11 +51,11 @@ var Levels = (function () {
         /**
          * Assigns the level to be played
          * 
-         * @param {string}  tag - Name of the level to be played
+         * @param {string}  name - Name of the level to be played
          */
-        select: function (tag) {
+        select: function (name) {
             // Get the current level
-            current = Levels.find(tag);
+            current = Levels.find(name);
 
             // Capture the grid size
             let size = current.objectMap.gridSize;
@@ -62,6 +63,7 @@ var Levels = (function () {
             // Temporary array of copy objects to be created
             let levelObjects = [];
 
+            // One time function
             function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
@@ -74,17 +76,18 @@ var Levels = (function () {
 
                     // Get objects by their numbers, assign them their new information
                     if (objNum !== 0) {
-
                         let objFound = Objects.findByProperty('levelID', objNum);
+                        objFound = objFound.object;
 
-                        // Make an object out of what is found
+                        // Instantiate new objects out of what is found
                         let newObj = eval('new ' +
                             capitalizeFirstLetter(objFound.name) +
                             '(' + xPos * size + ',' + yPos * size + ',' +
                             objFound.z + ',' +
                             objFound.width + ',' +
                             objFound.height + ',"' +
-                            objFound.name + '")');
+                            objFound.name + '","' +
+                            objFound.tag + '")');
 
                         // Add them to the lists
                         Objects.add(newObj);
@@ -94,24 +97,35 @@ var Levels = (function () {
             }
 
             // Replace level object list and the Objects module with new level objects
-            this.currentLevel().objectsList = levelObjects.slice();
-            Objects.objects([]);
-            Objects.add(levelObjects);
+            current.objectsList = levelObjects.slice();
 
             // Arrange the objectsList array based on z (depth) so it draws accordingly
-            this.currentLevel().objectsList = this.currentLevel().objectsList.sort(function (a, b) {
+            current.objectsList = current.objectsList.sort(function (a, b) {
                 return a.z - b.z;
             });
 
-            console.log('Original objects: ', Objects.objects(), 'Level objects: ', this.currentLevel().objectsList);
+            // Cleaning
+            Objects.objects([]); // Empty the pool
+            Objects.add(levelObjects); // Fill it with level game objects
+            levelObjects = []; // Empty the temporary array
+
+            // Assign the camera if there is one
+            if (current.camera) {
+                objToFollow = Objects.findByProperty('tag', current.camera.objectToFollow);
+                Video.setupCamera(objToFollow, current.camera.width, current.camera.height, current.camera.bleed);
+            }
         },
 
         /**
          * Draws the background of the current level
+         * Also draws the camera if there is one
          */
         draw: function () {
             if (current.background.id != 'grid') {
                 ctx.drawImage(current.background, current.x, current.y, current.width, current.height);
+            }
+            if (current.camera) {
+                Video.updateCamera(objToFollow.coll.x, objToFollow.coll.y, objToFollow.width, objToFollow.height, current.camera.speed)
             }
         },
 
@@ -120,7 +134,7 @@ var Levels = (function () {
          * 
          * @param {array}   levelObjects - An array of game objects (singular: levelObject)
          *                                                
-         * @property {string}   levelObject.tag - Name of the level   
+         * @property {string}   levelObject.name - Name of the level   
          * @property {number}   levelObject.width - Width of the level
          * @property {number}   levelObject.height - Height of the level 
          * @property {number}   levelObject.x - X offset of the level      
@@ -137,41 +151,30 @@ var Levels = (function () {
                     levelList[i].background = Loader.getFile('grid');
                 }
 
-                // Parse objects and place them in their spots within the level
+                // Get objects from the objects list of a given level
+                // Add them to the global object pool
                 for (let j = 0; j < levelList[i].objectsList.length; j++) {
                     // Assign data to objects
-                    let z = levelList[i].objectsList[j].z,
-                        width = levelList[i].objectsList[j].width,
-                        height = levelList[i].objectsList[j].height,
-                        levelID = levelList[i].objectsList[j].levelID,
-                        obj = levelList[i].objectsList[j] = Objects.findByProperty('name', levelList[i].objectsList[j].name);
-
-                    // Convert to real object, assign neccessary position values
-                    obj.z = z;
-                    obj.width = obj.coll.width = width;
-                    obj.height = obj.coll.height = height;
-                    obj.coll.z = z;
-                    obj.levelID = levelID;
+                    Objects.add(levelList[i].objectsList[j]);
                 }
 
                 // Add level to the levels array
                 levels.push(levelList[i]);
 
                 // Also make them available to outside world through levels
-                this[levelList[i].tag] = levelList[i];
-
+                this[levelList[i].name] = levelList[i];
             }
         },
 
         /**
-         * Finds and returns a level by tag
+         * Finds and returns a level by name
          * 
-         * @param {string}  tag - Name of the level
+         * @param {string}  name - Name of the level
          * @returns {object}                     
          */
-        find: function (tag) {
+        find: function (name) {
             for (let i = 0; i < levels.length; i++) {
-                if (levels[i].tag == tag) {
+                if (levels[i].name == name) {
                     return levels[i];
                 }
             }

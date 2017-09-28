@@ -19,7 +19,9 @@ Loader.addFiles(
         { name: 'imgPoint', type: 'img', path: 'images/point.png' },
         { name: 'imgBackground', type: 'img', path: 'images/bg.jpg' },
         { name: 'imgBackground2', type: 'img', path: 'images/bg2.jpg' },
-        { name: 'imgBlock', type: 'img', path: 'images/block.png' }
+        { name: 'imgBlock', type: 'img', path: 'images/block.png' },
+        { name: 'imgBricks', type: 'img', path: 'images/bricks.png' },
+        { name: 'imgCharacter', type: 'img', path: 'images/character.png' }
     ],
 
     // External scripts
@@ -27,19 +29,20 @@ Loader.addFiles(
         { name: 'boxScript', type: 'script', path: 'custom_objects/box.js' },
         { name: 'ballScript', type: 'script', path: 'custom_objects/ball.js' },
         { name: 'padScript', type: 'script', path: 'custom_objects/pad.js' },
-        { name: 'wallScript', type: 'script', path: 'custom_objects/wall.js' }
+        { name: 'wallScript', type: 'script', path: 'custom_objects/wall.js' },
+        { name: 'pointScript', type: 'script', path: 'custom_objects/point.js' }
     ]
 
     // Set up and run the engine when all the loading is done
 ).loadAll(function () {
 
     Engine.setup({
-        screenWidth: 400,
-        screenHeight: 400,
+        screenWidth: 320,
+        screenHeight: 240,
         mouseEnabled: true,
         keyboardEnabled: true,
         startingLevel: 'level1',
-        physicsDebug: true
+        physicsDebug: false
     });
 
     Timer.setup(function () { Timer.increaseTimeBy(1) }, 1000);

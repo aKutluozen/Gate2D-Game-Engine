@@ -38,10 +38,6 @@ var Objects = (function () {
             return objs === undefined ? objectsArray : objectsArray = objs.slice();
         },
 
-        get: function (name) {
-            return objects[name]; // make this object thing to outside world open so collisions can work
-        },
-
         /**
          * Adds an array of game objects
          * 
@@ -75,72 +71,15 @@ var Objects = (function () {
             return null;
         },
 
-        // !!! TRY AND MAKE THIS MORE EFFICIENT - DON"T SEARCH FOR EVERYTHING ALL THE TIME!
         /**
-         * Finds and returns a game object if it is in a certain area
+         * Returns the game objects with a given name
+         * This function is a shortcut for findByProperty('name', <name>)
          * 
-         * @param {number}  x - X position of the game object
-         * @param {number}  y - Y position of the game object
-         * @returns {object}  
+         * @param {string}   name - An array of game objects
+         * @returns {object}
          */
-        findInPosition: function (x, y) {
-            for (let i = 0; i < objectsArray.length; i++) {
-                if (x > objectsArray[i].x && y > objectsArray[i].y && x < objectsArray[i].x + objectsArray[i].width && y < objectsArray[i].y + objectsArray[i].height) {
-                    return objectsArray[i];
-                }
-            }
-            return null;
-        },
-
-        clone: function (item) {
-            if (!item) { return item; } // null, undefined values check
-
-            var types = [Number, String, Boolean],
-                result;
-
-            // normalizing primitives if someone did new String('aaa'), or new Number('444');
-            types.forEach(function (type) {
-                if (item instanceof type) {
-                    result = type(item);
-                }
-            });
-
-            if (typeof result == "undefined") {
-                if (Object.prototype.toString.call(item) === "[object Array]") {
-                    result = [];
-                    item.forEach(function (child, index, array) {
-                        result[index] = this.clone(child);
-                    });
-                } else if (typeof item == "object") {
-                    // testing that this is DOM
-                    if (item.nodeType && typeof item.cloneNode == "function") {
-                        var result = item.cloneNode(true);
-                    } else if (!item.prototype) { // check that this is a literal
-                        if (item instanceof Date) {
-                            result = new Date(item);
-                        } else {
-                            // it is an object literal
-                            result = {};
-                            for (var i in item) {
-                                result[i] = this.clone(item[i]);
-                            }
-                        }
-                    } else {
-                        // depending what you would like here,
-                        // just keep the reference, or create new object
-                        if (false && item.constructor) {
-                            // would not advice to do that, reason? Read below
-                            result = new item.constructor();
-                        } else {
-                            result = item;
-                        }
-                    }
-                } else {
-                    result = item;
-                }
-            }
-
-            return result;
+        get: function (name) {
+            return objects[name];
         }
     }
 }());

@@ -1,4 +1,4 @@
-function Pad (x, y, z, width, height, tag) {
+function Pad (x, y, z, width, height) {
     Entity.apply(this, arguments); // Apply the inherited properties
     this.img = Loader.getFile('imgPad'); // Load the object image
     this.coll = new Physics.AABBCollision(x, y, z, width, height);
@@ -20,5 +20,5 @@ Pad.prototype.update = function () {
 }
 
 Pad.prototype.handleMouseMovement = function (input) {
-    this.x = input.x;
+
 }

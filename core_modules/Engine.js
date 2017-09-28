@@ -47,11 +47,11 @@ var Engine = (function (GameUpdate, GameDraw, Video) {
             // Handle debug setup
             Video.debug(settings.screenDebug);
             Physics.debug(settings.physicsDebug);
-            
+
             // Level setup
             Levels.select(settings.startingLevel);
             Levels.levelContext(Video.bufferContext());
-            
+
             // Connect every object to the buffer context
             for (let i = 0; i < Objects.length(); i++) {
                 Objects.objects()[i].setupDisplay();
