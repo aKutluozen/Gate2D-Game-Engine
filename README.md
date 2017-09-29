@@ -1,6 +1,6 @@
 ![alt text](http://www.alikutluozen.com/images/logos/gate-logo.png)
 
-Gate2D is an HTML5 Canvas based game engine written in JavaScript. It provides developers with a useful set of tools for graphics, level management, object pooling, math and physics calculations, and many more. Gate2D helps set up a project structure and build playable games in matter of minutes.
+Gate2D is an HTML5 Canvas based game engine written in JavaScript. It provides developers with a useful set of tools for graphics, level management, object pooling, math and physics calculations, and more. Gate2D helps set up a project structure and build playable games in matter of minutes.
 
 # Basic Workflow of the Engine:
 
