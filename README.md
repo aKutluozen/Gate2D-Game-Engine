@@ -1,4 +1,4 @@
-# JS-Game-Boilerplate
+![alt text](http://www.alikutluozen.com/images/logos/gate-logo.png)
 
 A basic JavaScript game framework utilizing canvas features of HTML5.
 
