@@ -11,3 +11,13 @@ Gate2D is an HTML5 Canvas based game engine written in JavaScript. It provides d
 5. Any extra draw or update calls can be added to update.js or draw.js.
 
 A much more detailed documentation will come soon. For now, just follow the example games I've created for you!
+
+# What is next?
+
+- Better sprite management
+- Sound module
+- 2D map grid with multiple objects on the same cell
+- Mobile controls
+- More game examples and tutorials
+- Ultimately, multiplayer functionalities
+

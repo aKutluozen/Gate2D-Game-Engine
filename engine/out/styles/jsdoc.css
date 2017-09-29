@@ -17,7 +17,7 @@ body {
     font-family: 'Helvetica Neue', Helvetica, sans-serif;
     font-size: 16px;
     line-height: 160%;
-    background-image: url('grid.png');
+    background-image: url('../grid.png');
     background-repeat: repeat;
 }
 
@@ -706,7 +706,7 @@ span.param-type,
     margin: auto auto;
     background: #f1f1f1;
     padding: 30px;
-    border-radius: 20px;
+    border-radius: 10px;
     margin-top: 20px;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
 }
