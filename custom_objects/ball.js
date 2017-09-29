@@ -20,12 +20,6 @@ function Ball(x, y, z, width, height, name, tag, controlled) {
     this.coll = new Physics.CircleCollision(x, y, z, width);
 
     this.animation = new Sprites.animation(12, 3);
-    this.animation.createState({
-        name: 'walkRight',
-        beginning: 0,
-        end: 3
-    });
-    console.log(this.animationRight);
 }
 
 // Establish the inheritance
@@ -33,10 +27,7 @@ Ball.prototype = new Entity();
 
 // Define object methods
 Ball.prototype.draw = function () {
-    //console.log(this.animation.getFrame());
-    //this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     if (this.speedX > 0) {
-        //this.animation.playState('walkRight');
         this.ctx.drawImage(this.sprite, this.animation.getFrame() * 16, 0, 16, 16, this.x, this.y, this.width, this.height);
     } else if (this.speedX < 0) {
         this.ctx.drawImage(this.sprite, this.animation.getFrame() * 16, 16, 16, 16, this.x, this.y, this.width, this.height);
