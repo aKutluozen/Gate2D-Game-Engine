@@ -13,24 +13,24 @@
 Loader.addFiles(
     // External resources
     [
-        { name: 'grid', type: 'img', path: 'images/grid.png' },
-        { name: 'imgPad', type: 'img', path: 'images/pad.png' },
-        { name: 'imgBall', type: 'img', path: 'images/ball.png' },
-        { name: 'imgPoint', type: 'img', path: 'images/point.png' },
-        { name: 'imgBackground', type: 'img', path: 'images/bg.jpg' },
-        { name: 'imgBackground2', type: 'img', path: 'images/bg2.jpg' },
-        { name: 'imgBlock', type: 'img', path: 'images/block.png' },
-        { name: 'imgBricks', type: 'img', path: 'images/bricks.png' },
-        { name: 'imgCharacter', type: 'img', path: 'images/character.png' }
+        { name: 'grid', type: 'img', path: 'assets/images/grid.png' },
+        { name: 'imgPad', type: 'img', path: 'assets/images/pad.png' },
+        { name: 'imgBall', type: 'img', path: 'assets/images/ball.png' },
+        { name: 'imgPoint', type: 'img', path: 'assets/images/point.png' },
+        { name: 'imgBackground', type: 'img', path: 'assets/images/bg.jpg' },
+        { name: 'imgBackground2', type: 'img', path: 'assets/images/bg2.jpg' },
+        { name: 'imgBlock', type: 'img', path: 'assets/images/block.png' },
+        { name: 'imgBricks', type: 'img', path: 'assets/images/bricks.png' },
+        { name: 'imgCharacter', type: 'img', path: 'assets/images/character.png' }
     ],
 
     // External scripts
     [
-        { name: 'boxScript', type: 'script', path: 'custom_objects/box.js' },
-        { name: 'ballScript', type: 'script', path: 'custom_objects/ball.js' },
-        { name: 'padScript', type: 'script', path: 'custom_objects/pad.js' },
-        { name: 'wallScript', type: 'script', path: 'custom_objects/wall.js' },
-        { name: 'pointScript', type: 'script', path: 'custom_objects/point.js' }
+        { name: 'boxScript', type: 'script', path: 'assets/objects/box.js' },
+        { name: 'ballScript', type: 'script', path: 'assets/objects/ball.js' },
+        { name: 'padScript', type: 'script', path: 'assets/objects/pad.js' },
+        { name: 'wallScript', type: 'script', path: 'assets/objects/wall.js' },
+        { name: 'pointScript', type: 'script', path: 'assets/objects/point.js' }
     ]
 
     // Set up and run the engine when all the loading is done

@@ -17,7 +17,7 @@ body {
     right: 0;
     margin: auto;
     background: #ddffff;
-    background-image: url('images/grid.png');
+    background-image: url('../images/grid.png');
     display: block;
     cursor: none;
     height: auto;
