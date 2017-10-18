@@ -36,7 +36,7 @@ Gate2D.Loader.addFiles(
     // Set up and run the engine when all the loading is done
 ).loadAll(function () {
 
-    Gate2D.Engine.setup({
+    Gate2D.Manager.setup({
         screenWidth: 320,
         screenHeight: 240,
         mouseEnabled: true,
@@ -46,5 +46,5 @@ Gate2D.Loader.addFiles(
     });
 
     Gate2D.Timer.setup(function () { Gate2D.Timer.increaseTimeBy(1) }, 1000);
-    Gate2D.Engine.run();
+    Gate2D.Manager.run();
 });

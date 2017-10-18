@@ -57,8 +57,8 @@ Gate2D.Levels = (function () {
         select: function (name, condition) {
 
             if (condition() === true) {
-                // Wake the controls again
-                Gate2D.Engine.setupControls();
+                // Wake up the controls again
+                // Gate2D.Manager.setupControls();
 
                 // Get the current level
                 _current = this.get(name);
@@ -126,15 +126,18 @@ Gate2D.Levels = (function () {
                 // Connect every object to the buffer context
                 Gate2D.Objects.setupDisplayForObjects();
 
-                // Wake the controls again
-                Gate2D.Engine.setupControls();
+                // Wake up the controls again
+                Gate2D.Manager.setupControls();
 
                 // Assign the camera if there is one
                 if (_current.camera) {
                     _objToFollow = Gate2D.Objects.findByProperty('tag', _current.camera.objectToFollow);
                     Gate2D.Video.setupCamera(_objToFollow, _current.camera.width, _current.camera.height, _current.camera.bleed);
                 }
+
+                console.log(_current.name + ' is setup');
             }
+            
         },
 
         /**

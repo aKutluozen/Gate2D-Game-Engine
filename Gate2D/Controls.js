@@ -11,6 +11,11 @@ Gate2D.Controls = (function () {
 
     'use strict';
 
+    // Following booleans make sure listeners are added only once
+    let _keyboardListenerAdded = false,
+        _mouseListenerAdded = false,
+        _touchListenerAdded = false;
+
     // Main control module to be exported
 
     return {
@@ -20,23 +25,26 @@ Gate2D.Controls = (function () {
          * @param {Object}  entities - An array of game objects
          */
         initMouseControls: function (entities) {
-            let _this = this; // Cache 'this'
-
-            Gate2D.Video.canvas().addEventListener('mousemove', function (event) {
-                for (let i = 0, len = entities.length; i < len; i++) {
-                    if (entities[i].controlled) {
-                        entities[i].handleMouseMovement(_this.getMousePosition(event));
+            let _this = this;
+            
+            if (!_mouseListenerAdded) {
+                Gate2D.Video.canvas().addEventListener('mousemove', function (event) {
+                    for (let i = 0, len = entities.length; i < len; i++) {
+                        if (entities[i].controlled) {
+                            entities[i].handleMouseMovement(_this.getMousePosition(event));
+                        }
                     }
-                }
-            });
+                });
 
-            Gate2D.Video.canvas().addEventListener('mousedown', function (event) {
-                for (let i = 0, len = entities.length; i < len; i++) {
-                    if (entities[i].controlled) {
-                        entities[i].handleMouseDown(_this.getMousePosition(event));
+                Gate2D.Video.canvas().addEventListener('mousedown', function (event) {
+                    for (let i = 0, len = entities.length; i < len; i++) {
+                        if (entities[i].controlled) {
+                            entities[i].handleMouseDown(_this.getMousePosition(event));
+                        }
                     }
-                }
-            });
+                });
+                _mouseListenerAdded = true;
+            }
         },
 
         /**
@@ -47,21 +55,28 @@ Gate2D.Controls = (function () {
         initTouchControls: function (entities) {
             let _this = this;
 
-            Gate2D.Video.canvas().addEventListener('touchstart', function (event) {
-                for (let i = 0, len = entities.length; i < len; i++) {
-                    if (entities[i].controlled) {
-                        entities[i].handleMouseDown(_this.getTouchPosition(event));
+            if (!_touchListenerAdded) {
+                Gate2D.Video.canvas().addEventListener('touchstart', function (event) {
+                    for (let i = 0, len = entities.length; i < len; i++) {
+                        if (entities[i].controlled) {
+                            entities[i].handleMouseDown(_this.getTouchPosition(event));
+                        }
                     }
-                }
-            }, {passive: true});
+                }, {
+                    passive: true
+                });
 
-            Gate2D.Video.canvas().addEventListener('touchmove', function (event) {
-                for (let i = 0, len = entities.length; i < len; i++) {
-                    if (entities[i].controlled) {
-                        entities[i].handleMouseMovement(_this.getTouchPosition(event));
+                Gate2D.Video.canvas().addEventListener('touchmove', function (event) {
+                    for (let i = 0, len = entities.length; i < len; i++) {
+                        if (entities[i].controlled) {
+                            entities[i].handleMouseMovement(_this.getTouchPosition(event));
+                        }
                     }
-                }
-            }, {passive: true});
+                }, {
+                    passive: true
+                });
+                _touchListenerAdded = true;
+            }
         },
 
         /**
@@ -97,25 +112,28 @@ Gate2D.Controls = (function () {
          * @param {array}   entities - An array of game objects
          */
         initKeyboardControls: function (entities) {
-            let _this = this; // Cache 'this'
+            let _this = this;
 
-            document.addEventListener('keydown', function (event) {
-                for (let i = 0, len = entities.length; i < len; i++) {
-                    if (entities[i].controlled) {
-                        entities[i].handleKeyDown(event.keyCode);
+            if (!_keyboardListenerAdded) {
+                document.addEventListener('keydown', function (event) {
+                    for (let i = 0, len = entities.length; i < len; i++) {
+                        if (entities[i].controlled) {
+                            entities[i].handleKeyDown(event.keyCode);
+                        }
                     }
-                }
+                });
 
-                _this.keyboardListener(event.keyCode);
-            });
-
-            document.addEventListener('keyup', function (event) {
-                for (let i = 0, len = entities.length; i < len; i++) {
-                    if (entities[i].controlled) {
-                        entities[i].handleKeyUp(event.keyCode);
+                document.addEventListener('keyup', function (event) {
+                    _this.keyboardListener(event.keyCode);
+                    for (let i = 0, len = entities.length; i < len; i++) {
+                        if (entities[i].controlled) {
+                            entities[i].handleKeyUp(event.keyCode);
+                        }
                     }
-                }
-            });
+
+                });
+                _keyboardListenerAdded = true;
+            }
         },
 
         /**
@@ -125,7 +143,12 @@ Gate2D.Controls = (function () {
          */
         keyboardListener: function (input) {
             if (input === 27) {
-                Gate2D.Engine.pause(!Gate2D.Engine.pause());
+                console.log('did');
+                if (Gate2D.Manager.gameStatus() === 'on') {
+                    Gate2D.Manager.gameStatus('paused');
+                } else if (Gate2D.Manager.gameStatus() === 'paused') {
+                    Gate2D.Manager.gameStatus('on');
+                }
             }
         }
     }

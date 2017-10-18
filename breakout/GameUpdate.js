@@ -12,7 +12,7 @@ Gate2D.GameUpdate = function () {
 
     'use strict';
 
-    if (Gate2D.Engine.gameStatus() === 'on') {
+    if (Gate2D.Manager.gameStatus() === 'on') {
         // Handles all the object specific action logic
         for (let i = 0, len = Gate2D.Levels.currentLevel().objectsList.length; i < len; i++) {
             Gate2D.Levels.currentLevel().objectsList[i].update();
@@ -22,8 +22,15 @@ Gate2D.GameUpdate = function () {
         // ...
     }
 
-    if (Gate2D.Globals.score == 10) {
+    if (Gate2D.Globals.score == 5) {
         Gate2D.Globals.score = 0;
-        Gate2D.Engine.gameStatus('won');
+        Gate2D.Manager.gameStatus('won');
     }
+
+    Gate2D.Levels.select('level2', function() {
+        if (Gate2D.Globals.score > 0) {
+            Gate2D.Globals.score = 0;
+            return true;
+        }
+    });
 }

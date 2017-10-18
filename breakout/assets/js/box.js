@@ -1,6 +1,6 @@
 function Box(x, y, z, width, height) {
     Gate2D.Entity.apply(this, arguments);
-    this.img = Gate2D.Loader.getFile('sprites'); // Load the object image
+    this.img = Gate2D.Loader.getFile('sprites');
     this.coll = new Gate2D.Physics.AABBCollision(x, y, z, width, height);
     this.randomColor = Math.floor(Math.random() * 7) * 64;
     this.breaking = false;

@@ -29,17 +29,17 @@ Gate2D.GameDraw = function () {
     Gate2D.Video.drawText(Gate2D.Globals.score, "Impact", 24, "white", Gate2D.Video.getScreenWidth() / 2, 0, "center", false);
 
     // Handle game over screen
-    if (Gate2D.Engine.gameStatus() === 'off') {
+    if (Gate2D.Manager.gameStatus() === 'off') {
         Gate2D.Video.fade('black', 0, 0.75, 50, function () {
-            Gate2D.Engine.pause(true);
+            Gate2D.Manager.pause(true);
             Gate2D.Video.drawText("GAME OVER", "Impact", 64, "white", Gate2D.Video.getScreenWidth() / 2, Gate2D.Video.getScreenHeight() / 2 - 24, "center");
         });
     }
 
     // Handle win screen
-    if (Gate2D.Engine.gameStatus() === 'won') {
+    if (Gate2D.Manager.gameStatus() === 'won') {
         Gate2D.Video.fade('black', 0, 0.75, 50, function () {
-            Gate2D.Engine.pause(true);
+            Gate2D.Manager.pause(true);
             Gate2D.Video.drawText("YOU WIN!", "Impact", 64, "white", Gate2D.Video.getScreenWidth() / 2, Gate2D.Video.getScreenHeight() / 2 - 24, "center");
         });
     }

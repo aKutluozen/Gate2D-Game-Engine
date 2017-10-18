@@ -1,10 +1,9 @@
-function Ball(x, y, z, width, height, name, tag, controlled) {
+function Ball(x, y, z, width, height, name, tag) {
     Gate2D.Entity.apply(this, arguments); // Apply the inherited properties
     this.img = Gate2D.Loader.getFile('sprites'); // Load the object image
 
     this.speedX = 2;
     this.speedY = 2;
-    this.controlled = true;
 
     // Define collision area if one is needed
     this.coll = new Gate2D.Physics.CircleCollision(x, y, z, width, height);
@@ -78,7 +77,7 @@ Ball.prototype.update = function () {
     }
 
     if (this.coll.y > Gate2D.Levels.currentLevel().height - 16) {
-        Gate2D.Engine.gameStatus('over');
+        Gate2D.Manager.gameStatus('over');
         Gate2D.Globals.life--;
     }
 
@@ -87,8 +86,4 @@ Ball.prototype.update = function () {
 
     // Always update the collision area position and center it based on the object position
     this.coll.update(this.x + this.width / 2, this.y + this.width / 2);
-}
-
-Ball.prototype.handleMouseMovement = function (input) {
-    this.movement = input;
 }

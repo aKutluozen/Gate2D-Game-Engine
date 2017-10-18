@@ -1,5 +1,5 @@
 /**
- * Engine.js 
+ * Manager.js 
  *                  
  * @summary         Brings the game loop elements together
  * @module          Engine
@@ -7,7 +7,7 @@
  * @version         0.1.0
  */
 
-Gate2D.Engine = (function () {
+Gate2D.Manager = (function () {
 
     'use strict';
 
@@ -41,7 +41,7 @@ Gate2D.Engine = (function () {
             Gate2D.Video.setup(settings.screenWidth, settings.screenHeight, settings.screenFPS);
 
             // Setup controls for the first time
-            this.setupControls();
+            //this.setupControls();
 
             // Handle debug setup
             Gate2D.Video.debug(settings.screenDebug);
@@ -97,7 +97,7 @@ Gate2D.Engine = (function () {
          * 
          * @param {string}  status - Status of the game. Can be 'on' or 'off' - MORE IS COMING!
          */
-        gameStatus: function (status, params) {
+        gameStatus: function (status) {
             if (arguments.length == 0) {
                 return this._gameStatus;
             }
@@ -106,6 +106,7 @@ Gate2D.Engine = (function () {
                 case 'on': this._gameStatus = 'on'; break;
                 case 'over': this._gameStatus = 'off'; break;
                 case 'won': this._gameStatus = 'won'; break;
+                case 'paused': this._gameStatus = 'paused'; break;
                 case 'change-level-start':
                     this._gameStatus = 'off';
                     break;

@@ -79,7 +79,7 @@ Gate2D.Timer = (function () {
         setup: function (callback, interval) {
             window.setInterval(function () {
                 // Run the callback function as long as the game is not paused
-                if (!Gate2D.Engine.pause()) {
+                if (!Gate2D.Manager.pause()) {
                     if (typeof callback == 'function')
                         callback();
                     else console.warn('Callback is not a function');
