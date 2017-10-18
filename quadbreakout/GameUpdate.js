@@ -21,13 +21,4 @@ Gate2D.GameUpdate = function () {
         // Add extra game logic here
         // ...
     }
-
-    Gate2D.Levels.select('level2', function () {
-        if (Gate2D.Globals.score == 50) {
-            Gate2D.Globals.score = 0;
-            return true;
-        } else {
-            return false;
-        }
-    });
 }

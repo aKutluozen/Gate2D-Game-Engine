@@ -16,16 +16,16 @@ Gate2D.Loader.setLocalPath('');
 Gate2D.Loader.addFiles(
     // External resources
     [
-        { name: 'background', type: 'img', path: 'assets/images/bg.jpg' },
-        { name: 'sprites', type: 'img', path: 'assets/images/sprites.png' }
+        { name: 'background', type: 'img', path: 'assets/img/bg.jpg' },
+        { name: 'sprites', type: 'img', path: 'assets/img/sprites.png' }
     ],
 
     // External scripts
     [
-        { name: 'boxScript', type: 'script', path: 'assets/objects/box.js' },
-        { name: 'ballScript', type: 'script', path: 'assets/objects/ball.js' },
-        { name: 'padScript', type: 'script', path: 'assets/objects/pad.js' },
-        { name: 'wallScript', type: 'script', path: 'assets/objects/wall.js' },
+        { name: 'boxScript', type: 'script', path: 'assets/js/box.js' },
+        { name: 'ballScript', type: 'script', path: 'assets/js/ball.js' },
+        { name: 'padScript', type: 'script', path: 'assets/js/pad.js' },
+        { name: 'wallScript', type: 'script', path: 'assets/js/wall.js' },
     ]
 
     // Set up and run the engine when all the loading is done
