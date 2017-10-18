@@ -22,6 +22,17 @@ Gate2D.Globals.add([
 ]);
 
 /**
+ * A group of objects to be used across levels
+ * Level IDs must be assigned here to use them in maps
+ */ 
+Gate2D.Objects.createGroup('level1ObjectGroup', [
+    { object: new Player(0, 0, 0, 12, 12, 'player', 'player'), levelID: 3 },
+    { object: new Box(0, 0, 0, 32, 16, 'box', 'platformLong'), levelID: 2 },
+    { object: new Box(0, 0, 0, 16, 16, 'box', 'platformNormal'), levelID: 1 },
+    { object: new Box(0, 0, 0, 16, 16, 'box', 'platformWall'), levelID: 4 },
+]);
+
+/**
  * All the following added levels can be reached by Levels.<varname>
  * E.g., Levels.intro1 
  */
@@ -35,6 +46,7 @@ Gate2D.Levels.add([
         x: 0,
         y: 0,
         background: 'imgBackground',
+        objectsList: Gate2D.Objects.getGroup('level1ObjectGroup'),
 
         // Define a camera for the level
         camera: {
@@ -45,14 +57,6 @@ Gate2D.Levels.add([
             bleed: 16 // Padding around the camera outside the screen
             // bleed should be as big as the object most close to the end of the screen
         },
-
-        // Instantiate objects for the level, give them IDs to usei n the map
-        objectsList: [
-            { object: new Ball(0, 0, 0, 12, 12, 'ball', 'player'), levelID: 3 },
-            { object: new Box(0, 0, 0, 32, 16, 'box', 'platformLong'), levelID: 2 },
-            { object: new Box(0, 0, 0, 16, 16, 'box', 'platformNormal'), levelID: 1 },
-            { object: new Box(0, 0, 0, 16, 16, 'box', 'platformWall'), levelID: 4 },
-        ],
 
         // Draw a map for the objects using their level IDs
         objectMap: {

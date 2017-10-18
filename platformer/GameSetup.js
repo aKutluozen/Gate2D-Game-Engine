@@ -30,10 +30,7 @@ Gate2D.Loader.addFiles(
     // External scripts
     [
         { name: 'boxScript', type: 'script', path: 'assets/js/box.js' },
-        { name: 'ballScript', type: 'script', path: 'assets/js/ball.js' },
-        { name: 'padScript', type: 'script', path: 'assets/js/pad.js' },
-        { name: 'wallScript', type: 'script', path: 'assets/js/wall.js' },
-        { name: 'pointScript', type: 'script', path: 'assets/js/point.js' }
+        { name: 'ballScript', type: 'script', path: 'assets/js/player.js' },
     ]
 
     // Set up and run the engine when all the loading is done

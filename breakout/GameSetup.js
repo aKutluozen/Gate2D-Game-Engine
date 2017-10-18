@@ -28,8 +28,6 @@ Gate2D.Loader.addFiles(
         { name: 'padScript', type: 'script', path: 'assets/js/pad.js' },
         { name: 'wallScript', type: 'script', path: 'assets/js/wall.js' },
     ]
-
-
 ).loadAll(function () {
 
     // Set up and run the engine when all the loading is done

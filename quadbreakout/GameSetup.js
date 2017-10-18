@@ -1,9 +1,9 @@
 /**
- * Bootstrap.js 
+ * GameSetup.js 
  *
  * Loads all the necessary game files, and launches the game when it is all done.
  * Including this script file in an HTML document along with "Loader.js" will run the game.
- * @module          Bootstrap
+ * @module          GameSetup
  * @author          Ali Kutluozen
  * @version         0.1.0
  */
@@ -27,10 +27,9 @@ Gate2D.Loader.addFiles(
         { name: 'padScript', type: 'script', path: 'assets/js/pad.js' },
         { name: 'wallScript', type: 'script', path: 'assets/js/wall.js' },
     ]
-
-    // Set up and run the engine when all the loading is done
 ).loadAll(function () {
 
+    // Set up and run the engine when all the loading is done
     Gate2D.Engine.setup({
         screenWidth: 640,
         screenHeight: 480,

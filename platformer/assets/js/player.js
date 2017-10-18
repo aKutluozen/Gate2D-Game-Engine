@@ -1,6 +1,5 @@
-function Ball(x, y, z, width, height, name, tag, controlled) {
+function Player(x, y, z, width, height, name, tag, controlled) {
     Gate2D.Entity.apply(this, arguments); // Apply the inherited properties
-    this.img = Gate2D.Loader.getFile('imgBall'); // Load the object image
     this.sprite = Gate2D.Loader.getFile('imgCharacter');
 
     // Define object specific properties
@@ -14,8 +13,6 @@ function Ball(x, y, z, width, height, name, tag, controlled) {
     this.jumpSpeed = 5; // Maximum speed for jump
     this.gravity = 0.25; // Gravity is added to the yVelocity until the max. jump speed 
 
-    this.whatIsAroundMe = []; // An empty list of colliding surrounding objects
-
     // Define collision area if one is needed
     this.coll = new Gate2D.Physics.CircleCollision(x, y, z, width);
 
@@ -23,10 +20,10 @@ function Ball(x, y, z, width, height, name, tag, controlled) {
 }
 
 // Establish the inheritance
-Ball.prototype = new Gate2D.Entity();
+Player.prototype = new Gate2D.Entity();
 
 // Define object methods
-Ball.prototype.draw = function () {
+Player.prototype.draw = function () {
     if (this.speedX > 0) {
         this.ctx.drawImage(this.sprite, this.animation.getFrame() * 16, 0, 16, 16, this.x, this.y, this.width, this.height);
     } else if (this.speedX < 0) {
@@ -37,9 +34,7 @@ Ball.prototype.draw = function () {
     this.coll.draw();
 }
 
-Ball.prototype.update = function () {
-    // Always keep an updated list of what is around
-    this.whatIsAroundMe = Gate2D.Physics.checkCollision(this, this.whatIsAroundMe);
+Player.prototype.update = function () {
 
     // Gravity is always pulling down
     if (this.isFalling && this.yVelocity <= this.jumpSpeed - this.gravity) {
@@ -47,50 +42,51 @@ Ball.prototype.update = function () {
     }
 
     // Save the previous spot
-    var prevX = this.coll.x - this.speedX;
-    var prevY = this.coll.y - this.yVelocity;
+    let prevX = this.coll.x - this.speedX,
+        prevY = this.coll.y - this.yVelocity;
 
-    // If the object is supposed to respond to more than one instance, use a for loop
-    for (var i = 0; i < this.whatIsAroundMe.length; i++) {
-        var other = this.whatIsAroundMe[i];
-
-        if (other.name === 'box') {
-            // Collision from right
-            if (prevX + this.coll.r <= other.coll.x) {
-                this.x -= this.speedX;
-                this.speedX = 0;
-            }
-
-            // Collision from left
-            if (prevX - this.coll.r >= other.coll.x + other.coll.width) {
-                this.x -= this.speedX;
-                this.speedX = 0;
-            }
-
-            // Collision from top
-            if (prevY + this.coll.r <= other.coll.y) {
-                this.y = other.coll.y - this.coll.r * 2; // Place the player right on top of the platform
-                this.yVelocity = 0; // Reset the jump speed to 0
-                this.isJumping = false; // Not jumping anymore
-                this.isFalling = false; // Not falling anymore
-            }
-
-            // Collision from bottom
-            if (prevY - this.coll.r >= other.coll.y + other.coll.height) {
-                this.isJumping = false; // Not jumping anymore
-                this.isFalling = true; // Falling is happening, so the player can't jump
-                this.yVelocity = this.gravity; // Make yVelocity a small positive number to initiate the falling
-                this.y = other.coll.y + other.coll.height + Math.abs(this.yVelocity); // Place the player right under the platform
-            }
-        } else {
+    if (other = Gate2D.Physics.checkCollision(this)) {
+        //Fall if there is nothing to hold on to
+        if (other.length === 0) {
             this.isFalling = true;
+        } else {
+            for (let i = 0, len = other.length; i < len; i++) {
+
+                if (other[i].name === 'box') {
+                    // Collision from right
+                    if (prevX + this.coll.r <= other[i].coll.x) {
+                        this.x -= this.speedX;
+                        this.speedX = 0;
+                    }
+
+                    // Collision from left
+                    if (prevX - this.coll.r >= other[i].coll.x + other[i].coll.width) {
+                        this.x -= this.speedX;
+                        this.speedX = 0;
+                    }
+
+                    // Collision from top
+                    if (prevY + this.coll.r <= other[i].coll.y) {
+                        this.y = other[i].coll.y - this.coll.r * 2; // Place the player right on top of the platform
+                        this.yVelocity = 0; // Reset the jump speed to 0
+                        this.isJumping = false; // Not jumping anymore
+                        this.isFalling = false; // Not falling anymore
+                    }
+
+                    // Collision from bottom
+                    if (prevY - this.coll.r >= other[i].coll.y + other[i].coll.height) {
+                        this.isJumping = false; // Not jumping anymore
+                        this.isFalling = true; // Falling is happening, so the player can't jump
+                        this.yVelocity = this.gravity; // Make yVelocity a small positive number to initiate the falling
+                        this.y = other[i].coll.y + other[i].coll.height + Math.abs(this.yVelocity); // Place the player right under the platform
+                    }
+                } else {
+                    this.isFalling = true;
+                }
+            }
         }
     }
 
-    // Fall if there is nothing to hold on to
-    if (this.whatIsAroundMe.length === 0) {
-        this.isFalling = true;
-    }
 
     this.x += this.speedX;
     this.y += this.yVelocity;
@@ -99,11 +95,11 @@ Ball.prototype.update = function () {
     this.coll.update(this.x + this.width / 2, this.y + this.height / 2);
 }
 
-Ball.prototype.handleMouseMovement = function (input) {
+Player.prototype.handleMouseMovement = function (input) {
     this.movement = input;
 }
 
-Ball.prototype.handleKeyDown = function (input) {
+Player.prototype.handleKeyDown = function (input) {
     if (input === 39) {
         this.speedX = 1;
     }
@@ -123,7 +119,7 @@ Ball.prototype.handleKeyDown = function (input) {
     this.animation.play();
 }
 
-Ball.prototype.handleKeyUp = function (input) {
+Player.prototype.handleKeyUp = function (input) {
     if (input === 39) {
         this.speedX = 0;
     }
