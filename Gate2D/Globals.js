@@ -26,7 +26,7 @@ Gate2D.Globals = (function () {
         length: function () {
             return _globals.length;
         },
-        
+
         /**
          * Returns the globals array
          * 
@@ -35,19 +35,24 @@ Gate2D.Globals = (function () {
         globals: function () {
             return _globals;
         },
-        
+
         /**
          * Adds an array of game objects
          * 
          * @param {array}   values - An array of game variables
          */
         add: function (values) {
-            for (let i = 0, len = values.length; i < len; i++) {
+            let i = 0,
+                len = values.length;
+
+            for (; i < len; i++) {
                 _globals.push(values[i]);
-                
+
                 // Also make them available to outside world through Globals
                 this[Object.keys(values[i])[0]] = Object.values(values[i])[0];
             }
+            
+            console.log('Global variables added:', i);
         }
     }
 }());

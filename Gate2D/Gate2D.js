@@ -10,3 +10,4 @@
 'use strict';
 
 var Gate2D = Gate2D || {}; // Welcome, Gate2D!
+console.log('Initializing Gate2D...');

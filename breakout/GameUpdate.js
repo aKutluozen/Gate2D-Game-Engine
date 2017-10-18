@@ -1,5 +1,5 @@
 /**
- * @GameUpdate.js 
+ * GameUpdate.js 
  *
  * GameUpdate function is placed in the game loop.
  * It is responsbile for execution of all the game logic.
@@ -22,15 +22,15 @@ Gate2D.GameUpdate = function () {
         // ...
     }
 
-    if (Gate2D.Globals.score == 5) {
+    if (Gate2D.Globals.score == 54) {
         Gate2D.Globals.score = 0;
         Gate2D.Manager.gameStatus('won');
     }
 
-    Gate2D.Levels.select('level2', function() {
-        if (Gate2D.Globals.score > 0) {
-            Gate2D.Globals.score = 0;
-            return true;
-        }
-    });
+    // Gate2D.Levels.select('level2', function() {
+    //     if (Gate2D.Globals.score > 54) {
+    //         Gate2D.Globals.score = 0;
+    //         return true;
+    //     }
+    // });
 }

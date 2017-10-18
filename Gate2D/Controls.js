@@ -143,10 +143,10 @@ Gate2D.Controls = (function () {
          */
         keyboardListener: function (input) {
             if (input === 27) {
-                console.log('did');
                 if (Gate2D.Manager.gameStatus() === 'on') {
                     Gate2D.Manager.gameStatus('paused');
                 } else if (Gate2D.Manager.gameStatus() === 'paused') {
+                    Gate2D.Manager.pause(false);
                     Gate2D.Manager.gameStatus('on');
                 }
             }

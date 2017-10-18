@@ -1,5 +1,5 @@
 /**
- * @GameDraw.js 
+ * GameDraw.js 
  *
  * GameDraw function is placed in the game loop.
  * It is responsbile for all the drawing actions.
@@ -28,20 +28,28 @@ Gate2D.GameDraw = function () {
     // Show score on top of the screen
     Gate2D.Video.drawText(Gate2D.Globals.score, "Impact", 24, "white", Gate2D.Video.getScreenWidth() / 2, 0, "center", false);
 
-    // Handle game over screen
-    if (Gate2D.Manager.gameStatus() === 'off') {
-        Gate2D.Video.fade('black', 0, 0.75, 50, function () {
-            Gate2D.Manager.pause(true);
-            Gate2D.Video.drawText("GAME OVER", "Impact", 64, "white", Gate2D.Video.getScreenWidth() / 2, Gate2D.Video.getScreenHeight() / 2 - 24, "center");
-        });
-    }
-
-    // Handle win screen
-    if (Gate2D.Manager.gameStatus() === 'won') {
-        Gate2D.Video.fade('black', 0, 0.75, 50, function () {
-            Gate2D.Manager.pause(true);
-            Gate2D.Video.drawText("YOU WIN!", "Impact", 64, "white", Gate2D.Video.getScreenWidth() / 2, Gate2D.Video.getScreenHeight() / 2 - 24, "center");
-        });
+    // Handle various screens
+    switch (Gate2D.Manager.gameStatus()) {
+        case 'over': // Game over
+            Gate2D.Video.fade('black', 0, 0.75, 50, function () {
+                Gate2D.Manager.pause(true);
+                Gate2D.Video.drawText("GAME OVER", "Impact", 64, "white", Gate2D.Video.getScreenWidth() / 2, Gate2D.Video.getScreenHeight() / 2 - 24, "center");
+            });
+            break;
+        case 'won': // Game won
+            Gate2D.Video.fade('black', 0, 0.75, 50, function () {
+                Gate2D.Manager.pause(true);
+                Gate2D.Video.drawText("YOU WIN!", "Impact", 64, "white", Gate2D.Video.getScreenWidth() / 2, Gate2D.Video.getScreenHeight() / 2 - 24, "center");
+            });
+            break;
+        case 'paused': // Game paused
+            Gate2D.Video.fade('black', 0, 0.5, 10, function () {
+                Gate2D.Manager.pause(true);
+                Gate2D.Video.drawText("GAME PAUSED", "Impact", 64, "white", Gate2D.Video.getScreenWidth() / 2, Gate2D.Video.getScreenHeight() / 2 - 24, "center");
+            });
+            break;
+        default:
+            break;
     }
 
     // Let the video engine render the screen

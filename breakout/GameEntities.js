@@ -1,5 +1,5 @@
 /**
- * @GameEntities.js 
+ * GameEntities.js 
  *
  * Initialization of all the game objects and variables must be done here using
  * Object's and Globals' add method.

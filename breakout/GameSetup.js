@@ -1,11 +1,10 @@
 /**
- * setup.js 
+ * GameSetup.js 
  *
  * Loads all the necessary game files, and launches the game when it is all done.
  * Including this script file in an HTML document along with "Loader.js" will run the game.
- * @module          Bootstrap
+ *
  * @author          Ali Kutluozen
- * @version         0.1.0
  */
 
 'use strict';

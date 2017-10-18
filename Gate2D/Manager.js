@@ -13,9 +13,9 @@ Gate2D.Manager = (function () {
 
     // Private local variables
 
-    let _gamePaused = false,
-        _gameStatus = 'on',
-        _settings = null;
+    let _gamePaused = false, // Controls if the game really stops or not
+        _gameStatus = 'on', // Game status variable
+        _settings = null; // Managers global settings object
 
     // Engine functions to be exported
 
@@ -40,15 +40,14 @@ Gate2D.Manager = (function () {
             // Setup the video
             Gate2D.Video.setup(settings.screenWidth, settings.screenHeight, settings.screenFPS);
 
-            // Setup controls for the first time
-            //this.setupControls();
-
             // Handle debug setup
             Gate2D.Video.debug(settings.screenDebug);
             Gate2D.Physics.debug(settings.physicsDebug);
 
             // Level setup
-            Gate2D.Levels.select(settings.startingLevel, function () { return true; });
+            Gate2D.Levels.select(settings.startingLevel, function () {
+                return true;
+            });
             Gate2D.Levels.levelContext(Gate2D.Video.bufferContext());
 
             // Connect the context the buffer for the first time
@@ -67,6 +66,12 @@ Gate2D.Manager = (function () {
             if (_settings.touchEnabled) {
                 Gate2D.Controls.initTouchControls(Gate2D.Objects.objects());
             }
+
+            console.log('Controls are setup. ' +
+                '\nKeyboard: ', _settings.keyboardEnabled,
+                '\nMouse: ', _settings.mouseEnabled,
+                '\nTouch: ', _settings.touchEnabled,
+            );
         },
 
         /**
@@ -93,28 +98,15 @@ Gate2D.Manager = (function () {
         },
 
         /**
-         * Assigns the status of the game
+         * Assigns or returns the status of the game
          * 
-         * @param {string}  status - Status of the game. Can be 'on' or 'off' - MORE IS COMING!
+         * @param {string}  status - Status of the game. (on, over, won, paused, ...more is coming)
          */
         gameStatus: function (status) {
-            if (arguments.length == 0) {
+            if (status == undefined) {
                 return this._gameStatus;
             }
-
-            switch (status) {
-                case 'on': this._gameStatus = 'on'; break;
-                case 'over': this._gameStatus = 'off'; break;
-                case 'won': this._gameStatus = 'won'; break;
-                case 'paused': this._gameStatus = 'paused'; break;
-                case 'change-level-start':
-                    this._gameStatus = 'off';
-                    break;
-                case 'change-level-end':
-                    this._gameStatus = 'on';
-                    break;
-                default: return; break;
-            }
+            this._gameStatus = status;
         }
     }
 }());

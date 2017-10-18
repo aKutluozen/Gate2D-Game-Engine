@@ -230,6 +230,8 @@ Gate2D.Video = (function () {
             _ctx.mozImageSmoothingEnabled = false;
             _ctx.webkitImageSmoothingEnabled = false;
             _ctx.imageSmoothingEnabled = false;
+
+            console.log('Screen is setup');
         },
 
         /**   
@@ -250,6 +252,8 @@ Gate2D.Video = (function () {
             _cameraWidth = width;
             _cameraHeight = height;
             _cameraBleed = bleed;
+
+            console.log('Camera is setup, following:', objectToFollow);
         },
 
         /**   

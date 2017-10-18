@@ -57,9 +57,6 @@ Gate2D.Levels = (function () {
         select: function (name, condition) {
 
             if (condition() === true) {
-                // Wake up the controls again
-                // Gate2D.Manager.setupControls();
-
                 // Get the current level
                 _current = this.get(name);
 
@@ -121,7 +118,6 @@ Gate2D.Levels = (function () {
                 // Cleaning
                 Gate2D.Objects.objects([]); // Empty the pool
                 Gate2D.Objects.add(levelObjects); // Fill it with level game objects
-                levelObjects = []; // Empty the temporary array
 
                 // Connect every object to the buffer context
                 Gate2D.Objects.setupDisplayForObjects();
@@ -135,9 +131,11 @@ Gate2D.Levels = (function () {
                     Gate2D.Video.setupCamera(_objToFollow, _current.camera.width, _current.camera.height, _current.camera.bleed);
                 }
 
-                console.log(_current.name + ' is setup');
+                console.log('Current level:', _current.name, 'is setup with', levelObjects.length, 'objects');
+
+                levelObjects = []; // Empty the temporary array
             }
-            
+
         },
 
         /**
@@ -163,7 +161,9 @@ Gate2D.Levels = (function () {
          * @property {Array}    levelObject.objectsList - A list of objects that in the level
          */
         add: function (levelList) {
-            for (let i = 0, len = levelList.length; i < len; i++) {
+            let i = 0,
+                len = levelList.length;
+            for (; i < len; i++) {
                 // Load the background image from the string
                 if (levelList[i].background != '') {
                     levelList[i].background = Gate2D.Loader.getFile(levelList[i].background);
@@ -177,6 +177,8 @@ Gate2D.Levels = (function () {
                 // Also make them available to outside world through levels
                 _levels[levelList[i].name] = levelList[i];
             }
+
+            console.log('Levels added:', i);
         },
 
         /**
