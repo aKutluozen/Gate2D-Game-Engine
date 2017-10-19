@@ -36,10 +36,11 @@ Gate2D.Loader.addFiles(
         mouseEnabled: true,
         keyboardEnabled: true,
         touchEnabled: true,
-        startingLevel: 'level1',
+        startingLevel: 'Level 1',
         physicsDebug: false,
     });
 
-    Gate2D.Manager.gameStatus('on');
+    console.log('Engine is running...');
+    Gate2D.Manager.gameStatus('waiting');
     Gate2D.Manager.run();
 });

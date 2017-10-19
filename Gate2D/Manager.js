@@ -97,10 +97,14 @@ Gate2D.Manager = (function () {
             this._gamePaused = bool;
         },
 
+        restart: function () {
+            location.reload();
+        },
+
         /**
          * Assigns or returns the status of the game
          * 
-         * @param {string}  status - Status of the game. (on, over, won, paused, ...more is coming)
+         * @param {string}  status - Status of the game. (on, over, won, paused, waiting, ...more is coming)
          */
         gameStatus: function (status) {
             if (status == undefined) {

@@ -22,15 +22,11 @@ Gate2D.GameUpdate = function () {
         // ...
     }
 
-    if (Gate2D.Globals.score == 54) {
-        Gate2D.Globals.score = 0;
-        Gate2D.Manager.gameStatus('won');
-    }
-
-    // Gate2D.Levels.select('level2', function() {
-    //     if (Gate2D.Globals.score > 54) {
-    //         Gate2D.Globals.score = 0;
-    //         return true;
-    //     }
-    // });
+    Gate2D.Levels.select('Level 2', function() {
+        if (Gate2D.Globals.score > 0) {
+            Gate2D.Globals.score = 0;
+            Gate2D.Manager.gameStatus('waiting');
+            return true;
+        }
+    });
 }

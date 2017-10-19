@@ -50,3 +50,13 @@ Pad.prototype.update = function () {
 Pad.prototype.handleMouseMovement = function (input) {
     this.movement = input;
 }
+
+// Start the game when clicked
+Pad.prototype.handleMouseDown = function (input) {
+    switch(Gate2D.Manager.gameStatus()) {
+        case 'waiting': Gate2D.Manager.gameStatus('on'); break;
+        case 'over': Gate2D.Manager.restart(); break;
+        case 'won': Gate2D.Manager.restart(); break;
+        default: break;
+    }
+}

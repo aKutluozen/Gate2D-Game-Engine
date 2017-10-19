@@ -223,7 +223,7 @@ Gate2D.Video = (function () {
             _canvas.width = _width;
             _canvas.height = _height;
             _ctx = _canvas.getContext('2d');
-            
+
             document.body.appendChild(_canvas);
             _counterElement = document.getElementById('counter') || '';
             _ctx.msImageSmoothingEnabled = false;
@@ -405,6 +405,30 @@ Gate2D.Video = (function () {
                     return;
                 }
             }
+        },
+
+        /**
+         * Draws a tint layer on the screen
+         * 
+         * @param {string}      color - Color of the fade
+         * @param {number}      opacity - Opacity to start from (0.0 to 1.0)
+         * @param {number}      x - x position of the tint - 0 is default
+         * @param {number}      y - y position of the tint - 0 is default
+         * @param {number}      width - Width of the tint - Screen size is default
+         * @param {number}      height - Height of the tint - Screen size is default
+         */
+        drawTint: function (color, opacity, x, y, width, height) {
+            // Set the defaults
+            if (!x) x = 0;
+            if (!y) y = 0;
+            if (!width) width = _buffer.width;
+            if (!height) height = _buffer.height;
+
+            _bctx.save();
+            _bctx.fillStyle = color;
+            _bctx.globalAlpha = opacity;
+            _bctx.fillRect(x, y, width, height);
+            _bctx.restore();
         },
 
         /**
