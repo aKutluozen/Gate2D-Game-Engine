@@ -196,6 +196,10 @@ Gate2D.Video = (function () {
          * @param {number}  fps - Frames per second
          */
         setup: function (w, h, fps) {
+            // Cache DOM
+            let _doc = document,
+                _body = document.body;
+
             // Set up FPS
             _counter = 0;
             _then = Date.now();
@@ -211,21 +215,21 @@ Gate2D.Video = (function () {
             _debug = false;
 
             // Set up the buffer
-            _buffer = document.createElement('canvas');
+            _buffer = _doc.createElement('canvas');
             _buffer.id = 'game-buffer';
             _buffer.width = _width;
             _buffer.height = _height;
             _bctx = _buffer.getContext('2d');
 
             // Set up the real canvas
-            _canvas = document.createElement('canvas');
+            _canvas = _doc.createElement('canvas');
             _canvas.id = 'game-canvas';
             _canvas.width = _width;
             _canvas.height = _height;
             _ctx = _canvas.getContext('2d');
 
-            document.body.appendChild(_canvas);
-            _counterElement = document.getElementById('counter') || '';
+            _body.appendChild(_canvas);
+            _counterElement = _doc.getElementById('counter') || '';
             _ctx.msImageSmoothingEnabled = false;
             _ctx.mozImageSmoothingEnabled = false;
             _ctx.webkitImageSmoothingEnabled = false;

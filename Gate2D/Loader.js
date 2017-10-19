@@ -62,7 +62,8 @@ Gate2D.Loader = (function () {
         loadAll: function (callback) {
 
             let flag = true, // Keeps track to see if anything failed at all
-                num = 0; // Number of files loaded
+                num = 0, // Number of files loaded
+                loadLocation = document.getElementById('files'); // Where to load the files
 
             // Internal recursive function
             function loadThis(number) {
@@ -78,7 +79,8 @@ Gate2D.Loader = (function () {
                 let file = document.createElement(_files[number].filetype);
                 file.src = _files[number].filepath;
                 file.id = _files[number].tag;
-                document.getElementById('files').appendChild(file);
+                file.setAttribute('defer', '');
+                loadLocation.appendChild(file);
 
                 // Recursively calls the next file for each successful load
                 file.onload = function () {

@@ -8,7 +8,7 @@
  * @author          Ali Kutluozen     
  */
 
-Gate2D.GameDraw = function () {
+Gate2D.GameDraw = function (Levels) {
 
     'use strict';
 
