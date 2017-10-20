@@ -43,6 +43,14 @@ Gate2D.Controls = (function () {
                         }
                     }
                 });
+
+                Gate2D.Video.canvas().addEventListener('mouseup', function (event) {
+                    for (let i = 0, len = entities.length; i < len; i++) {
+                        if (entities[i].controlled) {
+                            entities[i].handleMouseUp(_this.getMousePosition(event));
+                        }
+                    }
+                });
                 _mouseListenerAdded = true;
             }
         },
@@ -70,6 +78,16 @@ Gate2D.Controls = (function () {
                     for (let i = 0, len = entities.length; i < len; i++) {
                         if (entities[i].controlled) {
                             entities[i].handleMouseMovement(_this.getTouchPosition(event));
+                        }
+                    }
+                }, {
+                    passive: true
+                });
+
+                Gate2D.Video.canvas().addEventListener('touchend', function (event) {
+                    for (let i = 0, len = entities.length; i < len; i++) {
+                        if (entities[i].controlled) {
+                            entities[i].handleMouseUp();
                         }
                     }
                 }, {

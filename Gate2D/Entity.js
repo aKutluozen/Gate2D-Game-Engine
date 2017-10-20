@@ -16,7 +16,7 @@
  * 
  * @author          Ali Kutluozen
  */
-Gate2D.Entity = function(x, y, z, width, height, name, tag, controlled, isStatic) {
+Gate2D.Entity = function (x, y, z, width, height, name, tag, controlled, isStatic) {
     this.x = x || 0;
     this.y = y || 0;
     this.z = z || 0;
@@ -90,6 +90,15 @@ Gate2D.Entity.prototype = {
      * @param {object}  input - Event
      */
     handleMouseDown: function (input) {
+
+    },
+
+    /**
+     * Passes the mouse movement event as a parameter
+     * 
+     * @param {object}  input - Event
+     */
+    handleMouseUp: function (input) {
 
     },
 

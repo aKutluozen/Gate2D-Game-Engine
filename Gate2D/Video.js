@@ -135,12 +135,39 @@ Gate2D.Video = (function () {
         },
 
         /**
+         * Returns the width of the device in pixels
+         * 
+         * @returns {number}
+         */
+        getDeviceWidth: function () {
+            return window.innerWidth;
+        },
+
+        /**
+         * Returns the height of the device in pixels
+         * 
+         * @returns {number}
+         */
+        getDeviceHeight: function () {
+            return window.innerHeight;
+        },
+
+        /**
          * Returns the height of the canvas in pixels
          * 
          * @returns {number}
          */
         getScreenHeight: function () {
             return _canvas.height;
+        },
+
+        /**
+         * Returns the screen ratio
+         * 
+         * @returns {number}
+         */
+        getDeviceRatio: function () {
+            return  window.innerWidth / window.innerHeight;
         },
 
         /**

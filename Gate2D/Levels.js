@@ -78,7 +78,7 @@ Gate2D.Levels = (function () {
                 function capitalizeFirstLetter(string) {
                     return string.charAt(0).toUpperCase() + string.slice(1);
                 }
-
+                
                 for (let yPos = 0, len = _current.objectMap.height; yPos < len; yPos++) {
                     for (let xPos = 0, len = _current.objectMap.width; xPos < len; xPos++) {
 
@@ -87,6 +87,7 @@ Gate2D.Levels = (function () {
 
                         // Get objects by their numbers, assign them their new information
                         if (objNum !== 0) {
+                            
                             let objFound = Gate2D.Objects.findByProperty('levelID', objNum);
                             objFound = objFound.object;
 
