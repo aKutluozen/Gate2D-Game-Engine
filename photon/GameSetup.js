@@ -38,6 +38,7 @@ Gate2D.Loader.addFiles(
         touchEnabled: true,
         startingLevel: 'Level 1',
         physicsDebug: false,
+        controlsDebug: true
     });
 
     console.log('Engine is running...');

@@ -18,8 +18,14 @@ Gate2D.Physics = (function () {
     // Main physics module to be exported
 
     return {
-
+        /**
+         * Toggles debug mode, returns the value if needed
+         * 
+         * @returns {boolean}
+         */
         debug: function (bool) {
+            if (bool == undefined)
+                return _debug;
             _debug = bool;
         },
 

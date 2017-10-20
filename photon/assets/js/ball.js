@@ -83,7 +83,7 @@ Ball.prototype.update = function () {
 }
 
 Ball.prototype.handleMouseUp = function () {
-    this.fire();
+
 }
 // Need button
 

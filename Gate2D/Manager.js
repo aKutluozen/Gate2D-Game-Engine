@@ -43,6 +43,7 @@ Gate2D.Manager = (function () {
             // Handle debug setup
             Gate2D.Video.debug(settings.screenDebug);
             Gate2D.Physics.debug(settings.physicsDebug);
+            Gate2D.Controls.debug(settings.controlsDebug);
 
             // Level setup
             Gate2D.Levels.select(settings.startingLevel, function () {

@@ -34,6 +34,26 @@ Gate2D.Objects.createGroup('level1ObjectGroup', [
 ]);
 
 /**
+ * Onscreen game buttons must be declared as an array
+ * Methods can be attacted to each button
+ */ 
+Gate2D.Controls.addOnScreenButton([
+    {
+        name: 'controlButton', type: 'start', x: 0, y: 960, width: 720, height: 200,
+        method: function () {
+            console.log('pressed!');
+            Gate2D.Objects.get('ball').fire();
+        }
+    },
+    {
+        name: 'fireButton', type: 'start', x: 0, y: 0, width: 200,height: 200,
+        method: function () {
+            Gate2D.Objects.get('ball').fire();
+        }
+    }
+])
+
+/**
  * All the following added levels can be reached by Levels.<varname>
  * E.g., Levels.intro1 
  */

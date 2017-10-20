@@ -12,10 +12,20 @@ Gate2D.GameUpdate = function () {
 
     'use strict';
 
-    if (Gate2D.Manager.gameStatus() === 'on') {
+    // Cache
+    let Levels = Gate2D.Levels,
+        Globals = Gate2D.Globals,
+        Manager = Gate2D.Manager,
+        status = Manager.gameStatus(),
+        currentLevel = Levels.currentLevel(),
+        objectsList = currentLevel.objectsList,
+        objectsLength = objectsList.length;
+
+    // Execute the physics if the game is on
+    if (status === 'on') {
         // Handles all the object specific action logic
-        for (let i = 0, len = Gate2D.Levels.currentLevel().objectsList.length; i < len; i++) {
-            Gate2D.Levels.currentLevel().objectsList[i].update();
+        for (let i = 0; i < objectsLength; i++) {
+            objectsList[i].update();
         }
 
         // Add extra game logic here
