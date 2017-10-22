@@ -59,10 +59,12 @@ Gate2D.Levels = (function () {
             if (condition() === true) {
                 // Get the current level
                 _current = this.get(name);
-
+                
                 // Set up the background in CSS
-                if (_current.background.id != 'grid') {
+                if (_current.background) {
                     Gate2D.Video.canvas().style.background = "url('" + _current.background.src + "') repeat";
+                } else {
+                    Gate2D.Video.canvas().style.background = "none";
                 }
 
                 // Add base objects to be copied from

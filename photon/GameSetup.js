@@ -16,15 +16,15 @@ Gate2D.Loader.setLocalPath('');
 Gate2D.Loader.addFiles(
     // External resources
     [
-        { name: 'background', type: 'img', path: 'assets/img/bg.jpg' },
+        { name: 'background', type: 'img', path: 'assets/img/bg.png' },
         { name: 'sprites', type: 'img', path: 'assets/img/sprites.png' }
     ],
 
     // External scripts
     [
-        { name: 'boxScript', type: 'script', path: 'assets/js/box.js' },
-        { name: 'ballScript', type: 'script', path: 'assets/js/ball.js' },
-        { name: 'padScript', type: 'script', path: 'assets/js/cannon.js' },
+        { name: 'enemyScript', type: 'script', path: 'assets/js/enemy.js' },
+        { name: 'photonScript', type: 'script', path: 'assets/js/photon.js' },
+        { name: 'cannonScript', type: 'script', path: 'assets/js/cannon.js' },
         { name: 'wallScript', type: 'script', path: 'assets/js/wall.js' },
     ]
 ).loadAll(function () {
@@ -33,15 +33,15 @@ Gate2D.Loader.addFiles(
     Gate2D.Manager.setup({
         screenWidth: 720,
         screenHeight: 1280,
-        mouseEnabled: true,
-        keyboardEnabled: true,
+        mouseEnabled: false,
+        keyboardEnabled: false,
         touchEnabled: true,
         startingLevel: 'Level 1',
         physicsDebug: false,
-        controlsDebug: true
+        controlsDebug: false
     });
 
     console.log('Engine is running...');
-    Gate2D.Manager.gameStatus('waiting');
+    Gate2D.Manager.gameStatus('on');
     Gate2D.Manager.run();
 });

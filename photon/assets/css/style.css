@@ -20,8 +20,8 @@ body {
     background-image: url('../images/grid.png');
     display: block;
     cursor: auto;
-    height: auto;
-    width: calc(100vw);
+    height: calc(100vh);
+    width: auto;
     image-rendering: auto;
 }
 

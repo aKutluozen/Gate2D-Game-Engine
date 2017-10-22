@@ -43,6 +43,8 @@ Gate2D.Video = (function () {
         _fadeTo, // Value that the screen will fade to (0.0 to 1.0)
         _isFading = false; // Determines if the fading animation is on
 
+    let _HUDElementsArray = []; // HUD elements array
+
     // Main video module to be exported
 
     return {
@@ -167,7 +169,7 @@ Gate2D.Video = (function () {
          * @returns {number}
          */
         getDeviceRatio: function () {
-            return  window.innerWidth / window.innerHeight;
+            return window.innerWidth / window.innerHeight;
         },
 
         /**
@@ -448,7 +450,7 @@ Gate2D.Video = (function () {
          * @param {number}      width - Width of the tint - Screen size is default
          * @param {number}      height - Height of the tint - Screen size is default
          */
-        drawTint: function (color, opacity, x, y, width, height) {
+        drawBox: function (color, opacity, x, y, width, height) {
             // Set the defaults
             if (!x) x = 0;
             if (!y) y = 0;
@@ -460,6 +462,36 @@ Gate2D.Video = (function () {
             _bctx.globalAlpha = opacity;
             _bctx.fillRect(x, y, width, height);
             _bctx.restore();
+        },
+
+        /**
+         * Creates an array of HUD elements like health bar, backgrounds for score, buttons, etc.
+         * 
+         * @param {array}   elements - Array of buttons
+         */
+        createStaticImages: function (elements) {
+            for (let i = 0; i < elements.length; i++) {
+                _HUDElementsArray.push(elements[i]);
+            }
+        },
+
+        /**
+         * Creates an array of HUD elements like health bar, backgrounds for score, buttons, etc.
+         */
+        drawStaticImages: function () {
+            for (let i = 0; i < _HUDElementsArray.length; i++) {
+                _bctx.drawImage(
+                    _HUDElementsArray[i].image, 
+                    _HUDElementsArray[i].cropX, 
+                    _HUDElementsArray[i].cropY, 
+                    _HUDElementsArray[i].cropWidth, 
+                    _HUDElementsArray[i].cropHeight,
+                    _HUDElementsArray[i].drawX, 
+                    _HUDElementsArray[i].drawY, 
+                    _HUDElementsArray[i].drawWidth, 
+                    _HUDElementsArray[i].drawHeight
+                );
+            }
         },
 
         /**

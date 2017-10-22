@@ -56,8 +56,9 @@ Gate2D.Physics = (function () {
              */
             this.draw = function () {
                 if (_debug) {
-                    Gate2D.Video.bufferContext().fillStyle = "rgba(244, 188, 66, 0.35)";
-                    Gate2D.Video.bufferContext().fillRect(this.x, this.y, this.width, this.height);
+                    let buffer = Gate2D.Video.bufferContext();
+                    buffer.fillStyle = "rgba(244, 188, 66, 0.35)";
+                    buffer.fillRect(this.x, this.y, this.width, this.height);
                 }
             };
 
@@ -100,10 +101,11 @@ Gate2D.Physics = (function () {
              */
             this.draw = function () {
                 if (_debug) {
-                    Gate2D.Video.bufferContext().fillStyle = "rgba(244, 188, 66, 0.75)";
-                    Gate2D.Video.bufferContext().beginPath();
-                    Gate2D.Video.bufferContext().arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
-                    Gate2D.Video.bufferContext().fill();
+                    let buffer = Gate2D.Video.bufferContext();
+                    buffer.fillStyle = "rgba(244, 188, 66, 0.75)";
+                    buffer.beginPath();
+                    buffer.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+                    buffer.fill();
                 }
             };
 
@@ -212,23 +214,25 @@ Gate2D.Physics = (function () {
          * @returns {array}
          */
         checkCollision: function (obj) {
-            var arr = [];
+            let arr = [],
+                objects = Gate2D.Objects.objects();
 
             // Searching object is a circular one
             if (obj.coll.r !== undefined) {
+                
                 for (let i = 0, len = Gate2D.Objects.length(); i < len; i++) {
 
                     // Circle to circle collision
-                    if (Gate2D.Objects.objects()[i].coll.r !== undefined) {
-                        if (this.checkCircleCollision(obj, Gate2D.Objects.objects()[i]) && Gate2D.Objects.objects()[i] != obj) {
-                            arr.push(Objects.objects()[i]);
+                    if (objects[i].coll.r !== undefined) {
+                        if (this.checkCircleCollision(obj, objects[i]) && objects[i] != obj) {
+                            arr.push(objects[i]);
                         }
                     }
 
                     // Circle to rectangle collision
                     else {
-                        if (this.checkCircleRectangleCollision(obj, Gate2D.Objects.objects()[i]) && Gate2D.Objects.objects()[i] != obj) {
-                            arr.push(Gate2D.Objects.objects()[i]);
+                        if (this.checkCircleRectangleCollision(obj, objects[i]) && objects[i] != obj) {
+                            arr.push(objects[i]);
                         }
                     }
                 }
@@ -239,16 +243,16 @@ Gate2D.Physics = (function () {
                 for (let i = 0, len = Gate2D.Objects.length(); i < len; i++) {
 
                     // Rectangle to circle collision
-                    if (Gate2D.Objects.objects()[i].coll.r !== undefined) {
-                        if (this.checkCircleRectangleCollision(Gate2D.Objects.objects()[i], obj) && Gate2D.Objects.objects()[i] != obj) {
-                            arr.push(Gate2D.Objects.objects()[i]);
+                    if (objects[i].coll.r !== undefined) {
+                        if (this.checkCircleRectangleCollision(objects[i], obj) && objects[i] != obj) {
+                            arr.push(objects[i]);
                         }
                     }
 
                     // Rectangle to rectangle collision
                     else {
-                        if (this.checkAABBCollision(obj, Gate2D.Objects.objects()[i]) && Gate2D.Objects.objects()[i] != obj) {
-                            arr.push(Gate2D.Objects.objects()[i]);
+                        if (this.checkAABBCollision(obj, objects[i]) && objects[i] != obj) {
+                            arr.push(objects[i]);
                         }
                     }
                 }

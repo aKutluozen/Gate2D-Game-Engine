@@ -15,10 +15,16 @@ Gate2D.Controls = (function () {
 		_mouseListenerAdded = false,
 		_touchListenerAdded = false,
 		_onScreenButtonsArray = [],
+		_onScreenButtonsObjects = {},
 		_debug = false;
 
-	// Main control module to be exported
+	// Cache other modules
+	let _Video = Gate2D.Video,
+		_Manager = Gate2D.Manager,
+		_bufferContext = _Video.bufferContext(),
+		_status = _Manager.gameStatus();
 
+	// Main control module to be exported
 	return {
 		/**
 		 * Sends mouse coordinates to whoever is listening
@@ -26,10 +32,13 @@ Gate2D.Controls = (function () {
 		 * @param {Object}  entities - An array of game objects
 		 */
 		initMouseControls: function (entities) {
-			let _this = this;
+			// Cache 'this' and necessary elements
+			let _this = this,
+				_canvas = Gate2D.Video.canvas();
 
+			// Add the listener only once
 			if (!_mouseListenerAdded) {
-				Gate2D.Video.canvas().addEventListener("mousemove", function (event) {
+				_canvas.addEventListener("mousemove", function (event) {
 					for (let i = 0, len = entities.length; i < len; i++) {
 						if (entities[i].controlled) {
 							entities[i].handleMouseMovement(_this.getMousePosition(event));
@@ -38,7 +47,7 @@ Gate2D.Controls = (function () {
 					_this.listenOnScreenButtons();
 				});
 
-				Gate2D.Video.canvas().addEventListener("mousedown", function (event) {
+				_canvas.addEventListener("mousedown", function (event) {
 					for (let i = 0, len = entities.length; i < len; i++) {
 						if (entities[i].controlled) {
 							entities[i].handleMouseDown(_this.getMousePosition(event));
@@ -46,7 +55,7 @@ Gate2D.Controls = (function () {
 					}
 				});
 
-				Gate2D.Video.canvas().addEventListener("mouseup", function (event) {
+				_canvas.addEventListener("mouseup", function (event) {
 					for (let i = 0, len = entities.length; i < len; i++) {
 						if (entities[i].controlled) {
 							entities[i].handleMouseUp(_this.getMousePosition(event));
@@ -63,10 +72,13 @@ Gate2D.Controls = (function () {
 		 * @param {Object}  entities - An array of game objects
 		 */
 		initTouchControls: function (entities) {
-			let _this = this;
+			// Cache 'this' and necessary elements
+			let _this = this,
+				_canvas = Gate2D.Video.canvas();
 
+			// Add the listener only once
 			if (!_touchListenerAdded) {
-				Gate2D.Video.canvas().addEventListener("touchstart",
+				_canvas.addEventListener("touchstart",
 					function (event) {
 						for (let i = 0, len = entities.length; i < len; i++) {
 							if (entities[i].controlled) {
@@ -78,7 +90,7 @@ Gate2D.Controls = (function () {
 						passive: true
 					});
 
-				Gate2D.Video.canvas().addEventListener("touchmove",
+				_canvas.addEventListener("touchmove",
 					function (event) {
 						for (let i = 0, len = entities.length; i < len; i++) {
 							if (entities[i].controlled) {
@@ -90,7 +102,7 @@ Gate2D.Controls = (function () {
 						passive: true
 					});
 
-				Gate2D.Video.canvas().addEventListener("touchend",
+				_canvas.addEventListener("touchend",
 					function (event) {
 						for (let i = 0, len = entities.length; i < len; i++) {
 							if (entities[i].controlled) {
@@ -111,10 +123,13 @@ Gate2D.Controls = (function () {
 		 * @param {array}   entities - An array of game objects
 		 */
 		initKeyboardControls: function (entities) {
-			let _this = this;
+			// Cache 'this' and necessary elements
+			let _this = this,
+				_canvas = Gate2D.Video.canvas();
 
+			// Add the listener only once
 			if (!_keyboardListenerAdded) {
-				document.addEventListener("keydown", function (event) {
+				_canvas.addEventListener("keydown", function (event) {
 					for (let i = 0, len = entities.length; i < len; i++) {
 						if (entities[i].controlled) {
 							entities[i].handleKeyDown(event.keyCode);
@@ -122,7 +137,7 @@ Gate2D.Controls = (function () {
 					}
 				});
 
-				document.addEventListener("keyup", function (event) {
+				_canvas.addEventListener("keyup", function (event) {
 					_this.keyboardListener(event.keyCode);
 					for (let i = 0, len = entities.length; i < len; i++) {
 						if (entities[i].controlled) {
@@ -141,15 +156,15 @@ Gate2D.Controls = (function () {
 		 */
 		keyboardListener: function (input) {
 			if (input === 27) {
-				if (Gate2D.Manager.gameStatus() === "on") {
-					Gate2D.Manager.gameStatus("paused");
-				} else if (Gate2D.Manager.gameStatus() === "paused") {
-					Gate2D.Manager.pause(false);
-					Gate2D.Manager.gameStatus("on");
+				if (status === "on") {
+					_Manager.gameStatus("paused");
+				} else if (status === "paused") {
+					_Manager.pause(false);
+					_Manager.gameStatus("on");
 				}
 			}
 		},
-		
+
 		/**
 		 * Returns the x and y position of the mouse on canvas
 		 * 
@@ -157,10 +172,13 @@ Gate2D.Controls = (function () {
 		 * @returns {object}
 		 */
 		getMousePosition: function (event) {
+			// Cache necessary numbers
+			let _canvas = _Video.canvas();
+
 			event.preventDefault();
 			return {
-				x: event.pageX - Gate2D.Video.canvas().offsetLeft,
-				y: event.pageY - Gate2D.Video.canvas().offsetTop
+				x: event.pageX - _canvas.offsetLeft,
+				y: event.pageY - _canvas.offsetTop
 			};
 		},
 
@@ -171,9 +189,16 @@ Gate2D.Controls = (function () {
 		 * @returns {object}
 		 */
 		getTouchPosition: function (event) {
+			// Cache necessary numbers
+			let _canvas = _Video.canvas(),
+				_screenWidth = _Video.getScreenWidth(),
+				_deviceWidth = _Video.getDeviceWidth(),
+				_screenHeight = _Video.getScreenHeight(),
+				_deviceHeight = _Video.getDeviceHeight();
+
 			return {
-				x: event.changedTouches[0].pageX - Gate2D.Video.canvas().offsetLeft,
-				y: event.changedTouches[0].pageY - Gate2D.Video.canvas().offsetTop
+				x: (event.changedTouches[0].pageX - _canvas.offsetLeft) * (_screenWidth / (_deviceWidth - 2 * _canvas.offsetLeft)),
+				y: (event.changedTouches[0].pageY - _canvas.offsetTop) * (_screenHeight / _deviceHeight)
 			};
 		},
 
@@ -188,6 +213,9 @@ Gate2D.Controls = (function () {
 
 			for (; i < len; i++) {
 				_onScreenButtonsArray.push(buttons[i]);
+
+				// Also make them accesible to outside world
+				_onScreenButtonsObjects[buttons[i].name] = buttons[i];
 			}
 
 			console.log("Onscreen buttons added:", i);
@@ -195,20 +223,21 @@ Gate2D.Controls = (function () {
 
 	    /**
 		 * Checks to see if the click position is corresponding to any button
-		 * If so, executes the method of that button if the type matches PROBLEM!!!
+		 * If so, executes the method of that button based on the event
 		 * 
 		 * @param {array}   clickPosition - The position of the event
+		 * @param {array}   type - Type of the event ('start', 'move', 'release')
 		 */
 		listenOnScreenButtons: function (clickPosition, type) {
-			if (clickPosition){
+			if (clickPosition) {
 				for (let i = 0; i < _onScreenButtonsArray.length; i++) {
 					if (clickPosition.x >= _onScreenButtonsArray[i].x &&
 						clickPosition.x <= _onScreenButtonsArray[i].x + _onScreenButtonsArray[i].width &&
 						clickPosition.y >= _onScreenButtonsArray[i].y &&
 						clickPosition.y <= _onScreenButtonsArray[i].y + _onScreenButtonsArray[i].height &&
-						type === _onScreenButtonsArray[i].type
+						_onScreenButtonsArray[i].status === 'active'
 					) {
-						_onScreenButtonsArray[i].method();
+						_onScreenButtonsArray[i].action(type);
 					}
 				}
 			}
@@ -218,11 +247,41 @@ Gate2D.Controls = (function () {
 		 * Draws the touch buttons on the screen if in the debug mode
 		 */
 		drawOnScreenButtons: function () {
-			if (_debug) {
-				for (let i = 0; i < _onScreenButtonsArray.length; i++) {
-					Gate2D.Video.drawTint('orange', 0.5, _onScreenButtonsArray[i].x, _onScreenButtonsArray[i].y, _onScreenButtonsArray[i].width, _onScreenButtonsArray[i].height);
+			for (let i = 0; i < _onScreenButtonsArray.length; i++) {
+				if (_debug) {
+					_Video.drawBox('orange', 0.5, _onScreenButtonsArray[i].x, _onScreenButtonsArray[i].y, _onScreenButtonsArray[i].width, _onScreenButtonsArray[i].height);
 				}
+
+				_Video.bufferContext().save();
+
+				// Fade out the disabled button
+				if (_onScreenButtonsArray[i].status === 'disabled') {
+					_Video.bufferContext().globalAlpha = 0.5;
+				} else if (_onScreenButtonsArray[i].status === 'active') {
+					_Video.bufferContext().globalAlpha = 1;
+				}
+
+				_Video.bufferContext().drawImage(
+					_onScreenButtonsArray[i].image.image,
+					_onScreenButtonsArray[i].image.cropX,
+					_onScreenButtonsArray[i].image.cropY,
+					_onScreenButtonsArray[i].image.cropWidth,
+					_onScreenButtonsArray[i].image.cropHeight,
+					_onScreenButtonsArray[i].image.drawX,
+					_onScreenButtonsArray[i].image.drawY,
+					_onScreenButtonsArray[i].image.drawWidth,
+					_onScreenButtonsArray[i].image.drawHeight,
+				);
+				_Video.bufferContext().restore();
 			}
+		},
+
+	    /**
+		 * Returns a button if found
+		 * @param {string}	name - Name of the button
+		 */
+		getOnScreenButton: function (name) {
+			return _onScreenButtonsObjects[name] || null;
 		},
 
         /**
@@ -230,10 +289,10 @@ Gate2D.Controls = (function () {
          * 
          * @returns {boolean}
          */
-        debug: function (bool) {
-            if (bool == undefined)
-                return _debug;
-            _debug = bool;
-        },
+		debug: function (bool) {
+			if (bool == undefined)
+				return _debug;
+			_debug = bool;
+		},
 	};
 })();

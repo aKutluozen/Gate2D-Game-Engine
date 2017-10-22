@@ -5,7 +5,7 @@
  * Styling of HTML elements
  */
 
-body {
+ body {
     background: black;
 }
 
@@ -20,8 +20,9 @@ body {
     background-image: url('../images/grid.png');
     display: block;
     cursor: auto;
-    height: auto;
-    image-rendering: pixelated;
+    height: calc(100vh);
+    width: auto;
+    image-rendering: auto;
 }
 
 #counter {

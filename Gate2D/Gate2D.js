@@ -9,5 +9,7 @@
     
 'use strict';
 
-var Gate2D = Gate2D || {}; // Welcome, Gate2D!
+// Welcome, Gate2D!
+var Gate2D = Gate2D || {}; 
+
 console.log('Initializing Gate2D...');

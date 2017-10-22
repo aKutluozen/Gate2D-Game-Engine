@@ -26,14 +26,14 @@ Gate2D.GameDraw = function () {
     }
 
     // Show score on top of the screen
-    Gate2D.Video.drawTint('black', 0.75, 213, 4, 213, 24);
+    Gate2D.Video.drawBox('black', 0.75, 213, 4, 213, 24);
     Gate2D.Video.drawText(
         Gate2D.Levels.currentLevel().name + ' - Score:' + Gate2D.Globals.score, "Impact", 24, "white", Gate2D.Video.getScreenWidth() / 2, 0, "center", false);
 
     // Handle various screens
     switch (Gate2D.Manager.gameStatus()) {
         case 'waiting': // Waiting
-            Gate2D.Video.drawTint('black', 0.75);
+            Gate2D.Video.drawBox('black', 0.75);
             Gate2D.Video.drawText("CLICK TO PLAY!", "Impact", 64, "white", Gate2D.Video.getScreenWidth() / 2, Gate2D.Video.getScreenHeight() / 2 - 24, "center");
             break;
         case 'over': // Game over

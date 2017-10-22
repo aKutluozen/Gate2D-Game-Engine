@@ -28,6 +28,8 @@ Gate2D.GameDraw = function () {
     // Draw the background of the level first
     Levels.draw();
 
+    Video.drawStaticImages();
+
     // Draw game objects that have draw methods
     for (let i = 0; i < objectsLength; i++) {
         // If there is a camera present, draw objects only when they are in the view
@@ -39,14 +41,14 @@ Gate2D.GameDraw = function () {
     }
 
     // Show score on top of the screen
-    Video.drawTint('black', 0.75, 213, 4, 213, 24);
+    Video.drawBox('black', 0.75, 0, 0, 720, 72);
     Video.drawText(
-        currentLevel.name + ' - Score:' + Globals.score, "Impact", 24, "white", screenWidth / 2, 0, "center", false);
+        currentLevel.name + ' - Score:' + Globals.score, "Impact", 48, "white", screenWidth / 2, 8, "center", false);
 
     // Handle various screens
     switch (status) {
         case 'waiting': // Waiting
-            Video.drawTint('black', 0.75);
+            Video.drawBox('black', 0.75);
             Video.drawText("CLICK TO PLAY!", "Impact", 64, "white", screenWidth / 2, screenHeight / 2 - 24, "center");
             break;
         case 'over': // Game over
@@ -73,6 +75,7 @@ Gate2D.GameDraw = function () {
         default:
             break;
     }
+
 
     Controls.drawOnScreenButtons();
 

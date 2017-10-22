@@ -114,6 +114,7 @@ Gate2D.Loader = (function () {
             }
 
             // Enqueueing core script files - Do not change the order!
+            this.enqueue('engine', 'script', _enginePath + 'Gate2D/Manager.js');
             this.enqueue('mathLibrary', 'script', _enginePath + 'Gate2D/Math.js');
             this.enqueue('videoModule', 'script', _enginePath + 'Gate2D/Video.js');
             this.enqueue('gameControls', 'script', _enginePath + 'Gate2D/Controls.js');
@@ -122,7 +123,6 @@ Gate2D.Loader = (function () {
             this.enqueue('gameDraw', 'script', _localPath + 'GameDraw.js');
             this.enqueue('gameGlobals', 'script', _enginePath + 'Gate2D/Globals.js');
             this.enqueue('levels', 'script', _enginePath + 'Gate2D/Levels.js');
-            this.enqueue('engine', 'script', _enginePath + 'Gate2D/Manager.js');
             this.enqueue('timer', 'script', _enginePath + 'Gate2D/Timer.js');
             this.enqueue('sprites', 'script', _enginePath + 'Gate2D/Sprites.js');
             this.enqueue('entity', 'script', _enginePath + 'Gate2D/Entity.js');

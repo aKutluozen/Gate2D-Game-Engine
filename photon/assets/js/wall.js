@@ -2,7 +2,7 @@
  * wall.js 
  * 
  * Wall Class
- * Sides of the game area. The ball bounces off of them.
+ * Sides of the game area. The photon bounces off of them.
  * 
  * @constructor
  * @param {number}  x - X position of the entity
@@ -26,8 +26,8 @@ function Wall(x, y, z, width, height) {
 Wall.prototype = new Gate2D.Entity();
 
 // Define object main methods draw and there is no need for update since these are static items
-Wall.prototype.draw = function () {    
-    this.ctx.drawImage(this.img, 480, 32, 32, 32, this.x, this.y, this.width, this.height);
+Wall.prototype.draw = function () {
+    // this.ctx.drawImage(this.img, 480, 32, 32, 32, this.x, this.y, this.width, this.height);
     // this.ctx.fillRect(this.x, this.y, this.width, this.height);
     this.coll.draw();
 }
