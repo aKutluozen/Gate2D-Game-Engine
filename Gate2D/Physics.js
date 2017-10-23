@@ -123,6 +123,7 @@ Gate2D.Physics = (function () {
 
         /**
          * Checks collision between 2 circular entities
+         * This function is internally used. However, you may call it as you need it.
          * 
          * @param {object}  thisEntity  - The object that will collide with the other object
          * @param {object}  otherEntity - The object that will collide with the other object
@@ -144,7 +145,8 @@ Gate2D.Physics = (function () {
         },
 
         /**
-         * Checks collision between 2 rectangular entities    
+         * Checks collision between 2 rectangular entities  
+         * This function is internally used. However, you may call it as you need it.
          * 
          * @param {object}  thisEntity  - The object that will collide with the other object
          * @param {object}  otherEntity - The object that will collide with the other object
@@ -165,6 +167,7 @@ Gate2D.Physics = (function () {
 
         /**
          * Checks collision between a circle and a rectangle
+         * This function is internally used. However, you may call it as you need it.
          * 
          * @param {object}  circle - Any object that has a circleCollision property as collision area
          * @param {object}  rect -  Any object that has a AABBCollision property as collision area - MIGHT CHANGE TO A STRING
@@ -214,13 +217,15 @@ Gate2D.Physics = (function () {
          * @returns {array}
          */
         checkCollision: function (obj) {
+            // Create the temporary array and cache number
             let arr = [],
-                objects = Gate2D.Objects.objects();
+                objects = Gate2D.Objects.objects(),
+                len = Gate2D.Objects.length();
 
             // Searching object is a circular one
             if (obj.coll.r !== undefined) {
                 
-                for (let i = 0, len = Gate2D.Objects.length(); i < len; i++) {
+                for (let i = 0; i < len; i++) {
 
                     // Circle to circle collision
                     if (objects[i].coll.r !== undefined) {
@@ -240,7 +245,7 @@ Gate2D.Physics = (function () {
 
             // Searching object is a rectangular one
             else {
-                for (let i = 0, len = Gate2D.Objects.length(); i < len; i++) {
+                for (let i = 0; i < len; i++) {
 
                     // Rectangle to circle collision
                     if (objects[i].coll.r !== undefined) {
@@ -261,7 +266,7 @@ Gate2D.Physics = (function () {
         },
 
         /**
-         * Moves a given object to a point, return the rotation if needed
+         * Moves a given object to a point, returns the rotation if needed
          * 
          * @param {object}  from - The object that needs to move
          * @param {object}  to - The target point

@@ -28,8 +28,10 @@ Gate2D.Controls = (function () {
 	return {
 		/**
 		 * Sends mouse coordinates to whoever is listening
+		 * This function is internally used. No need to call if from the actual game code.
 		 * 
 		 * @param {Object}  entities - An array of game objects
+		 * 
 		 */
 		initMouseControls: function (entities) {
 			// Cache 'this' and necessary elements
@@ -68,17 +70,18 @@ Gate2D.Controls = (function () {
 
 		/**
 		 * Sends touch coordinates to whoever is listening
+		 * This function is internally used. No need to call if from the actual game code. 
 		 * 
 		 * @param {Object}  entities - An array of game objects
 		 */
 		initTouchControls: function (entities) {
 			// Cache 'this' and necessary elements
 			let _this = this,
-				_canvas = Gate2D.Video.canvas();
+				canvas = Gate2D.Video.canvas();
 
 			// Add the listener only once
 			if (!_touchListenerAdded) {
-				_canvas.addEventListener("touchstart",
+				canvas.addEventListener("touchstart",
 					function (event) {
 						for (let i = 0, len = entities.length; i < len; i++) {
 							if (entities[i].controlled) {
@@ -90,7 +93,7 @@ Gate2D.Controls = (function () {
 						passive: true
 					});
 
-				_canvas.addEventListener("touchmove",
+				canvas.addEventListener("touchmove",
 					function (event) {
 						for (let i = 0, len = entities.length; i < len; i++) {
 							if (entities[i].controlled) {
@@ -102,7 +105,7 @@ Gate2D.Controls = (function () {
 						passive: true
 					});
 
-				_canvas.addEventListener("touchend",
+				canvas.addEventListener("touchend",
 					function (event) {
 						for (let i = 0, len = entities.length; i < len; i++) {
 							if (entities[i].controlled) {
@@ -119,17 +122,18 @@ Gate2D.Controls = (function () {
 
 		/**
 		 * Sends keycodes to whoever is listening
+		 * This function is internally used. No need to call if from the actual game code.
 		 * 
 		 * @param {array}   entities - An array of game objects
 		 */
 		initKeyboardControls: function (entities) {
 			// Cache 'this' and necessary elements
 			let _this = this,
-				_canvas = Gate2D.Video.canvas();
+				doc = document.body;
 
 			// Add the listener only once
 			if (!_keyboardListenerAdded) {
-				_canvas.addEventListener("keydown", function (event) {
+				doc.addEventListener("keydown", function (event) {
 					for (let i = 0, len = entities.length; i < len; i++) {
 						if (entities[i].controlled) {
 							entities[i].handleKeyDown(event.keyCode);
@@ -137,7 +141,7 @@ Gate2D.Controls = (function () {
 					}
 				});
 
-				_canvas.addEventListener("keyup", function (event) {
+				doc.addEventListener("keyup", function (event) {
 					_this.keyboardListener(event.keyCode);
 					for (let i = 0, len = entities.length; i < len; i++) {
 						if (entities[i].controlled) {
@@ -151,6 +155,7 @@ Gate2D.Controls = (function () {
 
 		/**
 		 * A general input manager for pausing, escaping, etc the game
+		 * This function is internally used. No need to call if from the actual game code. 
 		 * 
 		 * @param {number}  input - Keycode number to be interpreted
 		 */
@@ -167,6 +172,7 @@ Gate2D.Controls = (function () {
 
 		/**
 		 * Returns the x and y position of the mouse on canvas
+		 * This function is internally used. However, you may call it as you need it.
 		 * 
 		 * @param {array}   event - Mouse event
 		 * @returns {object}
@@ -184,6 +190,7 @@ Gate2D.Controls = (function () {
 
 		/**
 		 * Returns the x and y position of the mouse on canvas
+		 * This function is internally used. However, you may call it as you need it.
 		 * 
 		 * @param {array}   event - Mouse event
 		 * @returns {object}
@@ -206,7 +213,23 @@ Gate2D.Controls = (function () {
 		 * Adds button area to the buttons array
 		 * 
 		 * @param {array}   buttons - An array of buttons
-		 */
+		 *                          
+         * @property {string}       buttons[num].name - Name of the button      
+         * @property {string}       buttons[num].status - Status of the button ('active', 'disabled')      
+         * @property {number}       buttons[num].x - X position of the button 
+         * @property {number}      	buttons[num].y - Y position of the button     
+         * @property {object}      	buttons[num].image - Image of the button (An object, specify further settings with following properties) 
+		 * @property {object}      	buttons[num].image.image - Image file - (Use Gate2D.Loader.getFile('imageFileName') to load it)
+		 * @property {number}      	buttons[num].image.cropX - X position of where to start cutting the image from 
+		 * @property {number}      	buttons[num].image.cropY - Y position of where to start cutting the image from
+		 * @property {number}      	buttons[num].image.cropWidth - Width of the cut area 
+		 * @property {number}      	buttons[num].image.cropHeight - Height of the cut area 
+		 * @property {number}      	buttons[num].image.drawX - X position of the image on the screen 
+		 * @property {number}      	buttons[num].image.drawY - Y position of the image on the screen 
+		 * @property {number}      	buttons[num].image.drawWidth - Width of the image on the screen
+		 * @property {number}      	buttons[num].image.drawHeight - Height of the image on the screen
+         * @property {function}     buttons[num].action - Action to be executed when interacted with the button ('start', 'move', 'release')
+         */
 		addOnScreenButton: function (buttons) {
 			let i = 0,
 				len = buttons.length;
@@ -223,7 +246,8 @@ Gate2D.Controls = (function () {
 
 	    /**
 		 * Checks to see if the click position is corresponding to any button
-		 * If so, executes the method of that button based on the event
+		 * If so, executes the method of that button based on the event.
+		 * This function is internally used. No need to call if from the actual game code.
 		 * 
 		 * @param {array}   clickPosition - The position of the event
 		 * @param {array}   type - Type of the event ('start', 'move', 'release')
@@ -244,40 +268,44 @@ Gate2D.Controls = (function () {
 		},
 
 	    /**
-		 * Draws the touch buttons on the screen if in the debug mode
+		 * Draws the touch buttons on the screen
 		 */
 		drawOnScreenButtons: function () {
-			for (let i = 0; i < _onScreenButtonsArray.length; i++) {
-				if (_debug) {
+			for (let i = 0, len = _onScreenButtonsArray.length; i < len; i++) {
+				if (_debug && _onScreenButtonsArray[i].status === 'active') {
 					_Video.drawBox('orange', 0.5, _onScreenButtonsArray[i].x, _onScreenButtonsArray[i].y, _onScreenButtonsArray[i].width, _onScreenButtonsArray[i].height);
 				}
 
-				_Video.bufferContext().save();
+				// Draw only if it has an image property
+				if (_onScreenButtonsArray[i].image) {
+					_Video.bufferContext().save();
 
-				// Fade out the disabled button
-				if (_onScreenButtonsArray[i].status === 'disabled') {
-					_Video.bufferContext().globalAlpha = 0.5;
-				} else if (_onScreenButtonsArray[i].status === 'active') {
-					_Video.bufferContext().globalAlpha = 1;
+					// Fade out the disabled button
+					if (_onScreenButtonsArray[i].status === 'disabled') {
+						_Video.bufferContext().globalAlpha = 0.5;
+					} else if (_onScreenButtonsArray[i].status === 'active') {
+						_Video.bufferContext().globalAlpha = 1;
+					}
+
+					_Video.bufferContext().drawImage(
+						_onScreenButtonsArray[i].image.image,
+						_onScreenButtonsArray[i].image.cropX,
+						_onScreenButtonsArray[i].image.cropY,
+						_onScreenButtonsArray[i].image.cropWidth,
+						_onScreenButtonsArray[i].image.cropHeight,
+						_onScreenButtonsArray[i].image.drawX,
+						_onScreenButtonsArray[i].image.drawY,
+						_onScreenButtonsArray[i].image.drawWidth,
+						_onScreenButtonsArray[i].image.drawHeight,
+					);
+					_Video.bufferContext().restore();
 				}
-
-				_Video.bufferContext().drawImage(
-					_onScreenButtonsArray[i].image.image,
-					_onScreenButtonsArray[i].image.cropX,
-					_onScreenButtonsArray[i].image.cropY,
-					_onScreenButtonsArray[i].image.cropWidth,
-					_onScreenButtonsArray[i].image.cropHeight,
-					_onScreenButtonsArray[i].image.drawX,
-					_onScreenButtonsArray[i].image.drawY,
-					_onScreenButtonsArray[i].image.drawWidth,
-					_onScreenButtonsArray[i].image.drawHeight,
-				);
-				_Video.bufferContext().restore();
 			}
 		},
 
 	    /**
 		 * Returns a button if found
+		 * 
 		 * @param {string}	name - Name of the button
 		 */
 		getOnScreenButton: function (name) {

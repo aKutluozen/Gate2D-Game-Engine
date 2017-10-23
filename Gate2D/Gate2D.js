@@ -12,4 +12,6 @@
 // Welcome, Gate2D!
 var Gate2D = Gate2D || {}; 
 
+Gate2D.Misc = {} // Container for miscellaneous game functions - Put this in a thing later
+
 console.log('Initializing Gate2D...');

@@ -328,6 +328,8 @@ Gate2D.Video = (function () {
         /**             
          * Checks if a given object is in the view of the camera
          * 
+         * @param {object}      object - The game object
+         * 
          * @returns {boolean}
          */
         isObjectInView: function (object) {
@@ -342,10 +344,10 @@ Gate2D.Video = (function () {
         /**             
          * Refreshes the screen on a given FPS
          * 
-         * @param {boolean} isFPSDependent - Decides if refreshing is FPS dependent.
-         * If true, you must incorporate Video.deltaTime() in game physics.
+         * @param {boolean} _FPSdep - Decides if refreshing is FPS dependent.
+         * If true, you must incorporate Gate2D.Video.deltaTime() in game physics.
          */
-        refresh: function () {
+        refresh: function (_FPSdep) {
             if (!_FPSdep) {
                 _ctx.clearRect(0, 0, _width, _height);
                 _bctx.clearRect(0, 0, _width, _height);
@@ -359,7 +361,6 @@ Gate2D.Video = (function () {
                     _ctx.clearRect(0, 0, _width, _height);
                     _bctx.clearRect(0, 0, _width, _height);
                     _then = _now - (_dt % _interval);
-
                     if (_debug) {
                         _et = (_then - _first) / 1000;
                         this.showFPS(_et);
@@ -390,10 +391,10 @@ Gate2D.Video = (function () {
                 y = _cameraY;
             }
 
-            _bctx.font = size + "px " + font;
+            _bctx.font = size + 'px ' + font;
             _bctx.fillStyle = color;
             _bctx.textAlign = align;
-            _bctx.textBaseline = "top";
+            _bctx.textBaseline = 'top';
             _bctx.fillText(value, x, y);
 
             if (isStroked) {
@@ -465,9 +466,21 @@ Gate2D.Video = (function () {
         },
 
         /**
-         * Creates an array of HUD elements like health bar, backgrounds for score, buttons, etc.
+         * Creates an array of HUD elements like backgrounds for score, buttons, health bar, etc.
          * 
          * @param {array}   elements - Array of buttons
+		 *                          
+         * @property {string}   elements[num].name - Name of the image          
+		 * @property {object}   elements[num].image - Image file - (Use Gate2D.Loader.getFile('imageFileName') to load it)
+		 * @property {number}   elements[num].cropX - X position of where to start cutting the image from 
+		 * @property {number}   elements[num].cropY - Y position of where to start cutting the image from
+		 * @property {number}   elements[num].cropWidth - Width of the cut area 
+		 * @property {number}   elements[num].cropHeight - Height of the cut area 
+		 * @property {number}   elements[num].drawX - X position of the image on the screen 
+		 * @property {number}   elements[num].drawY - Y position of the image on the screen 
+		 * @property {number}   elements[num].drawWidth - Width of the image on the screen
+		 * @property {number}   elements[num].drawHeight - Height of the image on the screen
+         * @property {number}   elements[num].opacity - Opacity of the image (0.0 to 1.0)
          */
         createStaticImages: function (elements) {
             for (let i = 0; i < elements.length; i++) {
@@ -480,6 +493,8 @@ Gate2D.Video = (function () {
          */
         drawStaticImages: function () {
             for (let i = 0; i < _HUDElementsArray.length; i++) {
+                _bctx.save();
+                _bctx.globalAlpha = _HUDElementsArray[i].opacity;
                 _bctx.drawImage(
                     _HUDElementsArray[i].image, 
                     _HUDElementsArray[i].cropX, 
@@ -491,6 +506,7 @@ Gate2D.Video = (function () {
                     _HUDElementsArray[i].drawWidth, 
                     _HUDElementsArray[i].drawHeight
                 );
+                _bctx.restore();
             }
         },
 

@@ -39,7 +39,7 @@ Gate2D.Loader.addFiles(
     Gate2D.Manager.setup({
         screenWidth: 320,
         screenHeight: 240,
-        mouseEnabled: true,
+        mouseEnabled: false,
         keyboardEnabled: true,
         startingLevel: 'level1',
         physicsDebug: false

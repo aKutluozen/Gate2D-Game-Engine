@@ -47,6 +47,19 @@ Gate2D.Math = (function () {
                 x: Math.cos(angle * Math.PI / 180) * speed,
                 y: Math.sin(angle * Math.PI / 180) * speed
             }
+        },
+
+        /**
+         * Returns a random in a range
+         * 
+         * @param {number}  min - Minimum
+         * @param {number}  max - Maximum
+         * @returns {number}
+         */
+        randomNumber: function (min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
         }
     }
 }());

@@ -73,7 +73,7 @@ Gate2D.Objects = (function () {
          * @returns {array}
          */
         getGroup: function (name) {
-            return _objectsGroup[name];
+            return _objectsGroup[name] || null;
         },
 
         /**
@@ -94,15 +94,19 @@ Gate2D.Objects = (function () {
 
         /**
          * Returns the game objects with a given name
-         * This function is a shortcut for findByProperty('name', <name>)
+         * This function is a shortcut for findByProperty('name', <name>) with a faster lookup time
          * 
          * @param {string}   name - An array of game objects
          * @returns {object}
          */
         get: function (name) {
-            return _objectsObject[name];
+            return _objectsObject[name] || null;
         },
 
+        /**
+         * Hooks up all the game objects with the buffer context
+         * This function is internally used. No need to call if from the actual game code.
+         */
         setupDisplayForObjects: function () {
             for (let i = 0, len = _objectsArray.length; i < len; i++) {
                 _objectsArray[i].setupDisplay();

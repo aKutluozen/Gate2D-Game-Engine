@@ -22,6 +22,7 @@ Gate2D.Loader = (function () {
     return {
         /**
          * Adds a new file object to the queue to be loaded in order
+         * This function is internally used. No need to call if from the actual game code.
          * 
          * @param {string}  tag - Tag name to be the id of the created DOM element
          * @param {string}  filetype - Type of the file as an HTML tag - E.g. script, img, audio, etc.
@@ -121,6 +122,7 @@ Gate2D.Loader = (function () {
             this.enqueue('gamePhysics', 'script', _enginePath + 'Gate2D/Physics.js');
             this.enqueue('gameUpdate', 'script', _localPath + 'GameUpdate.js');
             this.enqueue('gameDraw', 'script', _localPath + 'GameDraw.js');
+            this.enqueue('gameDraw', 'script', _localPath + 'GameControls.js');
             this.enqueue('gameGlobals', 'script', _enginePath + 'Gate2D/Globals.js');
             this.enqueue('levels', 'script', _enginePath + 'Gate2D/Levels.js');
             this.enqueue('timer', 'script', _enginePath + 'Gate2D/Timer.js');

@@ -41,6 +41,7 @@ Gate2D.Levels = (function () {
 
         /**
          * Assigns the level context for levels to be drawn
+         * This function is internally used. No need to call if from the actual game code.
          * 
          * @param {object}
          */
@@ -59,7 +60,10 @@ Gate2D.Levels = (function () {
             if (condition() === true) {
                 // Get the current level
                 _current = this.get(name);
-                
+
+                // Execute the level initAction
+                _current.initAction();
+
                 // Set up the background in CSS
                 if (_current.background) {
                     Gate2D.Video.canvas().style.background = "url('" + _current.background.src + "') repeat";
@@ -80,7 +84,7 @@ Gate2D.Levels = (function () {
                 function capitalizeFirstLetter(string) {
                     return string.charAt(0).toUpperCase() + string.slice(1);
                 }
-                
+
                 for (let yPos = 0, len = _current.objectMap.height; yPos < len; yPos++) {
                     for (let xPos = 0, len = _current.objectMap.width; xPos < len; xPos++) {
 
@@ -89,7 +93,7 @@ Gate2D.Levels = (function () {
 
                         // Get objects by their numbers, assign them their new information
                         if (objNum !== 0) {
-                            
+
                             let objFound = Gate2D.Objects.findByProperty('levelID', objNum);
                             objFound = objFound.object;
 
@@ -102,10 +106,12 @@ Gate2D.Levels = (function () {
                                 objFound.height + ',"' +
                                 objFound.name + '","' +
                                 objFound.tag + '")');
+                            
+                            newObj.levelID = objNum;
 
                             // Add them to the lists
                             Gate2D.Objects.add(newObj);
-                            levelObjects.push(newObj); // problem here
+                            levelObjects.push(newObj);
                         }
                     }
                 }
@@ -138,11 +144,10 @@ Gate2D.Levels = (function () {
 
                 levelObjects = []; // Empty the temporary array
             }
-
         },
 
         /**
-         * Also draws the camera if there is one
+         * Draws the camera if there is one - This function will be enhanced!
          */
         draw: function () {
             if (_current.camera) {
@@ -162,6 +167,17 @@ Gate2D.Levels = (function () {
          * @property {number}   levelObject.y - Y offset of the level 
          * @property {string}   levelObject.background - Background image of the level 
          * @property {Array}    levelObject.objectsList - A list of objects that in the level
+         * @property {object}   levelObject.camera - Camera object
+         * @property {string}   levelObject.camera.objectToFollow - Name of the object to follow
+         * @property {number}   levelObject.camera.width - Width of the camera on the screen (Should be smaller than level width)
+         * @property {number}   levelObject.camera.height - Height of the camera on the screen (Should be smaller than level height)
+         * @property {number}   levelObject.camera.speed - Following speed of the camera. Slower speeds cause a smoother follow
+         * @property {number}   levelObject.camera.bleed - The number of pixels around the camera, everything outside this range will not be drawn
+         * @property {object}   levelObject.objectMap - Map object of the level
+         * @property {number}   levelObject.objectMap.width - Width of the map in terms of grids
+         * @property {number}   levelObject.objectMap.height - Height of the map in terms of grids
+         * @property {number}   levelObject.objectMap.gridSize - Grid size in pixels (Combination of gridSize and map width should give the actual level width. E.g., 16 pixel grids * 20 cells = 320 pixels screen)
+         * @property {Array}    levelObject.objectMap.map - An array that is organized as a matrice with level IDs of game objects.
          */
         add: function (levelList) {
             let i = 0,

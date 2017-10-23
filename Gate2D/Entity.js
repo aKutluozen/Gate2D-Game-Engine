@@ -46,12 +46,13 @@ Gate2D.Entity.prototype = {
 
     /**
      * Draw the entity box on the context
+     * If the actual object does not have a draw method, this function takes over and it can only be seen in the debug mode
      * 
-     * @param {object}  ctx - Context to draw on
      * @param {string}  color   - Color of the entity box
      */
     draw: function (color) {
-        if (Video.debug()) {
+        if (color === undefined) this.color = 'white';
+        if (Gate2D.Video.debug()) {
             this.ctx.fillStyle = this.color;
             this.ctx.fillRect(this.x, this.y, this.width, this.height);
         }

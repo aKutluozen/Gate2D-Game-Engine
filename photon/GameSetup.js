@@ -26,6 +26,7 @@ Gate2D.Loader.addFiles(
         { name: 'photonScript', type: 'script', path: 'assets/js/photon.js' },
         { name: 'cannonScript', type: 'script', path: 'assets/js/cannon.js' },
         { name: 'wallScript', type: 'script', path: 'assets/js/wall.js' },
+        { name: 'miscFunctionsScript', type: 'script', path: 'assets/js/miscFunctions.js' }
     ]
 ).loadAll(function () {
 
@@ -42,6 +43,6 @@ Gate2D.Loader.addFiles(
     });
 
     console.log('Engine is running...');
-    Gate2D.Manager.gameStatus('on');
+    Gate2D.Manager.gameStatus('waiting');
     Gate2D.Manager.run();
 });

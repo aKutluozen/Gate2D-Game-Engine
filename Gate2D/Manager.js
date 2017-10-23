@@ -55,6 +55,10 @@ Gate2D.Manager = (function () {
             Gate2D.Objects.setupDisplayForObjects();
         },
 
+        /**
+         * Sets up the control based on the settings passed
+         * This function is internally used. No need to call if from the actual game code.
+         */
         setupControls: function () {
             if (_settings.keyboardEnabled) {
                 Gate2D.Controls.initKeyboardControls(Gate2D.Objects.objects());
@@ -98,6 +102,9 @@ Gate2D.Manager = (function () {
             this._gamePaused = bool;
         },
 
+        /**
+         * A basic page reload function - This will be enhanced!
+         */
         restart: function () {
             location.reload();
         },

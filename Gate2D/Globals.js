@@ -39,13 +39,12 @@ Gate2D.Globals = (function () {
         /**
          * Adds an array of game objects
          * 
-         * @param {array}   values - An array of game variables
+         * @param {array}   values - An array of game variables (Each global is key value pair - {key: value})
          */
         add: function (values) {
-            let i = 0,
-                len = values.length;
+            let i = values.length;
 
-            for (; i < len; i++) {
+            for (;i--;) {
                 _globals.push(values[i]);
 
                 // Also make them available to outside world through Globals

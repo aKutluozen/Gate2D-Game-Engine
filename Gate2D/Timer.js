@@ -73,10 +73,11 @@ Gate2D.Timer = (function () {
         /**
          * Sets up a timer
          * 
+         * @param {string}      name - Name of the timer - This functionality will be added later to have different timers with different names!
          * @param {function}    callback - The function that will be running at a given interval
          * @param {number}      interval - The interval of the timer (1000 milliseconds = 1 second)
          */
-        setup: function (callback, interval) {
+        setup: function (name, callback, interval) {
             window.setInterval(function () {
                 // Run the callback function as long as the game is not paused
                 if (!Gate2D.Manager.gameStatus() === 'on') {

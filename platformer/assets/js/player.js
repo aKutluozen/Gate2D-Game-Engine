@@ -87,16 +87,11 @@ Player.prototype.update = function () {
         }
     }
 
-
     this.x += this.speedX;
     this.y += this.yVelocity;
 
     // Always update the collision area position and center it based on the object position
     this.coll.update(this.x + this.width / 2, this.y + this.height / 2);
-}
-
-Player.prototype.handleMouseMovement = function (input) {
-    this.movement = input;
 }
 
 Player.prototype.handleKeyDown = function (input) {
