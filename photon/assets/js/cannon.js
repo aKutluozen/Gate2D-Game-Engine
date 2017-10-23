@@ -28,7 +28,8 @@ function Cannon(x, y, z, width, height) {
     this.overHeat = false; // Boolean that controls the overheat situation
     this.charge = 0; // The amount of charge - Also determines the related graphic
     this.isFiring = false; // Controls the fire animation
-    this.fireAnimation = 0;
+    this.fireAnimation = 0; // The length of the fire animation
+    this.jitter = 0; // Shake when overheating
 
     // Define collision area if one is needed
     this.coll = new Gate2D.Physics.AABBCollision(x, y, z, width, height);
@@ -63,7 +64,7 @@ Cannon.prototype.draw = function () {
             this.ctx.drawImage(this.img, 96, 192, 32, 160, this.x - 24, this.y - this.fireAnimation * 1.5 + 16, this.width, this.fireAnimation * 1.5);
         } else if (this.charge >= 33 && this.charge < 66) {
             this.ctx.drawImage(this.img, 128, 192, 32, 160, this.x - 24, this.y - this.fireAnimation * 1.5 + 16, this.width, this.fireAnimation * 1.5);
-        } else if (this.charge >= 66 && this.charge < 101) {
+        } else if (this.charge >= 66 && this.charge < 100) {
             this.ctx.drawImage(this.img, 160, 192, 32, 160, this.x - 24, this.y - this.fireAnimation * 1.5 + 16, this.width, this.fireAnimation * 1.5);
         }
     }
@@ -118,6 +119,8 @@ Cannon.prototype.update = function () {
         Gate2D.Globals.levelUp = true;
         // Disable the button until the cannon is cool again
         fireButton.status = 'disabled';
+        
+        this.direction += Math.sin(this.jitter++) * 2;
 
         // Keep incrementing the heat unless the player cools it down
         if (this.charge < 100) {
