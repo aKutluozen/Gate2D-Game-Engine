@@ -52,7 +52,9 @@ Photon.prototype.draw = function () {
             case 'red': {
                 this.ctx.drawImage(this.img, 160, 160, 24, 24, this.x, this.y, this.width, this.height);
             } break;
-            default: break;
+            default: {
+                this.ctx.drawImage(this.img, 96, 160, 24, 24, this.x, this.y, this.width, this.height);
+            } break;
         }
         //this.ctx.restore();
     }
@@ -89,7 +91,7 @@ Photon.prototype.update = function () {
                 }
             }
 
-            if (other[i].name === 'enemy') {
+            if (other[i].name === 'enemy' && !other[i].isDead) {
                 // Cache the old speed for swapping purposes
                 let oldSpeedX = this.speedX,
                     oldSpeedY = this.speedY,
@@ -115,10 +117,22 @@ Photon.prototype.update = function () {
                     this.speedY = Math.abs(oldSpeedX) + random;
                 }
 
+                // Wake the animation of the photon
+                other[i].isHitAnimationNumber = 40;
+
                 // Deduct life from the enemy with the same color
                 if (this.power === other[i].tag) {
                     other[i].life--;
-                    Gate2D.Globals.energy++;
+
+                    // Need balance
+                    if (other[i].tag === 'green') {
+                        Gate2D.Globals.energy++;
+                    } else if (other[i].tag === 'yellow') {
+                        Gate2D.Globals.energy += 8;
+                    } else {
+                        Gate2D.Globals.energy += 16;
+                    }
+
                     Gate2D.Globals.score++;
                     break;
                 }
@@ -167,7 +181,7 @@ Photon.prototype.fire = function (power) {
         Gate2D.Globals.energy -= power;
 
         // Get the direction from the cannon and assign the speed
-        this.movement = Gate2D.Math.direction(Gate2D.Objects.get('cannon').direction + 270, 16 + power / 8);
+        this.movement = Gate2D.Math.direction(Gate2D.Objects.get('cannon').direction + 270, 8 + power / 8);
 
         // Assign the new speed
         this.speedX = -this.movement.x;

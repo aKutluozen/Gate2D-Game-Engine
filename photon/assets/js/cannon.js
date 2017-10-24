@@ -54,8 +54,8 @@ Cannon.prototype.draw = function () {
 
     // Handle firing fire animation
     if (this.isFiring) {
-        if (this.fireAnimation < 256) {
-            this.fireAnimation += 32;
+        if (this.fireAnimation < 128) {
+            this.fireAnimation += 16;
         } else {
             this.isFiring = false;
             this.fireAnimation = 0;

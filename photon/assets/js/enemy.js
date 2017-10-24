@@ -18,12 +18,14 @@ function Enemy(x, y, z, width, height) {
     this.img = Gate2D.Loader.getFile('sprites'); // Load the object image
     this.direction = 0;
     this.checkedCollision = false;
+    this.isHitAnimationNumber = 0;
+    this.isDead = false;
 
     // Assign lives
     switch (this.tag) {
         case 'green': this.life = 2; break;
-        case 'yellow': this.life = 4; break;
-        case 'red': this.life = 8; break;
+        case 'yellow': this.life = 2; break;
+        case 'red': this.life = 2; break;
         default: break;
     }
 
@@ -37,8 +39,24 @@ Enemy.prototype = new Gate2D.Entity();
 // Define object main methods draw and update
 Enemy.prototype.draw = function () {
     // Draw them only when they are alive and in the screen
-    if (this.life > 0 && this.y > 0) {
+    if (this.y > 0) {
         this.ctx.save();
+
+        // Handle the hit animation
+        if (!this.isDead) {
+            if (this.isHitAnimationNumber >= 0) {
+                this.isHitAnimationNumber -= 0.5;
+            }
+        } else {
+            this.isHitAnimationNumber += 2;
+            this.ctx.globalAlpha = 1 - this.isHitAnimationNumber / (this.width * 4);
+            console.log(this.ctx.globalAlpha);
+            // Send them outside the screen when they are dead
+            if (this.isHitAnimationNumber >= this.width * 4) {
+                this.y = -300;
+                this.ctx.globalAlpha = 0;
+            }
+        }
 
         // Rotate them slowly
         this.ctx.translate(~~this.x + 4 + this.width / 2, ~~this.y + this.height / 2);
@@ -48,13 +66,25 @@ Enemy.prototype.draw = function () {
         // Select a color based on the tag
         switch (this.tag) {
             case 'green': {
-                this.ctx.drawImage(this.img, 192, 160, 32, 32, ~~this.x, ~~this.y, this.width, this.height);
+                this.ctx.drawImage(this.img, 192, 160, 32, 32,
+                    ~~this.x - this.isHitAnimationNumber / 2,
+                    ~~this.y - this.isHitAnimationNumber / 2,
+                    this.width + this.isHitAnimationNumber,
+                    this.height + this.isHitAnimationNumber);
             } break;
             case 'yellow': {
-                this.ctx.drawImage(this.img, 240, 160, 64, 64, ~~this.x, ~~this.y, this.width, this.height);
+                this.ctx.drawImage(this.img, 240, 160, 64, 64,
+                    ~~this.x - this.isHitAnimationNumber / 2,
+                    ~~this.y - this.isHitAnimationNumber / 2,
+                    this.width + this.isHitAnimationNumber,
+                    this.height + this.isHitAnimationNumber);
             } break;
             case 'red': {
-                this.ctx.drawImage(this.img, 320, 160, 128, 128, ~~this.x, ~~this.y, this.width, this.height);
+                this.ctx.drawImage(this.img, 320, 160, 128, 128,
+                    ~~this.x - this.isHitAnimationNumber / 2,
+                    ~~this.y - this.isHitAnimationNumber / 2,
+                    this.width + this.isHitAnimationNumber,
+                    this.height + this.isHitAnimationNumber);
             } break;
             default: break;
         }
@@ -69,14 +99,15 @@ Enemy.prototype.draw = function () {
 }
 
 Enemy.prototype.update = function () {
-    // Send them outside the screen when they are dead
-    if (this.life < 1) {
-        this.y = -200;
-    }
-
     // Move down enemies when needed
     if (Gate2D.Globals.levelUp) {
         this.y += 0.25;
+    }
+
+    if (!this.isDead) {
+        if (this.life < 1) {
+            this.isDead = true;
+        }
     }
 
     // Handle game over if the enemies are so close to the player
