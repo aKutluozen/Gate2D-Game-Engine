@@ -50,7 +50,7 @@ Enemy.prototype.draw = function () {
         } else {
             this.isHitAnimationNumber += 2;
             this.ctx.globalAlpha = 1 - this.isHitAnimationNumber / (this.width * 4);
-            console.log(this.ctx.globalAlpha);
+
             // Send them outside the screen when they are dead
             if (this.isHitAnimationNumber >= this.width * 4) {
                 this.y = -300;
