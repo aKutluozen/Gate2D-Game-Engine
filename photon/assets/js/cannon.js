@@ -26,7 +26,8 @@ function Cannon(x, y, z, width, height) {
     // Canon charge control
     this.isCharging = false; // True when charging
     this.overHeat = false; // Boolean that controls the overheat situation
-    this.charge = 0; // The amount of charge - Also determines the related graphic
+    this.charge = 0; // The amount of charge
+    this.heatSink = 0; // Accumuluates until it overheats and relaxes
     this.isFiring = false; // Controls the fire animation
     this.fireAnimation = 0; // The length of the fire animation
     this.jitter = 0; // Shake when overheating
@@ -60,11 +61,12 @@ Cannon.prototype.draw = function () {
             this.isFiring = false;
             this.fireAnimation = 0;
         }
-        if (this.charge >= 0 && this.charge < 33) {
+        console.log(this.charge);
+        if (this.charge >= 0 && this.charge < 10) {
             this.ctx.drawImage(this.img, 96, 192, 32, 160, this.x - 24, this.y - this.fireAnimation * 1.5 + 16, this.width, this.fireAnimation * 1.5);
-        } else if (this.charge >= 33 && this.charge < 66) {
+        } else if (this.charge >= 10 && this.charge < 20) {
             this.ctx.drawImage(this.img, 128, 192, 32, 160, this.x - 24, this.y - this.fireAnimation * 1.5 + 16, this.width, this.fireAnimation * 1.5);
-        } else if (this.charge >= 66 && this.charge < 100) {
+        } else if (this.charge >= 20 && this.charge < 31) {
             this.ctx.drawImage(this.img, 160, 192, 32, 160, this.x - 24, this.y - this.fireAnimation * 1.5 + 16, this.width, this.fireAnimation * 1.5);
         }
     }
@@ -72,8 +74,8 @@ Cannon.prototype.draw = function () {
     // Charging color change
     let red = 0, green = 255, blue = 0;
     if (this.isCharging) {
-        red += this.charge * 4;
-        green -= this.charge * 4;
+        red += this.heatSink * 4;
+        green -= this.heatSink * 4;
 
         // Draw the guide line with the color
         if (!this.overHeat) {
@@ -83,11 +85,11 @@ Cannon.prototype.draw = function () {
     }
 
     // Show the charging number
-    Gate2D.Video.drawText(~~(this.charge), 'Impact', 36, "white", this.x + 6, this.y + this.height / 2 - 22, "center", false);
+    // Gate2D.Video.drawText(~~(this.charge), 'Impact', 36, "white", this.x + 6, this.y + this.height / 2 - 22, "center", false);
 
     // Show the charging
     this.ctx.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-    this.ctx.fillRect(~~this.x, ~~(this.y + this.height / 3 + 3), this.width / 4, -(~~this.charge * 0.8));
+    this.ctx.fillRect(~~this.x, ~~(this.y + this.height / 3 + 3), this.width / 4, -(~~this.heatSink * 0.8));
 
     // Draw the box collision if needed
     this.coll.draw();
@@ -96,21 +98,16 @@ Cannon.prototype.draw = function () {
 }
 
 Cannon.prototype.update = function () {
-    let fireButton = Gate2D.Controls.getOnScreenButton('fireButton')
+    let fireButton = Gate2D.Controls.getOnScreenButton('fireButton');
 
     // If charging mode is on, charge the cannon until it is 100
     if (this.isCharging && !this.overHeat) {
-        this.charge += 0.5;
+        this.heatSink += 0.25;
+        this.charge += 0.25;
 
         // Overheating happens
-        if (this.charge > 100) {
+        if (this.heatSink > 100) {
             this.overHeat = true;
-        }
-    }
-    // Cool down the cannon when not using
-    else if (!this.isCharging && !this.overHeat && !this.isFiring) {
-        if (this.charge >= 0) {
-            this.charge -= 0.25;
         }
     }
 
@@ -123,12 +120,12 @@ Cannon.prototype.update = function () {
         this.direction += Math.sin(this.jitter++) * 2;
 
         // Keep incrementing the heat unless the player cools it down
-        if (this.charge < 100) {
-            this.charge += 0.25;
+        if (this.heatSink < 100) {
+            this.heatSink += 0.25;
 
             // Everything turns back to normal when the cannon is cold enough
-            if (this.charge < 5) {
-                this.charge = 0;
+            if (this.heatSink < 5) {
+                this.heatSink = 0;
                 this.overHeat = false;
                 this.isCharging = false;
                 Gate2D.Globals.levelUp = false;
@@ -162,5 +159,5 @@ Cannon.prototype.power = function () {
 
 // Cool down amount at each tap
 Cannon.prototype.coolDown = function () {
-    this.charge -= 5;
+    this.heatSink -= 5;
 }

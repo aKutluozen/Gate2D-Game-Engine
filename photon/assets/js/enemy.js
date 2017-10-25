@@ -24,8 +24,8 @@ function Enemy(x, y, z, width, height) {
     // Assign lives
     switch (this.tag) {
         case 'green': this.life = 2; break;
-        case 'yellow': this.life = 2; break;
-        case 'red': this.life = 2; break;
+        case 'yellow': this.life = 4; break;
+        case 'red': this.life = 8; break;
         default: break;
     }
 
@@ -48,6 +48,7 @@ Enemy.prototype.draw = function () {
                 this.isHitAnimationNumber -= 0.5;
             }
         } else {
+            Gate2D.Physics.moveTowards(this, {x: 360, y: 1088, width: 0, height: 0 }, 16);
             this.isHitAnimationNumber += 2;
             this.ctx.globalAlpha = 1 - this.isHitAnimationNumber / (this.width * 4);
 
@@ -111,7 +112,7 @@ Enemy.prototype.update = function () {
     }
 
     // Handle game over if the enemies are so close to the player
-    if (this.y + this.height >= 1088) {
+    if (this.y + this.height >= 1088 && !this.isDead) {
         Gate2D.Manager.gameStatus('over');
     }
 

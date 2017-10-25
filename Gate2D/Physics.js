@@ -270,12 +270,13 @@ Gate2D.Physics = (function () {
          * 
          * @param {object}  from - The object that needs to move
          * @param {object}  to - The target point
+         * @param {object}  speed - Speed of the movement
          * @returns {number}
          */
-        moveTowards: function (from, to) {
+        moveTowards: function (from, to, speed) {
             from.rotation = Math.atan2(from.y + from.height / 2 - to.y - to.height / 2, from.x + from.width / 2 - to.x - to.width / 2);
-            from.x -= Math.cos(from.rotation) * from.speed;
-            from.y -= Math.sin(from.rotation) * from.speed;
+            from.x -= Math.cos(from.rotation) * speed;
+            from.y -= Math.sin(from.rotation) * speed;
             return from.rotation;
         },
     }

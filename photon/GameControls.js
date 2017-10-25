@@ -55,6 +55,7 @@ Gate2D.Controls.addOnScreenButton([
                 case 'start': {
                     // Perform when touch starts 
                     if (!cannon.overHeat) {
+                        cannon.charge = 0;
                         cannon.charging(true); // Charge the cannon
                     }
                 } break;

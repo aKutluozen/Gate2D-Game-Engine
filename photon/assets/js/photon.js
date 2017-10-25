@@ -126,11 +126,11 @@ Photon.prototype.update = function () {
 
                     // Need balance
                     if (other[i].tag === 'green') {
-                        Gate2D.Globals.energy++;
+                        Gate2D.Globals.energy += 5;
                     } else if (other[i].tag === 'yellow') {
-                        Gate2D.Globals.energy += 8;
+                        Gate2D.Globals.energy += 10;
                     } else {
-                        Gate2D.Globals.energy += 16;
+                        Gate2D.Globals.energy += 15;
                     }
 
                     Gate2D.Globals.score++;
@@ -152,6 +152,7 @@ Photon.prototype.update = function () {
         this.speedX = 0;
         this.speedY = 0;
         this.power = 1;
+        Gate2D.Objects.get('cannon').charge = 0;
 
         // Wake up the levelUp event
         Gate2D.Misc.executeLevelup();
@@ -175,13 +176,13 @@ Photon.prototype.fire = function (power) {
         this.speedY = 0;
 
         // Assign the power
-        if (power >= 0 && power < 33) { this.power = 'green'; }
-        if (power >= 33 && power < 66) { this.power = 'yellow'; }
-        if (power >= 66 && power < 101) { this.power = 'red'; }
+        if (power >= 0 && power < 10) { this.power = 'green'; }
+        if (power >= 10 && power < 20) { this.power = 'yellow'; }
+        if (power >= 20 && power < 31) { this.power = 'red'; }
         Gate2D.Globals.energy -= power;
 
         // Get the direction from the cannon and assign the speed
-        this.movement = Gate2D.Math.direction(Gate2D.Objects.get('cannon').direction + 270, 8 + power / 8);
+        this.movement = Gate2D.Math.direction(Gate2D.Objects.get('cannon').direction + 270, 16);
 
         // Assign the new speed
         this.speedX = -this.movement.x;
