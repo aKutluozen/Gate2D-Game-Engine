@@ -8,9 +8,8 @@
  * @author          Ali Kutluozen     
  */
 
-Gate2D.GameDraw = function () {
-
-    'use strict';
+Gate2D.GameDraw = function() {
+    "use strict";
 
     // Cache needed modules and methods
     let Levels = Gate2D.Levels,
@@ -24,7 +23,7 @@ Gate2D.GameDraw = function () {
         objectsLength = objectsList.length,
         screenWidth = Video.getScreenWidth(),
         screenHeight = Video.getScreenHeight(),
-        gameFont = 'Impact';
+        gameFont = "Impact";
 
     // Draw the background of the level first
     Levels.draw();
@@ -44,41 +43,126 @@ Gate2D.GameDraw = function () {
 
     // Show score on top of the screen
     // Video.drawBox('black', 0.75, 0, 0, 720, 100);
-    Video.drawText(Globals.score, gameFont, 'bold ' + 48, "white", screenWidth - 24, 16, "right", false);
+    Video.drawText(
+        Globals.score,
+        gameFont,
+        "bold " + 48,
+        "white",
+        screenWidth - 24,
+        16,
+        "right",
+        false
+    );
 
     // Draw a energy box
-    Video.drawBox('#3a2618', 1, 18, 18, screenWidth / 2 - 12, 54); // Background
-    Video.drawBox('rgb(' + ~~(256 - 2 * Globals.energy) + ', ' + ~~(2 * Globals.energy) + ', 32)', 1, 24, 24, 1 + Globals.energy * (screenWidth / 2 - 24) / 100, 42); // Energy itself
-    Video.drawText(~~Globals.energy, gameFont, 'bold ' + 40, "white", 32, 20, "left", false);
+    Video.drawBox("#3a2618", 1, 18, 18, screenWidth / 2 - 12, 54); // Background
+    Video.drawBox(
+        "rgb(" +
+            ~~(256 - 2 * Globals.energy) +
+            ", " +
+            ~~(2 * Globals.energy) +
+            ", 32)",
+        1,
+        24,
+        24,
+        1 + Globals.energy * (screenWidth / 2 - 24) / 100,
+        42
+    ); // Energy itself
+    Video.drawText(
+        ~~Globals.energy,
+        gameFont,
+        "bold " + 40,
+        "white",
+        32,
+        20,
+        "left",
+        false
+    );
 
     // Draw onscreen buttons
     Controls.drawOnScreenButtons();
 
     // Handle various screens
     switch (status) {
-        case 'waiting': // Waiting
-            Video.drawBox('black', 0.75);
-            Video.drawText("TAP TO PLAY!", gameFont, 100, "white", screenWidth / 2, screenHeight / 2 - 50, "center");
+        case "waiting": // Waiting
+            Video.drawBox("black", 0.75);
+            Video.drawText(
+                "TAP TO PLAY!",
+                gameFont,
+                100,
+                "white",
+                screenWidth / 2,
+                screenHeight / 2 - 50,
+                "center"
+            );
             break;
-        case 'over': // Game over
-            Video.fade('black', 0, 0.75, 15, function () {
+        case "over": // Game over
+            Video.fade("black", 0, 0.75, 15, function() {
                 Manager.pause(true);
-                Video.drawText("GAME OVER!", gameFont, 100, "red", screenWidth / 2, screenHeight / 2 - 100, "center");
-                Video.drawText("tap to play again", gameFont, 64, "gray", screenWidth / 2, screenHeight / 2 + 20, "center");
+                Video.drawText(
+                    "GAME OVER!",
+                    gameFont,
+                    100,
+                    "red",
+                    screenWidth / 2,
+                    screenHeight / 2 - 100,
+                    "center"
+                );
+                Video.drawText(
+                    "tap to play again",
+                    gameFont,
+                    64,
+                    "gray",
+                    screenWidth / 2,
+                    screenHeight / 2 + 20,
+                    "center"
+                );
             });
             break;
-        case 'won': // Game won
-            Video.fade('black', 0, 0.75, 15, function () {
+        case "won": // Game won
+            Video.fade("black", 0, 0.75, 15, function() {
                 Manager.pause(true);
-                Video.drawText("YOU WIN!", gameFont, 64, "lightgreen", screenWidth / 2, screenHeight / 2 - 50, "center");
-                Video.drawText("tap to play again", gameFont, 32, "gray", screenWidth / 2, screenHeight / 2 + 20, "center");
+                Video.drawText(
+                    "YOU WIN!",
+                    gameFont,
+                    64,
+                    "lightgreen",
+                    screenWidth / 2,
+                    screenHeight / 2 - 50,
+                    "center"
+                );
+                Video.drawText(
+                    "tap to play again",
+                    gameFont,
+                    32,
+                    "gray",
+                    screenWidth / 2,
+                    screenHeight / 2 + 20,
+                    "center"
+                );
             });
             break;
-        case 'paused': // Game paused
-            Video.fade('black', 0, 0.75, 15, function () {
+        case "paused": // Game paused
+            Video.fade("black", 0, 0.75, 15, function() {
                 Manager.pause(true);
-                Video.drawText("GAME PAUSED", gameFont, 64, "lightgray", screenWidth / 2, screenHeight / 2 - 50, "center");
-                Video.drawText("tap to continue", gameFont, 32, "gray", screenWidth / 2, screenHeight / 2 + 20, "center");
+                Video.drawText(
+                    "GAME PAUSED",
+                    gameFont,
+                    64,
+                    "lightgray",
+                    screenWidth / 2,
+                    screenHeight / 2 - 50,
+                    "center"
+                );
+                Video.drawText(
+                    "tap to continue",
+                    gameFont,
+                    32,
+                    "gray",
+                    screenWidth / 2,
+                    screenHeight / 2 + 20,
+                    "center"
+                );
             });
             break;
         default:
@@ -87,4 +171,4 @@ Gate2D.GameDraw = function () {
 
     // Let the video engine render the screen
     Video.render();
-}
+};

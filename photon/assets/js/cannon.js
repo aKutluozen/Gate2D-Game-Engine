@@ -84,8 +84,8 @@ Cannon.prototype.draw = function () {
         }
     }
 
-    // Show the charging number
-    // Gate2D.Video.drawText(~~(this.charge), 'Impact', 36, "white", this.x + 6, this.y + this.height / 2 - 22, "center", false);
+    // Show the charging in three colors
+    // ...
 
     // Show the charging
     this.ctx.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';

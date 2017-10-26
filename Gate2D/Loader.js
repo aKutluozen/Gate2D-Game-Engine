@@ -17,24 +17,25 @@ Gate2D.Loader = (function () {
         _enginePath = '',   // Path for engine files
         _localPath = '';    // Path for local files
 
+    /**
+     * Adds a new file object to the queue to be loaded in order
+     * This function is internally used. No need to call if from the actual game code.
+     * 
+     * @param {string}  tag - Tag name to be the id of the created DOM element
+     * @param {string}  filetype - Type of the file as an HTML tag - E.g. script, img, audio, etc.
+     * @param {string}  filepath - File path - E.g. 'modules/util.js'
+     */
+    function _enqueue(tag, filetype, filepath) {
+        _files.push({
+            tag: tag,
+            filetype: filetype,
+            filepath: filepath
+        });
+    }
+
     // Loader module to be exported
 
     return {
-        /**
-         * Adds a new file object to the queue to be loaded in order
-         * This function is internally used. No need to call if from the actual game code.
-         * 
-         * @param {string}  tag - Tag name to be the id of the created DOM element
-         * @param {string}  filetype - Type of the file as an HTML tag - E.g. script, img, audio, etc.
-         * @param {string}  filepath - File path - E.g. 'modules/util.js'
-         */
-        enqueue: function (tag, filetype, filepath) {
-            _files.push({
-                tag: tag,
-                filetype: filetype,
-                filepath: filepath
-            });
-        },
 
         /**
          * Sets a global path for core files to be loaded (Useful for multiple projects in one folder)
@@ -111,32 +112,34 @@ Gate2D.Loader = (function () {
 
             // Enqueueing the external resources first (image, audio, etc.)
             for (let i = 0, len = filesCallback.length; i < len; i++) {
-                this.enqueue(filesCallback[i].name, filesCallback[i].type, _localPath + filesCallback[i].path);
+                _enqueue(filesCallback[i].name, filesCallback[i].type, _localPath + filesCallback[i].path);
             }
 
             // Enqueueing core script files - Do not change the order!
-            this.enqueue('engine', 'script', _enginePath + 'Gate2D/Manager.js');
-            this.enqueue('mathLibrary', 'script', _enginePath + 'Gate2D/Math.js');
-            this.enqueue('videoModule', 'script', _enginePath + 'Gate2D/Video.js');
-            this.enqueue('gameControls', 'script', _enginePath + 'Gate2D/Controls.js');
-            this.enqueue('gamePhysics', 'script', _enginePath + 'Gate2D/Physics.js');
-            this.enqueue('gameUpdate', 'script', _localPath + 'GameUpdate.js');
-            this.enqueue('gameDraw', 'script', _localPath + 'GameDraw.js');
-            this.enqueue('gameDraw', 'script', _localPath + 'GameControls.js');
-            this.enqueue('gameGlobals', 'script', _enginePath + 'Gate2D/Globals.js');
-            this.enqueue('levels', 'script', _enginePath + 'Gate2D/Levels.js');
-            this.enqueue('timer', 'script', _enginePath + 'Gate2D/Timer.js');
-            this.enqueue('sprites', 'script', _enginePath + 'Gate2D/Sprites.js');
-            this.enqueue('entity', 'script', _enginePath + 'Gate2D/Entity.js');
+            _enqueue('engine', 'script', _enginePath + 'Gate2D/Manager.js');
+            _enqueue('mathLibrary', 'script', _enginePath + 'Gate2D/Math.js');
+            _enqueue('videoModule', 'script', _enginePath + 'Gate2D/Video.js');
+            _enqueue('gameControls', 'script', _enginePath + 'Gate2D/Controls.js');
+            _enqueue('gamePhysics', 'script', _enginePath + 'Gate2D/Physics.js');
+            _enqueue('gameUpdate', 'script', _localPath + 'GameUpdate.js');
+            _enqueue('gameDraw', 'script', _localPath + 'GameDraw.js');
+            _enqueue('gameDraw', 'script', _localPath + 'GameControls.js');
+            _enqueue('gameGlobals', 'script', _enginePath + 'Gate2D/Globals.js');
+            _enqueue('levels', 'script', _enginePath + 'Gate2D/Levels.js');
+            _enqueue('timer', 'script', _enginePath + 'Gate2D/Timer.js');
+            _enqueue('sprites', 'script', _enginePath + 'Gate2D/Sprites.js');
+            _enqueue('entity', 'script', _enginePath + 'Gate2D/Misc.js');
+            _enqueue('entity', 'script', _enginePath + 'Gate2D/Entity.js');
 
             // Enqueueing custom script files            
             for (let i = 0, len = scriptsCallback.length; i < len; i++) {
-                this.enqueue(scriptsCallback[i].name, scriptsCallback[i].type, _localPath + scriptsCallback[i].path);
+                _enqueue(scriptsCallback[i].name, scriptsCallback[i].type, _localPath + scriptsCallback[i].path);
             }
 
             // Enqueueing more core script files that will import the game objects 
-            this.enqueue('gameObjects', 'script', _enginePath + 'Gate2D/Objects.js');
-            this.enqueue('gameEntities', 'script', _localPath + 'GameEntities.js');
+            _enqueue('gameObjects', 'script', _enginePath + 'Gate2D/Objects.js');
+            _enqueue('gameEntities', 'script', _localPath + 'GameEntities.js');
+            _enqueue('gameEntities', 'script', _localPath + 'GameFunctions.js');
 
             // To be chained with load function
             return this;

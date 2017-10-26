@@ -26,7 +26,6 @@ Gate2D.Loader.addFiles(
         { name: 'photonScript', type: 'script', path: 'assets/js/photon.js' },
         { name: 'cannonScript', type: 'script', path: 'assets/js/cannon.js' },
         { name: 'wallScript', type: 'script', path: 'assets/js/wall.js' },
-        { name: 'miscFunctionsScript', type: 'script', path: 'assets/js/miscFunctions.js' }
     ]
 ).loadAll(function () {
 
