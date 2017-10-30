@@ -25,13 +25,13 @@ Gate2D.Globals.add([
  * Level IDs must be assigned here to use them in maps
  */
 Gate2D.Objects.createGroup('level1ObjectGroup', [
-    { object: new Enemy(0, 0, 0, 32, 32, 'enemy', 'green'), levelID: 6 },
-    { object: new Enemy(0, 0, 0, 64, 64, 'enemy', 'yellow'), levelID: 7 },
-    { object: new Enemy(0, 0, 0, 128, 128, 'enemy', 'red'), levelID: 8 },
-    { object: new Photon(0, 0, 0, 32, 32, 'photon'), levelID: 2 },
+    { object: new Enemy(0, 0, 2, 32, 32, 'enemy', 'green'), levelID: 6 },
+    { object: new Enemy(0, 0, 2, 64, 64, 'enemy', 'yellow'), levelID: 7 },
+    { object: new Enemy(0, 0, 2, 128, 128, 'enemy', 'red'), levelID: 8 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon'), levelID: 2 },
     { object: new Cannon(0, 0, 1, 64, 256, 'cannon', 'player'), levelID: 3 },
-    { object: new Wall(0, 0, 0, 720, 16, 'wall', 'wallVertical'), levelID: 4 },
-    { object: new Wall(0, 0, 0, 16, 1264, 'wall', 'wallHorizontal'), levelID: 5 },
+    { object: new Wall(0, 0, 2, 720, 16, 'wall', 'wallVertical'), levelID: 4 },
+    { object: new Wall(0, 0, 2, 16, 1264, 'wall', 'wallHorizontal'), levelID: 5 },
 ]);
 
 /**

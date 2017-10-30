@@ -21,13 +21,15 @@ function Enemy(x, y, z, width, height) {
     this.isHitAnimationNumber = 0;
     this.isDead = false;
 
-    // Assign lives
+    // Assign lives randomly within certain ranges
     switch (this.tag) {
-        case 'green': this.life = 2; break;
-        case 'yellow': this.life = 4; break;
-        case 'red': this.life = 8; break;
+        case 'green': this.life = Gate2D.Math.randomNumber(1, 4); break;
+        case 'yellow': this.life = Gate2D.Math.randomNumber(4, 7); break;
+        case 'red': this.life = Gate2D.Math.randomNumber(7, 11); break;
         default: break;
     }
+
+    this.fullLife = this.life;
 
     // Define collision area if one is needed
     this.coll = new Gate2D.Physics.CircleCollision(x, y, z, width, height);
@@ -48,7 +50,6 @@ Enemy.prototype.draw = function () {
                 this.isHitAnimationNumber -= 0.5;
             }
         } else {
-            Gate2D.Physics.moveTowards(this, {x: 360, y: 1088, width: 0, height: 0 }, 16);
             this.isHitAnimationNumber += 2;
             this.ctx.globalAlpha = 1 - this.isHitAnimationNumber / (this.width * 4);
 
@@ -92,9 +93,10 @@ Enemy.prototype.draw = function () {
 
         this.ctx.restore();
 
-        Gate2D.Video.drawText(this.life, "Comic Sans MS", 'bold ' + (20 + this.life * 3), "rgba(0, 0, 0, 0.5)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 3, "center", false);
+        if (!this.isDead) {
+            Gate2D.Video.drawText(this.life, "Photon", (20 + this.life * 3), "rgba(0, 0, 0, 0.5)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 1.5, "center", false);
+        }
 
-        // this.ctx.drawImage(this.img, 192, 160, 32, 32, this.x, this.y, this.width, this.height);
         this.coll.draw();
     }
 }
@@ -109,6 +111,8 @@ Enemy.prototype.update = function () {
         if (this.life < 1) {
             this.isDead = true;
         }
+    } else {
+        Gate2D.Physics.moveTowards(this, { x: 356, y: 1088, width: 0, height: 0 }, 16);
     }
 
     // Handle game over if the enemies are so close to the player

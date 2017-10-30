@@ -31,6 +31,11 @@ function Cannon(x, y, z, width, height) {
     this.isFiring = false; // Controls the fire animation
     this.fireAnimation = 0; // The length of the fire animation
     this.jitter = 0; // Shake when overheating
+    this.chargeColor = 'lightgreen'; // Charge color
+    this.chargeAnimationDirection = 0;
+
+    this.red = 0;
+    this.green = 255;
 
     // Define collision area if one is needed
     this.coll = new Gate2D.Physics.AABBCollision(x, y, z, width, height);
@@ -47,11 +52,11 @@ Cannon.prototype.draw = function () {
     this.ctx.translate(this.x - 24 + this.width / 2, this.y + this.height / 2);
     this.ctx.rotate(-this.direction * Math.PI / 180);
     this.ctx.translate(-(this.x - 24 + this.width / 2), -(this.y + this.height / 2));
-    this.ctx.drawImage(this.img, 16, 160, 64, 256, this.x - 24, this.y + this.fireAnimation / 32, this.width, this.height);
+    this.ctx.drawImage(this.img, 16, 160, 64, 256, ~~(this.x - 24), ~~(this.y + this.fireAnimation / 32), this.width, this.height);
 
-    // Draw the normal guide line
-    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-    this.ctx.fillRect(this.x + 7, this.y, 1, -1000);
+    // // Draw the normal guide line
+    // this.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+    // this.ctx.fillRect(this.x + 7, this.y, 1, -1000);
 
     // Handle firing fire animation
     if (this.isFiring) {
@@ -61,35 +66,64 @@ Cannon.prototype.draw = function () {
             this.isFiring = false;
             this.fireAnimation = 0;
         }
-        console.log(this.charge);
+
+        // Show the right color of fire
         if (this.charge >= 0 && this.charge < 10) {
-            this.ctx.drawImage(this.img, 96, 192, 32, 160, this.x - 24, this.y - this.fireAnimation * 1.5 + 16, this.width, this.fireAnimation * 1.5);
+            this.ctx.drawImage(this.img, 96, 192, 32, 160, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+            this.chargeColor = 'lightgreen';
         } else if (this.charge >= 10 && this.charge < 20) {
-            this.ctx.drawImage(this.img, 128, 192, 32, 160, this.x - 24, this.y - this.fireAnimation * 1.5 + 16, this.width, this.fireAnimation * 1.5);
+            this.ctx.drawImage(this.img, 128, 192, 32, 160, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+            this.chargeColor = 'yellow';
         } else if (this.charge >= 20 && this.charge < 31) {
-            this.ctx.drawImage(this.img, 160, 192, 32, 160, this.x - 24, this.y - this.fireAnimation * 1.5 + 16, this.width, this.fireAnimation * 1.5);
+            this.ctx.drawImage(this.img, 160, 192, 32, 160, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+            this.chargeColor = 'red';
         }
     }
 
-    // Charging color change
-    let red = 0, green = 255, blue = 0;
-    if (this.isCharging) {
-        red += this.heatSink * 4;
-        green -= this.heatSink * 4;
+    // Show the overheat
+    this.ctx.fillStyle = 'rgb(220, 40, 40)';
+    this.ctx.fillRect(~~this.x, ~~(this.y + this.height / 3 + 3 + this.fireAnimation / 32), this.width / 4, -(~~this.heatSink * 0.8));
 
-        // Draw the guide line with the color
-        if (!this.overHeat) {
-            this.ctx.fillStyle = 'rgba(' + red + ', ' + green + ', ' + blue + ', 0.5)';
-            this.ctx.fillRect(~~(this.x + 8 - ~~(4 * (red / 100))), ~~(this.y), ~~(8 * (red / 100)), -1000);
+    // Charging animation
+    if (this.isCharging && !this.overHeat) {
+        this.ctx.save();
+
+        this.ctx.translate(this.x - 24 + this.width / 2, this.y + this.height / 2);
+        this.ctx.rotate(-this.chargeAnimationDirection * Math.PI / 180);
+        this.ctx.translate(-(this.x - 24 + this.width / 2), -(this.y + this.height / 2));
+        this.chargeAnimationDirection += 20 + this.charge;
+        this.chargeAnimationDirection %= 360;
+
+        if (this.charge > 0 && this.charge < 10) {
+            this.chargeColor = 'rgba(190, 255, 50, 0.75)';
+            this.ctx.drawImage(this.img, 96, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+        } else if (this.charge >= 10 && this.charge < 20) {
+            this.chargeColor = 'rgba(255, 255, 50, 0.75)';
+            this.ctx.drawImage(this.img, 192, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+        } else if (this.charge >= 20 && this.charge < 31) {
+            this.chargeColor = 'rgba(255, 50, 50, 0.75)';
+            this.ctx.drawImage(this.img, 288, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+        } else {
+            this.chargeColor = 'rgba(0, 0, 0, 0.5)';
         }
+        this.ctx.restore();
+
+        // Show the charging in three colors
+        this.ctx.fillStyle = this.chargeColor;
+        this.ctx.beginPath();
+        this.ctx.arc(this.x + 8, ~~(this.y + this.height / 2 + 2 + this.fireAnimation / 32), 16 * this.charge / 20, 0, 2 * Math.PI);
+        this.ctx.fill();
+        this.ctx.closePath();
     }
 
-    // Show the charging in three colors
-    // ...
-
-    // Show the charging
-    this.ctx.fillStyle = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
-    this.ctx.fillRect(~~this.x, ~~(this.y + this.height / 3 + 3), this.width / 4, -(~~this.heatSink * 0.8));
+    // Overheat coloring
+    if (this.overHeat) {
+        this.ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
+        this.ctx.beginPath();
+        this.ctx.arc(this.x + 8, ~~(this.y + this.height / 2 + 2 + this.fireAnimation / 32), 32, 0, 2 * Math.PI);
+        this.ctx.fill();
+        this.ctx.closePath();
+    }
 
     // Draw the box collision if needed
     this.coll.draw();
@@ -102,13 +136,15 @@ Cannon.prototype.update = function () {
 
     // If charging mode is on, charge the cannon until it is 100
     if (this.isCharging && !this.overHeat) {
-        this.heatSink += 0.25;
-        this.charge += 0.25;
+        if (this.charge < 30) {
+            this.charge += 0.25;
+        }
 
         // Overheating happens
-        if (this.heatSink > 100) {
+        if (this.heatSink > 95) {
             this.overHeat = true;
         }
+        this.direction += Math.sin(this.jitter++ % 360) * 2;
     }
 
     // Handle the overheat problem
@@ -116,11 +152,10 @@ Cannon.prototype.update = function () {
         Gate2D.Globals.levelUp = true;
         // Disable the button until the cannon is cool again
         fireButton.status = 'disabled';
-        
         this.direction += Math.sin(this.jitter++) * 2;
 
         // Keep incrementing the heat unless the player cools it down
-        if (this.heatSink < 100) {
+        if (this.heatSink < 96) {
             this.heatSink += 0.25;
 
             // Everything turns back to normal when the cannon is cold enough
@@ -159,5 +194,47 @@ Cannon.prototype.power = function () {
 
 // Cool down amount at each tap
 Cannon.prototype.coolDown = function () {
-    this.heatSink -= 5;
+    if (this.overHeat) {
+        this.heatSink -= 7;
+    }
+}
+
+// Releases the power of the cannon to the photon, disables the fire button momentarily
+Cannon.prototype.fire = function () {
+    if (!this.overHeat) {
+        if (this.charge <= Gate2D.Globals.energy) {
+            this.isCharging = false; // Release the cannon
+            Gate2D.Objects.get('photon').fire(this.charge); // Fire the photon with cannon power
+            this.isFiring = true; // Trigger the animation
+
+            // // Deduct the energy
+
+            // Pass the charging energy to overheat
+            if (this.charge > 0 && this.charge < 10) {
+                Gate2D.Globals.energy -= 10;
+                this.heatSink += 5;
+            } else if (this.charge >= 10 && this.charge < 20) {
+                Gate2D.Globals.energy -= 20;
+                this.heatSink += 10;
+            } else if (this.charge >= 20 && this.charge < 31) {
+                Gate2D.Globals.energy -= 30;
+                this.heatSink += 15;
+            }
+            Gate2D.Controls.getOnScreenButton('fireButton').status = 'disabled'; // Disable the fire button until the photon is out
+            this.charge = 0; // Release the cannon energy
+        }
+        else {
+            this.isCharging = false;
+            this.charge = 0;
+            Gate2D.Misc.executeLevelup();
+        }
+    }
+}
+
+// Charges the cannon if not overheating
+Cannon.prototype.chargeIt = function () {
+    if (!this.overHeat) {
+        this.charge = 0;
+        this.isCharging = true; // Charge the cannon
+    }
 }

@@ -21,9 +21,7 @@ Gate2D.Controls.addOnScreenButton([
             switch (type) {
                 case 'start': {
                     // Perform when touch starts
-                    if (cannon.overHeat) {
-                        cannon.coolDown();
-                    }
+                    cannon.coolDown();
                 } break;
                 case 'move': {
                     // Perform when touch moves
@@ -54,24 +52,15 @@ Gate2D.Controls.addOnScreenButton([
             switch (type) {
                 case 'start': {
                     // Perform when touch starts 
-                    if (!cannon.overHeat) {
-                        cannon.charge = 0;
-                        cannon.charging(true); // Charge the cannon
-                    }
+                    cannon.chargeIt();
                 } break;
                 case 'move': {
-                    // cannon.charging(false);
                     // Perform when touch moves
                     // ...
                 } break;
                 case 'release': {
                     // Perform when touch is released
-                    if (!cannon.overHeat) {
-                        cannon.charging(false); // Release the cannon
-                        Gate2D.Objects.get('photon').fire(cannon.power()); // Fire the photon with cannon power
-                        cannon.isFiring = true;
-                        this.status = 'disabled'; // Disable the fire button until the photon is out
-                    }
+                    cannon.fire();
                 } break;
                 default: {
                     // Perform when touch is none of the above

@@ -35,3 +35,9 @@ body {
 #files {
     display: none;
 }
+
+@font-face {
+    font-family: Photon;
+    /src: url(../fonts/Bungee_Inline/BungeeInline-Regular.ttf);
+    src: url(../fonts/Black_Ops_One/BlackOpsOne-Regular.ttf);
+}

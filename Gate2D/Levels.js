@@ -67,6 +67,7 @@ Gate2D.Levels = (function () {
                 // Set up the background in CSS
                 if (_current.background) {
                     Gate2D.Video.canvas().style.background = "url('" + _current.background.src + "') repeat";
+                    Gate2D.Video.canvas().style.backgroundSize = "cover";
                 } else {
                     Gate2D.Video.canvas().style.background = "none";
                 }
