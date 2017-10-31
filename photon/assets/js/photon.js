@@ -143,13 +143,13 @@ Photon.prototype.update = function () {
                 other[i].isHitAnimationNumber = 40;
 
                 // Deduct life from the enemy with the same color
-                if (this.power === other[i].tag) {
+                if (this.power === other[i].tag || other[i].tag === 'bonus') {
                     other[i].life--;
 
                     let Globals = Gate2D.Globals;
 
                     // Gain 75% of the energy back
-                    Globals.energy += ~~(other[i].fullLife * 0.75) + 1;
+                    Globals.energy += ~~(other[i].fullLife * 0.75) + 1 + other[i].bonusPoints;
 
                     Globals.score++;
                     break;

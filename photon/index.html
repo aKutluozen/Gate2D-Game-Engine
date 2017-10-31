@@ -5,6 +5,7 @@
     <title>Gate 2D Game Engine - Photon Demo</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/animations.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -19,6 +20,30 @@
     <script src="GameSetup.js"></script>
 
     <!-- The game canvas will appear here -->
+
+    <!-- Other game screens -->
+    <div id="black-screen"></div>
+
+    <div id="ui">
+
+        <div id="pause-menu">
+            <div class="center-menu">
+                <h1>GAME PAUSED</h1>
+                <h2 onclick="Gate2D.Misc.continue()">CONTINUE</h2>
+                <h2 onclick="Gate2D.Misc.restart()">RESTART GAME</h2>
+                <h2 onclick="Gate2D.Misc.restart()">EXIT GAME</h2>
+            </div>
+        </div>
+
+        <div id="touch-to-play" onclick="Gate2D.Misc.touchToPlay()">
+            <h1 class="center-h center-v no-margin">TOUCH TO PLAY</h1>
+        </div>
+
+        <div id="game-over" onclick="Gate2D.Misc.restart()">
+            <h1 class="red center-h center-v no-margin">GAME OVER</h1>
+            <h2 class="gray center-h center-v no-margin">TAP TO PLAY AGAIN</h2>
+        </div>
+    </div>
 </body>
 
 </html>

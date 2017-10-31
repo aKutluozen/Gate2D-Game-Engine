@@ -4,9 +4,16 @@
  *
  * Styling of HTML elements
  */
+ @font-face {
+    font-family: Photon;
+    src: url(../fonts/Black_Ops_One/BlackOpsOne-Regular.ttf);
+}
 
 body {
     background: black;
+    font-family: Photon;
+    font-weight: lighter;
+    color: white;
 }
 
 #game-canvas {
@@ -36,8 +43,76 @@ body {
     display: none;
 }
 
-@font-face {
-    font-family: Photon;
-    /src: url(../fonts/Bungee_Inline/BungeeInline-Regular.ttf);
-    src: url(../fonts/Black_Ops_One/BlackOpsOne-Regular.ttf);
+#black-screen {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: block;
+    animation: fadeOut 1s forwards;
+    pointer-events: none;
+}
+
+#touch-to-play, #pause-menu, #game-over {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.center-menu {
+    top: 50%;
+    position: absolute;
+    transform: translateY(-50%);
+    text-align: center;
+    width: 100%;
+    background: black;
+}
+
+.center-menu h2 {
+    color: gray;
+}
+
+#pause-button {
+    position: absolute;
+    z-index: 1;
+    width: 64px;
+    height: 64px;
+    border-radius: 100%;
+}
+
+.center-h {
+    text-align: center;
+}
+
+.center-v {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+h1 {
+    font-size: calc(8vw);
+}
+
+h2 {
+    font-size: calc(7vw);
+}
+
+.no-margin {
+    margin: 0px;
+}
+
+.gray {
+    color: #666;
+}
+
+.red {
+    color: rgb(180, 0, 0);
 }

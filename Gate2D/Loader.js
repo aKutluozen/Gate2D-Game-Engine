@@ -130,6 +130,7 @@ Gate2D.Loader = (function () {
             _enqueue('sprites', 'script', _enginePath + 'Gate2D/Sprites.js');
             _enqueue('entity', 'script', _enginePath + 'Gate2D/Misc.js');
             _enqueue('entity', 'script', _enginePath + 'Gate2D/Entity.js');
+            _enqueue('entity', 'script', _enginePath + 'Gate2D/UserInterface.js');
 
             // Enqueueing custom script files            
             for (let i = 0, len = scriptsCallback.length; i < len; i++) {

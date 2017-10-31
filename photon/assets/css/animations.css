@@ -1,0 +1,34 @@
+/**
+ * animations.css 
+ * author Ali Kutluozen
+ *
+ * Animations of HTML elements
+ */
+
+@keyframes fadeIn {
+    0%, 10% {
+        opacity: 0;
+        pointer-events: none;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0%, 10% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+.fadeOut {
+    animation: fadeOut 1s forwards;
+}
+
+.fadeIn {
+    animation: fadeIn 1s forwards;
+}

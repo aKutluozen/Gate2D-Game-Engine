@@ -42,6 +42,7 @@ Gate2D.Loader.addFiles(
     });
 
     console.log('Engine is running...');
+    Gate2D.UI.switch('touch-to-play');
     Gate2D.Manager.gameStatus('waiting');
     Gate2D.Manager.run();
 });

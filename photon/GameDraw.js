@@ -41,42 +41,11 @@ Gate2D.GameDraw = function () {
         } else objectsList[i].draw();
     }
 
-    Video.drawText(Globals.score, gameFont, "bold " + 48, "white", screenWidth - 24, 16, "right", false);
-    Video.drawText(~~Globals.energy, gameFont, "bold " + 48, "white", 24, 20, "left", false);
+    Video.drawText(Globals.score, gameFont, 54, "white", 24, 16, "left", false);
+    Video.drawText(~~Globals.energy, gameFont, 54, "white", screenWidth / 2, screenHeight - 96, "center", false);
 
     // Draw onscreen buttons
     Controls.drawOnScreenButtons();
-
-    // Handle various screens
-    switch (status) {
-        case "waiting": // Waiting
-            Video.drawBox("black", 0.75);
-            Video.drawText("TAP TO PLAY!", gameFont, 88, "white", screenWidth / 2, screenHeight / 2 - 50, "center");
-            break;
-        case "over": // Game over
-            Video.fade("black", 0, 0.75, 15, function () {
-                Manager.pause(true);
-                Video.drawText("GAME OVER!", gameFont, 100, "red", screenWidth / 2, screenHeight / 2 - 100, "center");
-                Video.drawText("tap to play again", gameFont, 64, "gray", screenWidth / 2, screenHeight / 2 + 20, "center");
-            });
-            break;
-        case "won": // Game won
-            Video.fade("black", 0, 0.75, 15, function () {
-                Manager.pause(true);
-                Video.drawText("YOU WIN!", gameFont, 64, "lightgreen", screenWidth / 2, screenHeight / 2 - 50, "center");
-                Video.drawText("tap to play again", gameFont, 32, "gray", screenWidth / 2, screenHeight / 2 + 20, "center");
-            });
-            break;
-        case "paused": // Game paused
-            Video.fade("black", 0, 0.75, 15, function () {
-                Manager.pause(true);
-                Video.drawText("GAME PAUSED", gameFont, 64, "lightgray", screenWidth / 2, screenHeight / 2 - 50, "center");
-                Video.drawText("tap to continue", gameFont, 32, "gray", screenWidth / 2, screenHeight / 2 + 20, "center");
-            });
-            break;
-        default:
-            break;
-    }
 
     // Let the video engine render the screen
     Video.render();

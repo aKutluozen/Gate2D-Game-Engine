@@ -53,6 +53,9 @@ Gate2D.Manager = (function () {
 
             // Connect the context the buffer for the first time
             Gate2D.Objects.setupDisplayForObjects();
+
+            // Setup the UI
+            Gate2D.UI.setup();
         },
 
         /**

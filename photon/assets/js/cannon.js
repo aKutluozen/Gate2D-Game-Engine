@@ -139,12 +139,12 @@ Cannon.prototype.update = function () {
         if (this.charge < 30) {
             this.charge += 0.25;
         }
+        this.direction += Math.sin(this.jitter++ % 360) * 1;
+    }
 
-        // Overheating happens
-        if (this.heatSink > 95) {
-            this.overHeat = true;
-        }
-        this.direction += Math.sin(this.jitter++ % 360) * 2;
+    // Overheating happens
+    if (this.heatSink > 99) {
+        this.overHeat = true;
     }
 
     // Handle the overheat problem
@@ -152,11 +152,11 @@ Cannon.prototype.update = function () {
         Gate2D.Globals.levelUp = true;
         // Disable the button until the cannon is cool again
         fireButton.status = 'disabled';
-        this.direction += Math.sin(this.jitter++) * 2;
+        this.direction += Math.sin(this.jitter++) * 1;
 
         // Keep incrementing the heat unless the player cools it down
-        if (this.heatSink < 96) {
-            this.heatSink += 0.25;
+        if (this.heatSink < 100) {
+            this.heatSink += 0.35;
 
             // Everything turns back to normal when the cannon is cold enough
             if (this.heatSink < 5) {

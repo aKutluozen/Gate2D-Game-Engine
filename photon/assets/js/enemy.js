@@ -20,12 +20,14 @@ function Enemy(x, y, z, width, height) {
     this.checkedCollision = false;
     this.isHitAnimationNumber = 0;
     this.isDead = false;
+    this.bonusPoints = 0;
 
     // Assign lives randomly within certain ranges
     switch (this.tag) {
         case 'green': this.life = Gate2D.Math.randomNumber(1, 4); break;
         case 'yellow': this.life = Gate2D.Math.randomNumber(4, 7); break;
         case 'red': this.life = Gate2D.Math.randomNumber(7, 11); break;
+        case 'bonus': this.life = 1; this.bonusPoints = Gate2D.Math.randomNumber(10, 50); break;
         default: break;
     }
 
@@ -88,6 +90,13 @@ Enemy.prototype.draw = function () {
                     this.width + this.isHitAnimationNumber,
                     this.height + this.isHitAnimationNumber);
             } break;
+            case 'bonus': {
+                this.ctx.drawImage(this.img, 464, 160, 80, 80,
+                    ~~this.x - this.isHitAnimationNumber / 2,
+                    ~~this.y - this.isHitAnimationNumber / 2,
+                    this.width + this.isHitAnimationNumber,
+                    this.height + this.isHitAnimationNumber);
+            } break;
             default: break;
         }
 
@@ -95,6 +104,9 @@ Enemy.prototype.draw = function () {
 
         if (!this.isDead) {
             Gate2D.Video.drawText(this.life, "Photon", (20 + this.life * 3), "rgba(0, 0, 0, 0.5)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 1.5, "center", false);
+        }
+        if (this.tag === 'bonus' && !this.isDead) {
+            Gate2D.Video.drawText('+' + this.bonusPoints, "Photon", 32, "rgba(255, 255, 255, 1)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 1.5, "center", false);
         }
 
         this.coll.draw();
