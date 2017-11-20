@@ -15,7 +15,10 @@
 Gate2D.Globals.add([
     { score: 0 },
     { energy: 100 },
-    { levelUp: false }
+    { levelUp: false },
+    { specialPower: 'none' },
+    { isWallActive: false },
+    { wallY: 0 }
     // Create custom game variables here as name-value pairs
     // ...
 ]);
@@ -28,11 +31,12 @@ Gate2D.Objects.createGroup('level1ObjectGroup', [
     { object: new Enemy(0, 0, 2, 32, 32, 'enemy', 'green'), levelID: 6 },
     { object: new Enemy(0, 0, 2, 64, 64, 'enemy', 'yellow'), levelID: 7 },
     { object: new Enemy(0, 0, 2, 128, 128, 'enemy', 'red'), levelID: 8 },
-    { object: new Enemy(0, 0, 2, 80, 80, 'enemy', 'bonus'), levelID: 9 },
+    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonus'), levelID: 9 },
     { object: new Photon(0, 0, 2, 32, 32, 'photon'), levelID: 2 },
     { object: new Cannon(0, 0, 1, 64, 256, 'cannon', 'player'), levelID: 3 },
     { object: new Wall(0, 0, 2, 720, 16, 'wall', 'wallVertical'), levelID: 4 },
     { object: new Wall(0, 0, 2, 16, 1264, 'wall', 'wallHorizontal'), levelID: 5 },
+    { object: new Wall(344, 1, 2, 32, 32, 'wall', 'photonWall'), levelID: 10 },
 ]);
 
 /**
@@ -82,7 +86,7 @@ Gate2D.Levels.add([
             height: 80,     // Number of cells from top to bottom
             gridSize: 16,   // Size of the cells
             map: [
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
                 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -181,10 +185,10 @@ Gate2D.Levels.add([
                 this.objectMap.map[i] = 6;
             }
 
-            // Bonus
-            for (let i = 300, len = this.objectMap.map.length; i < 2200; i += Gate2D.Math.randomNumber(0, 1100)) {
-                this.objectMap.map[i] = 9;
-            }
+            // // Bonus
+            // for (let i = 300, len = this.objectMap.map.length; i < 2200; i += Gate2D.Math.randomNumber(0, 1100)) {
+            //     this.objectMap.map[i] = 9;
+            // }
         }
     },
 

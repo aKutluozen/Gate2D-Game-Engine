@@ -273,7 +273,7 @@ Gate2D.Controls = (function () {
 		drawOnScreenButtons: function () {
 			for (let i = 0, len = _onScreenButtonsArray.length; i < len; i++) {
 				if (_debug && _onScreenButtonsArray[i].status === 'active') {
-					_Video.drawBox('orange', 0.5, _onScreenButtonsArray[i].x, _onScreenButtonsArray[i].y, _onScreenButtonsArray[i].width, _onScreenButtonsArray[i].height);
+					_Video.drawBox('green', 0.5, _onScreenButtonsArray[i].x, _onScreenButtonsArray[i].y, _onScreenButtonsArray[i].width, _onScreenButtonsArray[i].height);
 				}
 
 				// Draw only if it has an image property

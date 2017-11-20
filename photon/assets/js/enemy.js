@@ -7,7 +7,7 @@
  * @constructor
  * @param {number}  x - X position of the entity
  * @param {number}  y - Y position of the entity
- * @param {number}  z - Z/depth position of the entity
+ * @param {number}  z - Z depth position of the entity
  * @param {number}  width - Width of the entity
  * @param {number}  height - Height of the entity
  * 
@@ -21,6 +21,7 @@ function Enemy(x, y, z, width, height) {
     this.isHitAnimationNumber = 0;
     this.isDead = false;
     this.bonusPoints = 0;
+    this.active = true;
 
     // Assign lives randomly within certain ranges
     switch (this.tag) {
@@ -59,6 +60,7 @@ Enemy.prototype.draw = function () {
             if (this.isHitAnimationNumber >= this.width * 4) {
                 this.y = -300;
                 this.ctx.globalAlpha = 0;
+                this.active = false;
             }
         }
 
@@ -105,6 +107,7 @@ Enemy.prototype.draw = function () {
         if (!this.isDead) {
             Gate2D.Video.drawText(this.life, "Photon", (20 + this.life * 3), "rgba(0, 0, 0, 0.5)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 1.5, "center", false);
         }
+
         if (this.tag === 'bonus' && !this.isDead) {
             Gate2D.Video.drawText('+' + this.bonusPoints, "Photon", 32, "rgba(255, 255, 255, 1)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 1.5, "center", false);
         }
@@ -116,7 +119,13 @@ Enemy.prototype.draw = function () {
 Enemy.prototype.update = function () {
     // Move down enemies when needed
     if (Gate2D.Globals.levelUp) {
-        this.y += 0.25;
+        if (!Gate2D.Globals.isWallActive) {
+            this.y += 0.25;
+        } else {
+            if (this.y < Gate2D.Globals.wallY || this.y > Gate2D.Globals.wallY + 32) {
+                this.y += 0.25;
+            }
+        }
     }
 
     if (!this.isDead) {
@@ -152,5 +161,6 @@ Enemy.prototype.update = function () {
         }
     }
 
-    this.coll.update(this.x + this.width / 2, this.y + this.height / 2); // Always update the collision area position
+    // Always update the collision area position
+    this.coll.update(this.x + this.width / 2, this.y + this.height / 2);
 }

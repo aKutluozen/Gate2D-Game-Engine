@@ -98,16 +98,23 @@ Gate2D.Levels = (function () {
                             let objFound = Gate2D.Objects.findByProperty('levelID', objNum);
                             objFound = objFound.object;
 
+                            // Only place them on the map if their x and y values are 0
+                            var xPlace = xPos * size, yPlace = yPos * size;
+                            if (objFound.x !== 0 || objFound.y !== 0) {
+                                xPlace = objFound.x;
+                                yPlace = objFound.y;
+                            }
+
                             // Instantiate new objects out of what is found
                             let newObj = eval('new ' +
                                 capitalizeFirstLetter(objFound.name) +
-                                '(' + xPos * size + ',' + yPos * size + ',' +
+                                '(' + xPlace + ',' + yPlace + ',' +
                                 objFound.z + ',' +
                                 objFound.width + ',' +
                                 objFound.height + ',"' +
                                 objFound.name + '","' +
                                 objFound.tag + '")');
-                            
+
                             newObj.levelID = objNum;
 
                             // Add them to the lists

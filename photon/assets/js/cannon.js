@@ -7,7 +7,7 @@
  * @constructor
  * @param {number}  x - X position of the entity
  * @param {number}  y - Y position of the entity
- * @param {number}  z - Z/depth position of the entity
+ * @param {number}  z - Z depth position of the entity
  * @param {number}  width - Width of the entity
  * @param {number}  height - Height of the entity
  * 
@@ -16,6 +16,7 @@
 function Cannon(x, y, z, width, height) {
     Gate2D.Entity.apply(this, arguments); // Apply the inherited properties
     this.img = Gate2D.Loader.getFile('sprites'); // Load the object image
+    this.active = true;
 
     this.controlled = true; // This variable is needed to be able to receive control events
 
@@ -33,6 +34,9 @@ function Cannon(x, y, z, width, height) {
     this.jitter = 0; // Shake when overheating
     this.chargeColor = 'lightgreen'; // Charge color
     this.chargeAnimationDirection = 0;
+    this.canOverCharge = false; // Determines if the cannon can shoot an overcharged attack
+    this.isBombing = false; // Determines if the cannon can send bombs
+    this.specialFire = false; // Determines if a special firing is happening
 
     this.red = 0;
     this.green = 255;
@@ -54,9 +58,9 @@ Cannon.prototype.draw = function () {
     this.ctx.translate(-(this.x - 24 + this.width / 2), -(this.y + this.height / 2));
     this.ctx.drawImage(this.img, 16, 160, 64, 256, ~~(this.x - 24), ~~(this.y + this.fireAnimation / 32), this.width, this.height);
 
-    // // Draw the normal guide line
-    // this.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-    // this.ctx.fillRect(this.x + 7, this.y, 1, -1000);
+    // Draw the normal guide line
+    // this.ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    // this.ctx.fillRect(this.x + 7, this.y, 2, -1000);
 
     // Handle firing fire animation
     if (this.isFiring) {
@@ -66,17 +70,19 @@ Cannon.prototype.draw = function () {
             this.isFiring = false;
             this.fireAnimation = 0;
         }
-
         // Show the right color of fire
-        if (this.charge >= 0 && this.charge < 10) {
-            this.ctx.drawImage(this.img, 96, 192, 32, 160, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
-            this.chargeColor = 'lightgreen';
-        } else if (this.charge >= 10 && this.charge < 20) {
-            this.ctx.drawImage(this.img, 128, 192, 32, 160, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
-            this.chargeColor = 'yellow';
-        } else if (this.charge >= 20 && this.charge < 31) {
-            this.ctx.drawImage(this.img, 160, 192, 32, 160, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
-            this.chargeColor = 'red';
+        if (this.charge >= 0 && this.charge < 11) {
+            this.ctx.drawImage(this.img, 96, 224, 32, 128, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+        } else if (this.charge >= 11 && this.charge < 21) {
+            this.ctx.drawImage(this.img, 128, 224, 32, 128, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+        } else if (this.charge >= 21 && this.charge < 31) {
+            this.ctx.drawImage(this.img, 160, 224, 32, 128, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+        } else if (this.charge >= 31 && this.charge < 51) {
+            if (this.isBombing) {
+                this.ctx.drawImage(this.img, 160, 224, 32, 128, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+            } else {
+                this.ctx.drawImage(this.img, 192, 224, 32, 128, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+            }
         }
     }
 
@@ -94,6 +100,7 @@ Cannon.prototype.draw = function () {
         this.chargeAnimationDirection += 20 + this.charge;
         this.chargeAnimationDirection %= 360;
 
+        // Spinning energy animation
         if (this.charge > 0 && this.charge < 10) {
             this.chargeColor = 'rgba(190, 255, 50, 0.75)';
             this.ctx.drawImage(this.img, 96, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
@@ -103,6 +110,15 @@ Cannon.prototype.draw = function () {
         } else if (this.charge >= 20 && this.charge < 31) {
             this.chargeColor = 'rgba(255, 50, 50, 0.75)';
             this.ctx.drawImage(this.img, 288, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+        } else if (this.charge >= 31 && this.charge < 51) {
+            if (!this.isBombing) {
+                this.chargeColor = 'rgba(50, 100, 200, 0.75)';
+                this.ctx.drawImage(this.img, 384, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+            } else {
+                this.chargeColor = 'rgba(255, 50, 50, 0.75)';
+                this.ctx.drawImage(this.img, 288, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+                this.ctx.drawImage(this.img, 192, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+            }
         } else {
             this.chargeColor = 'rgba(0, 0, 0, 0.5)';
         }
@@ -132,13 +148,22 @@ Cannon.prototype.draw = function () {
 }
 
 Cannon.prototype.update = function () {
-    let fireButton = Gate2D.Controls.getOnScreenButton('fireButton');
+    let fireButton = Gate2D.Controls.getOnScreenButton('fireButton'),
+        specialButton = Gate2D.Controls.getOnScreenButton('specialButton'),
+        chooseButton = Gate2D.Controls.getOnScreenButton('chooseButton');
 
     // If charging mode is on, charge the cannon until it is 100
     if (this.isCharging && !this.overHeat) {
-        if (this.charge < 30) {
-            this.charge += 0.25;
+        if (!this.canOverCharge) {
+            if (this.charge < 30) {
+                this.charge += 0.25;
+            }
+        } else {
+            if (this.charge < 50) {
+                this.charge += 0.25;
+            }
         }
+
         this.direction += Math.sin(this.jitter++ % 360) * 1;
     }
 
@@ -152,6 +177,9 @@ Cannon.prototype.update = function () {
         Gate2D.Globals.levelUp = true;
         // Disable the button until the cannon is cool again
         fireButton.status = 'disabled';
+        specialButton.status = 'disabled';
+        chooseButton.status = 'disabled';
+
         this.direction += Math.sin(this.jitter++) * 1;
 
         // Keep incrementing the heat unless the player cools it down
@@ -165,6 +193,8 @@ Cannon.prototype.update = function () {
                 this.isCharging = false;
                 Gate2D.Globals.levelUp = false;
                 fireButton.status = 'active';
+                specialButton.status = 'active';
+                chooseButton.status = 'active';
             }
         }
     }
@@ -200,14 +230,22 @@ Cannon.prototype.coolDown = function () {
 }
 
 // Releases the power of the cannon to the photon, disables the fire button momentarily
-Cannon.prototype.fire = function () {
+Cannon.prototype.fire = function (isSpecial) {
+    var fireButton = Gate2D.Controls.getOnScreenButton('fireButton'),
+        specialButton = Gate2D.Controls.getOnScreenButton('specialButton'),
+        chooseButton = Gate2D.Controls.getOnScreenButton('chooseButton');
+
+    // Handle special attack differently
+    if (isSpecial) {
+        Gate2D.Objects.get('photon').fire('special');
+        return;
+    }
+
     if (!this.overHeat) {
         if (this.charge <= Gate2D.Globals.energy) {
             this.isCharging = false; // Release the cannon
             Gate2D.Objects.get('photon').fire(this.charge); // Fire the photon with cannon power
             this.isFiring = true; // Trigger the animation
-
-            // // Deduct the energy
 
             // Pass the charging energy to overheat
             if (this.charge > 0 && this.charge < 10) {
@@ -219,9 +257,14 @@ Cannon.prototype.fire = function () {
             } else if (this.charge >= 20 && this.charge < 31) {
                 Gate2D.Globals.energy -= 30;
                 this.heatSink += 15;
+            } else if (this.charge >= 31 && this.charge < 51) {
+                Gate2D.Globals.energy -= 50;
+                this.heatSink += 20;
             }
-            Gate2D.Controls.getOnScreenButton('fireButton').status = 'disabled'; // Disable the fire button until the photon is out
-            this.charge = 0; // Release the cannon energy
+
+            fireButton.status = 'disabled'; // Disable the fire button until the photon is out
+            specialButton.status = 'disabled'; // Disable the fire button until the photon is out
+            chooseButton.status = 'disabled'; // Disable the fire button until the photon is out
         }
         else {
             this.isCharging = false;

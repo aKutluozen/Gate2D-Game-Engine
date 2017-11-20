@@ -121,10 +121,10 @@ Gate2D.Loader = (function () {
             _enqueue('videoModule', 'script', _enginePath + 'Gate2D/Video.js');
             _enqueue('gameControls', 'script', _enginePath + 'Gate2D/Controls.js');
             _enqueue('gamePhysics', 'script', _enginePath + 'Gate2D/Physics.js');
+            _enqueue('gameGlobals', 'script', _enginePath + 'Gate2D/Globals.js');
             _enqueue('gameUpdate', 'script', _localPath + 'GameUpdate.js');
             _enqueue('gameDraw', 'script', _localPath + 'GameDraw.js');
             _enqueue('gameDraw', 'script', _localPath + 'GameControls.js');
-            _enqueue('gameGlobals', 'script', _enginePath + 'Gate2D/Globals.js');
             _enqueue('levels', 'script', _enginePath + 'Gate2D/Levels.js');
             _enqueue('timer', 'script', _enginePath + 'Gate2D/Timer.js');
             _enqueue('sprites', 'script', _enginePath + 'Gate2D/Sprites.js');

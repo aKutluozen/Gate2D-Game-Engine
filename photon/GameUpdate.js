@@ -31,6 +31,5 @@ Gate2D.GameUpdate = function () {
     if (status === "over") {
         Manager.pause(true);
         Gate2D.UI.switch('game-over').fadeIn('game-over');
-        console.log('doing this');
     }
 };

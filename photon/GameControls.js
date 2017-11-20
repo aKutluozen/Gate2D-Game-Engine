@@ -77,17 +77,75 @@ Gate2D.Controls.addOnScreenButton([
     },
     // Special Button
     {
-        name: 'specialButton', status: 'active', x: 0, y: 1100, width: 180, height: 180,
+        name: 'specialButton', status: 'active', x: 540, y: 1140, width: 180, height: 180,
         image: {
             image: Gate2D.Loader.getFile('sprites'),
             cropX: 432, cropY: 0, cropWidth: 144, cropHeight: 144,
             drawX: 560, drawY: 1116, drawWidth: 144, drawHeight: 144
         },
         action: function (type) {
+            let cannon = Gate2D.Objects.get('cannon');
+
             switch (type) {
                 case 'start': {
                     // Perform when touch starts 
+                    switch (Gate2D.Globals.specialPower) {
+                        case 'ghost': {
+                            Gate2D.Controls.getOnScreenButton('chooseButton').status = 'disabled';
+                            this.status = 'disabled';
+                            cannon.fire(true);
+                        } break;
+                        case 'bomb': {
+                            Gate2D.Controls.getOnScreenButton('chooseButton').status = 'disabled';
+                            cannon.isBombing = true;
+                            this.status = 'disabled';
+                            cannon.fire(true);
+                        } break;
+                        case 'wall': {
+                            Gate2D.Controls.getOnScreenButton('chooseButton').status = 'disabled';
+                            cannon.isBuildingWall = true;
+                            this.status = 'disabled';
+                            cannon.fire(true);
+                        } break;
+                    }
+                } break;
+                case 'move': {
+                    // Perform when touch moves
                     // ...
+                } break;
+                case 'release': {
+                    // Perform when touch is released
+                    // ...
+                } break;
+                default: {
+                    // Perform when touch is none of the above
+                    // ...
+                } break;
+            }
+
+        }
+    },
+    // Weapon choose Button
+    {
+        name: 'chooseButton', status: 'active', x: 620, y: 1050, width: 64, height: 64,
+        image: {
+            image: Gate2D.Loader.getFile('sprites'),
+            cropX: 576, cropY: 416, cropWidth: 64, cropHeight: 64,
+            drawX: 620, drawY: 1050, drawWidth: 64, drawHeight: 64
+        },
+        action: function (type) {
+            switch (type) {
+                case 'start': {
+                    // Perform when touch starts 
+
+                    // Browse through different powers
+                    let power = Gate2D.Globals.specialPower;
+                    if (power === 'none') Gate2D.Misc.setupSpecialPower('ghost');
+                    if (power === 'ghost') Gate2D.Misc.setupSpecialPower('wall');
+                    if (power === 'wall') Gate2D.Misc.setupSpecialPower('bomb');
+                    if (power === 'bomb') Gate2D.Misc.setupSpecialPower('none');
+                    Gate2D.Controls.getOnScreenButton('specialButton').status = 'active';
+                    
                 } break;
                 case 'move': {
                     // Perform when touch moves
@@ -107,7 +165,7 @@ Gate2D.Controls.addOnScreenButton([
     },
     // Pause Button
     {
-        name: 'pauseButton', status: 'active', x: 640, y: 0, width: 720, height: 1280,
+        name: 'pauseButton', status: 'active', x: 608, y: 0, width: 96, height: 96,
         image: {
             image: Gate2D.Loader.getFile('sprites'),
             cropX: 576, cropY: 0, cropWidth: 96, cropHeight: 96,

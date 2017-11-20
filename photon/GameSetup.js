@@ -40,9 +40,10 @@ Gate2D.Loader.addFiles(
         physicsDebug: false,
         controlsDebug: false
     });
-
+    
     console.log('Engine is running...');
     Gate2D.UI.switch('touch-to-play');
     Gate2D.Manager.gameStatus('waiting');
     Gate2D.Manager.run();
+    Gate2D.Misc.setupSpecialPower('none');
 });

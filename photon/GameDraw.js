@@ -36,9 +36,11 @@ Gate2D.GameDraw = function () {
         // If there is a camera present, draw objects only when they are in the view
         if (currentLevel.camera) {
             if (Video.isObjectInView(objectsList[i])) {
-                objectsList[i].draw();
+                if (objectsList[i].active) objectsList[i].draw();
             }
-        } else objectsList[i].draw();
+        } else {
+            if (objectsList[i].active) objectsList[i].draw();
+        }
     }
 
     Video.drawText(Globals.score, gameFont, 54, "white", 24, 16, "left", false);
