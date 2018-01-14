@@ -18,7 +18,11 @@ Gate2D.Globals.add([
     { levelUp: false },
     { specialPower: 'none' },
     { isWallActive: false },
-    { wallY: 0 }
+    { wallY: 0 },
+    { rapidPhotonsActive: 0 },
+    { bonusMultiplier: 1 },
+    { sameColorHits: 0 },
+    { inGameMultiplierOn: false }
     // Create custom game variables here as name-value pairs
     // ...
 ]);
@@ -31,12 +35,29 @@ Gate2D.Objects.createGroup('level1ObjectGroup', [
     { object: new Enemy(0, 0, 2, 32, 32, 'enemy', 'green'), levelID: 6 },
     { object: new Enemy(0, 0, 2, 64, 64, 'enemy', 'yellow'), levelID: 7 },
     { object: new Enemy(0, 0, 2, 128, 128, 'enemy', 'red'), levelID: 8 },
-    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonus'), levelID: 9 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon'), levelID: 2 },
+
+    // Bonuses
+    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonusPower'), levelID: 21 },
+    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonusCool'), levelID: 22 },
+    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonusMultiplier'), levelID: 23 },
+
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'mainPhoton'), levelID: 2 },
     { object: new Cannon(0, 0, 1, 64, 256, 'cannon', 'player'), levelID: 3 },
     { object: new Wall(0, 0, 2, 720, 16, 'wall', 'wallVertical'), levelID: 4 },
     { object: new Wall(0, 0, 2, 16, 1264, 'wall', 'wallHorizontal'), levelID: 5 },
     { object: new Wall(344, 1, 2, 32, 32, 'wall', 'photonWall'), levelID: 10 },
+
+    // Rapid fire photons pre instantiated
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid1'), levelID: 11 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid2'), levelID: 12 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid3'), levelID: 13 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid4'), levelID: 14 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid5'), levelID: 15 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid6'), levelID: 16 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid7'), levelID: 17 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid8'), levelID: 18 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid9'), levelID: 19 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid10'), levelID: 20 },
 ]);
 
 /**
@@ -86,7 +107,7 @@ Gate2D.Levels.add([
             height: 80,     // Number of cells from top to bottom
             gridSize: 16,   // Size of the cells
             map: [
-                9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+                0, 11,12,13,14,15,16,17,18,19,20,0, 21, 22, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
                 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -171,17 +192,17 @@ Gate2D.Levels.add([
 
         initAction: function () {
             // Put the big size first - Least frequent one
-            for (let i = 300, len = this.objectMap.map.length; i < 600; i += Gate2D.Math.randomNumber(0, 40)) {
+            for (let i = 300, len = this.objectMap.map.length; i < 600; i += Gate2D.Math.randomNumber(20, 30)) {
                 this.objectMap.map[i] = 8;
             }
 
             // Then the middle size
-            for (let i = 900, len = this.objectMap.map.length; i < 1600; i += Gate2D.Math.randomNumber(20, 40)) {
+            for (let i = 900, len = this.objectMap.map.length; i < 2200; i += Gate2D.Math.randomNumber(30, 40)) {
                 this.objectMap.map[i] = 7;
             }
 
             // Then the smallest size - Most frequent one
-            for (let i = 1000, len = this.objectMap.map.length; i < 2200; i += Gate2D.Math.randomNumber(0, 40)) {
+            for (let i = 1000, len = this.objectMap.map.length; i < 2200; i += Gate2D.Math.randomNumber(100, 120)) {
                 this.objectMap.map[i] = 6;
             }
 

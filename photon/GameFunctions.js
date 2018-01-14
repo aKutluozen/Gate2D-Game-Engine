@@ -10,6 +10,7 @@ Gate2D.Misc = {
     executeLevelup: function () {
         Gate2D.Globals.levelUp = true;
         let _this = this;
+
         // Put it back to sleep in a second
         window.setTimeout(function () {
             Gate2D.Globals.levelUp = false;
@@ -25,12 +26,17 @@ Gate2D.Misc = {
                 Gate2D.Manager.gameStatus("over");
             }
 
+            // Reset score multiplier
+            Gate2D.Globals.bonusMultiplier = 1;
+            Gate2D.Globals.sameColorHits = 0;
+
             // Create random bonus every once in a while
-            for (let i = 0; i < 10; i += ~~(Math.random() * 2 + 1)) {
+            for (let i = 0; i < 10; i++) {
                 if (i === 3) {
                     _this.isBonusComing(true);
                     break;
-                } else {
+                } 
+                else {
                     _this.isBonusComing(false);
                 }
             }
@@ -39,22 +45,40 @@ Gate2D.Misc = {
 
     // Retrieve the one bonus object and show it.
     isBonusComing: function (showOrHide) {
-        let bonus = Gate2D.Objects.findByProperty('tag', 'bonus');
+        // Choose a random bonus
+        let bonus = null;
+        let randomPower = Gate2D.Math.randomNumber(0, 3);
+        // let randomPower = 2;
+
+        switch (randomPower) {
+            case 0: {
+                bonus = Gate2D.Objects.findByProperty('tag', 'bonusPower');
+                bonus.bonusPower = Gate2D.Math.randomNumber(10, 50);
+            } break;
+            case 1: {
+                bonus = Gate2D.Objects.findByProperty('tag', 'bonusCool');
+                bonus.bonusCool = Gate2D.Math.randomNumber(10, 50);
+
+            } break;
+            case 2: {
+                bonus = Gate2D.Objects.findByProperty('tag', 'bonusMultiplier');
+                bonus.bonusMultiplier = Gate2D.Math.randomNumber(2, 4);
+            } break;
+        }
+
         if (showOrHide === true) {
             // Bring the bonus down
-            bonus.bonusPoints = Gate2D.Math.randomNumber(10, 50);
-            bonus.isHitAnimationNumber = 0;
-            bonus.life = 1;
-            bonus.isDead = false;
-            bonus.y = ~~(Math.random() * 750 + 200);
-            bonus.x = ~~(Math.random() * 600 + 120);
+            bonus.y = Gate2D.Math.randomNumber(200, 750);
+            bonus.x = Gate2D.Math.randomNumber(120, 600);
         } else {
             // Keep the bonus up there
             bonus.y = -400;
-            bonus.isHitAnimationNumber = 0;
-            bonus.life = 1;
-            bonus.isDead = false;
+            bonus.x = -400;
         }
+
+        bonus.isHitAnimationNumber = 0;
+        bonus.life = 1;
+        bonus.isDead = false;
     },
 
     // Handle cropping the button for the selected power
@@ -63,29 +87,31 @@ Gate2D.Misc = {
         let buttonImage = Gate2D.Controls.getOnScreenButton('specialButton').image,
             cannon = Gate2D.Objects.get('cannon');
 
+        // Reset all the cannon features
+        cannon.isBombing = false;
+        cannon.isBuildingWall = false;
+        cannon.rapidFire = false;
+
         switch (name) {
             case 'bomb': {
                 cannon.isBombing = true;
-                cannon.isBuildingWall = false;
                 buttonImage.cropX = 560;
                 buttonImage.cropY = 128;
             } break;
             case 'ghost': {
-                cannon.isBombing = false;
-                cannon.isBuildingWall = false;
                 buttonImage.cropX = 560;
                 buttonImage.cropY = 272;
             } break;
             case 'wall': {
-                cannon.isBombing = false;
                 cannon.isBuildingWall = true;
                 buttonImage.cropX = 560;
                 buttonImage.cropY = 480;
             } break;
+            case 'rapid': {
+                buttonImage.cropX = 560;
+                buttonImage.cropY = 624;
+            } break;
             default: {
-                cannon.isBombing = false;
-                cannon.canOverCharge = false;
-                cannon.isBuildingWall = false;
                 buttonImage.cropX = 432;
                 buttonImage.cropY = 0;
             } break;

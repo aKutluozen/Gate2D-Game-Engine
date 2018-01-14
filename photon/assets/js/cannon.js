@@ -37,6 +37,7 @@ function Cannon(x, y, z, width, height) {
     this.canOverCharge = false; // Determines if the cannon can shoot an overcharged attack
     this.isBombing = false; // Determines if the cannon can send bombs
     this.specialFire = false; // Determines if a special firing is happening
+    this.rapidFire = false; // Toggle rapid firing
 
     this.red = 0;
     this.green = 255;
@@ -59,8 +60,8 @@ Cannon.prototype.draw = function () {
     this.ctx.drawImage(this.img, 16, 160, 64, 256, ~~(this.x - 24), ~~(this.y + this.fireAnimation / 32), this.width, this.height);
 
     // Draw the normal guide line
-    // this.ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-    // this.ctx.fillRect(this.x + 7, this.y, 2, -1000);
+    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    this.ctx.fillRect(this.x + 7, this.y, 2, -1000);
 
     // Handle firing fire animation
     if (this.isFiring) {
@@ -164,7 +165,7 @@ Cannon.prototype.update = function () {
             }
         }
 
-        this.direction += Math.sin(this.jitter++ % 360) * 1;
+        // this.direction += Math.sin(this.jitter++ % 360) * 1;
     }
 
     // Overheating happens
@@ -237,14 +238,28 @@ Cannon.prototype.fire = function (isSpecial) {
 
     // Handle special attack differently
     if (isSpecial) {
-        Gate2D.Objects.get('photon').fire('special');
+        if (this.rapidFire) {
+            // Grab all the rapid firing photon by their level ID and fire them!
+            for (let i = 10; i--;) {
+                (function (index, self) {
+                    window.setTimeout(function () {
+                        let photon = Gate2D.Objects.findByProperty('levelID', 20 - index);
+                        photon.fire('special', self.direction);
+                        Gate2D.Globals.rapidPhotonsActive++;
+                    }, 250 + (250 * index));
+                })(i, this);
+            }
+        } else {
+            Gate2D.Objects.findByProperty('tag', 'mainPhoton').fire('special', this.direction);
+        }
         return;
     }
 
+    // Handle normal attack
     if (!this.overHeat) {
         if (this.charge <= Gate2D.Globals.energy) {
             this.isCharging = false; // Release the cannon
-            Gate2D.Objects.get('photon').fire(this.charge); // Fire the photon with cannon power
+            Gate2D.Objects.findByProperty('tag', 'mainPhoton').fire(this.charge, this.direction); // Fire the photon with cannon power
             this.isFiring = true; // Trigger the animation
 
             // Pass the charging energy to overheat
@@ -265,6 +280,9 @@ Cannon.prototype.fire = function (isSpecial) {
             fireButton.status = 'disabled'; // Disable the fire button until the photon is out
             specialButton.status = 'disabled'; // Disable the fire button until the photon is out
             chooseButton.status = 'disabled'; // Disable the fire button until the photon is out
+            
+            // Release the cannon energy
+            this.energy = 0;
         }
         else {
             this.isCharging = false;

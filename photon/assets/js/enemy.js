@@ -20,7 +20,9 @@ function Enemy(x, y, z, width, height) {
     this.checkedCollision = false;
     this.isHitAnimationNumber = 0;
     this.isDead = false;
-    this.bonusPoints = 0;
+    this.bonusPower = 0;
+    this.bonusCool = 0;
+    this.bonusMultiplier = 0;
     this.active = true;
 
     // Assign lives randomly within certain ranges
@@ -28,14 +30,16 @@ function Enemy(x, y, z, width, height) {
         case 'green': this.life = Gate2D.Math.randomNumber(1, 4); break;
         case 'yellow': this.life = Gate2D.Math.randomNumber(4, 7); break;
         case 'red': this.life = Gate2D.Math.randomNumber(7, 11); break;
-        case 'bonus': this.life = 1; this.bonusPoints = Gate2D.Math.randomNumber(10, 50); break;
+        case 'bonusPower': this.life = 1; break;
+        case 'bonusCool': this.life = 1; break;
+        case 'bonusMultiplier': this.life = 1; break;
         default: break;
     }
 
     this.fullLife = this.life;
 
     // Define collision area if one is needed
-    this.coll = new Gate2D.Physics.CircleCollision(x, y, z, width, height);
+    this.coll = new Gate2D.Physics.AABBCollision(x, y, z, width - 16, height - 16);
 }
 
 // Establish the inheritance
@@ -65,9 +69,9 @@ Enemy.prototype.draw = function () {
         }
 
         // Rotate them slowly
-        this.ctx.translate(~~this.x + 4 + this.width / 2, ~~this.y + this.height / 2);
-        this.ctx.rotate(~~this.direction++ % 360 * Math.PI / 180);
-        this.ctx.translate(-(~~this.x + 4 + this.width / 2), -(~~this.y + this.height / 2));
+        // this.ctx.translate(~~this.x + 4 + this.width / 2, ~~this.y + this.height / 2);
+        // this.ctx.rotate(~~this.direction++ % 360 * Math.PI / 180);
+        // this.ctx.translate(-(~~this.x + 4 + this.width / 2), -(~~this.y + this.height / 2));
 
         // Select a color based on the tag
         switch (this.tag) {
@@ -92,7 +96,21 @@ Enemy.prototype.draw = function () {
                     this.width + this.isHitAnimationNumber,
                     this.height + this.isHitAnimationNumber);
             } break;
-            case 'bonus': {
+            case 'bonusPower': {
+                this.ctx.drawImage(this.img, 464, 160, 80, 80,
+                    ~~this.x - this.isHitAnimationNumber / 2,
+                    ~~this.y - this.isHitAnimationNumber / 2,
+                    this.width + this.isHitAnimationNumber,
+                    this.height + this.isHitAnimationNumber);
+            } break;
+            case 'bonusCool': {
+                this.ctx.drawImage(this.img, 464, 160, 80, 80,
+                    ~~this.x - this.isHitAnimationNumber / 2,
+                    ~~this.y - this.isHitAnimationNumber / 2,
+                    this.width + this.isHitAnimationNumber,
+                    this.height + this.isHitAnimationNumber);
+            } break;
+            case 'bonusMultiplier': {
                 this.ctx.drawImage(this.img, 464, 160, 80, 80,
                     ~~this.x - this.isHitAnimationNumber / 2,
                     ~~this.y - this.isHitAnimationNumber / 2,
@@ -108,8 +126,16 @@ Enemy.prototype.draw = function () {
             Gate2D.Video.drawText(this.life, "Photon", (20 + this.life * 3), "rgba(0, 0, 0, 0.5)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 1.5, "center", false);
         }
 
-        if (this.tag === 'bonus' && !this.isDead) {
-            Gate2D.Video.drawText('+' + this.bonusPoints, "Photon", 32, "rgba(255, 255, 255, 1)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 1.5, "center", false);
+        if (this.tag === 'bonusPower' && !this.isDead) {
+            Gate2D.Video.drawText('+' + this.bonusPower, "Photon", 32, "rgba(255, 255, 255, 1)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 1.5, "center", false);
+        }
+
+        if (this.tag === 'bonusCool' && !this.isDead) {
+            Gate2D.Video.drawText('-' + this.bonusCool, "Photon", 32, "rgba(255, 255, 255, 1)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 1.5, "center", false);
+        }
+
+        if (this.tag === 'bonusMultiplier' && !this.isDead) {
+            Gate2D.Video.drawText('x' + this.bonusMultiplier, "Photon", 32, "rgba(255, 255, 255, 1)", ~~this.x + this.width / 2, ~~this.y + this.height / 2 - 16 - this.life * 1.5, "center", false);
         }
 
         this.coll.draw();
@@ -131,10 +157,17 @@ Enemy.prototype.update = function () {
     if (!this.isDead) {
         if (this.life < 1) {
             this.isDead = true;
+            //if (this.tag.substring(0, 5) === 'bonus') {
+                this.x = -400;
+                this.y = -400;
+            //}
         }
-    } else {
-        Gate2D.Physics.moveTowards(this, { x: 356, y: 1088, width: 0, height: 0 }, 16);
-    }
+    } 
+    // else {
+    //     if (this.tag.substring(0, 5) !== 'bonus') {
+    //         Gate2D.Physics.moveTowards(this, { x: 356, y: 1088, width: 0, height: 0 }, 16);
+    //     }
+    // }
 
     // Handle game over if the enemies are so close to the player
     if (this.y + this.height >= 1088 && !this.isDead) {
@@ -162,5 +195,5 @@ Enemy.prototype.update = function () {
     }
 
     // Always update the collision area position
-    this.coll.update(this.x + this.width / 2, this.y + this.height / 2);
+    this.coll.update(this.x + 8, this.y + 8);
 }

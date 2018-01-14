@@ -84,26 +84,38 @@ Gate2D.Controls.addOnScreenButton([
             drawX: 560, drawY: 1116, drawWidth: 144, drawHeight: 144
         },
         action: function (type) {
-            let cannon = Gate2D.Objects.get('cannon');
+            let cannon = Gate2D.Objects.get('cannon'),
+                fireButton = Gate2D.Controls.getOnScreenButton('fireButton'),
+                chooseButton = Gate2D.Controls.getOnScreenButton('chooseButton');
 
             switch (type) {
                 case 'start': {
                     // Perform when touch starts 
                     switch (Gate2D.Globals.specialPower) {
                         case 'ghost': {
-                            Gate2D.Controls.getOnScreenButton('chooseButton').status = 'disabled';
+                            chooseButton.status = 'disabled';
+                            fireButton.status = 'disabled';
                             this.status = 'disabled';
                             cannon.fire(true);
                         } break;
                         case 'bomb': {
-                            Gate2D.Controls.getOnScreenButton('chooseButton').status = 'disabled';
+                            chooseButton.status = 'disabled';
+                            fireButton.status = 'disabled';
                             cannon.isBombing = true;
                             this.status = 'disabled';
                             cannon.fire(true);
                         } break;
                         case 'wall': {
-                            Gate2D.Controls.getOnScreenButton('chooseButton').status = 'disabled';
+                            chooseButton.status = 'disabled';
+                            fireButton.status = 'disabled';
                             cannon.isBuildingWall = true;
+                            this.status = 'disabled';
+                            cannon.fire(true);
+                        } break;
+                        case 'rapid': {
+                            chooseButton.status = 'disabled';
+                            fireButton.status = 'disabled';
+                            cannon.rapidFire = true;
                             this.status = 'disabled';
                             cannon.fire(true);
                         } break;
@@ -143,7 +155,8 @@ Gate2D.Controls.addOnScreenButton([
                     if (power === 'none') Gate2D.Misc.setupSpecialPower('ghost');
                     if (power === 'ghost') Gate2D.Misc.setupSpecialPower('wall');
                     if (power === 'wall') Gate2D.Misc.setupSpecialPower('bomb');
-                    if (power === 'bomb') Gate2D.Misc.setupSpecialPower('none');
+                    if (power === 'bomb') Gate2D.Misc.setupSpecialPower('rapid');
+                    if (power === 'rapid') Gate2D.Misc.setupSpecialPower('none');
                     Gate2D.Controls.getOnScreenButton('specialButton').status = 'active';
                     
                 } break;

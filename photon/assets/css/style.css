@@ -90,6 +90,14 @@ body {
     border-right: 8px solid white;
 }
 
+/* HUD */
+
+#hud {
+    pointer-events: none;
+    z-index: 1;
+    position: absolute;
+}
+
 /* TEXT ALIGNMENT */
 
 .center-h {
@@ -124,6 +132,10 @@ h2 {
 
 .red {
     color: rgb(180, 0, 0);
+}
+
+.yellow {
+    color: rgb(255, 174, 0)
 }
 
 .center-menu h2 {
