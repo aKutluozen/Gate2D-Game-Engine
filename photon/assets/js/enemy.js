@@ -68,11 +68,6 @@ Enemy.prototype.draw = function () {
             }
         }
 
-        // Rotate them slowly
-        // this.ctx.translate(~~this.x + 4 + this.width / 2, ~~this.y + this.height / 2);
-        // this.ctx.rotate(~~this.direction++ % 360 * Math.PI / 180);
-        // this.ctx.translate(-(~~this.x + 4 + this.width / 2), -(~~this.y + this.height / 2));
-
         // Select a color based on the tag
         switch (this.tag) {
             case 'green': {
@@ -157,17 +152,10 @@ Enemy.prototype.update = function () {
     if (!this.isDead) {
         if (this.life < 1) {
             this.isDead = true;
-            //if (this.tag.substring(0, 5) === 'bonus') {
-                this.x = -400;
-                this.y = -400;
-            //}
+            this.x = -400;
+            this.y = -400;
         }
-    } 
-    // else {
-    //     if (this.tag.substring(0, 5) !== 'bonus') {
-    //         Gate2D.Physics.moveTowards(this, { x: 356, y: 1088, width: 0, height: 0 }, 16);
-    //     }
-    // }
+    }
 
     // Handle game over if the enemies are so close to the player
     if (this.y + this.height >= 1088 && !this.isDead) {

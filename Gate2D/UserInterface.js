@@ -36,6 +36,7 @@ Gate2D.UI = (function () {
             for (let i = 0, len = elements.length; i < len; i++) {
                 _screens[elements[i].id] = elements[i];
             }
+            // Also add the ui screen itself
         },
 
         /**

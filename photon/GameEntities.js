@@ -192,17 +192,17 @@ Gate2D.Levels.add([
 
         initAction: function () {
             // Put the big size first - Least frequent one
-            for (let i = 300, len = this.objectMap.map.length; i < 600; i += Gate2D.Math.randomNumber(20, 30)) {
+            for (let i = 300, len = this.objectMap.map.length; i < 600; i += Gate2D.Math.randomNumber(25, 30)) {
                 this.objectMap.map[i] = 8;
             }
 
             // Then the middle size
-            for (let i = 900, len = this.objectMap.map.length; i < 2200; i += Gate2D.Math.randomNumber(30, 40)) {
+            for (let i = 900, len = this.objectMap.map.length; i < 1800; i += Gate2D.Math.randomNumber(10, 20)) {
                 this.objectMap.map[i] = 7;
             }
 
             // Then the smallest size - Most frequent one
-            for (let i = 1000, len = this.objectMap.map.length; i < 2200; i += Gate2D.Math.randomNumber(100, 120)) {
+            for (let i = 1000, len = this.objectMap.map.length; i < 2200; i += Gate2D.Math.randomNumber(30, 90)) {
                 this.objectMap.map[i] = 6;
             }
 

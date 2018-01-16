@@ -40,7 +40,7 @@ function Photon(x, y, z, width, height, name, tag) {
     this.power = 0; // Power (color) of the photon
 
     // Define collision area if one is needed
-    this.coll = new Gate2D.Physics.CircleCollision(x, y, z, width, height);
+    this.coll = new Gate2D.Physics.CircleCollision(x, y, z, width / 3);
     this.initR = this.coll.r; // Keep the initial radius to come back to it after explosion
 
     // If a rapid photon, don't be active yet
@@ -64,17 +64,19 @@ Photon.prototype.draw = function () {
     if (this.speedX || this.speedY || this.power === 'wall') {
 
         // Draw trail
-        this.ctx.beginPath();
-        this.ctx.moveTo(~~this.hitX, ~~this.hitY);
-        this.ctx.lineTo(~~(this.x + this.width / 2), ~~(this.y + this.width / 2));
-        this.ctx.stroke();
-        this.ctx.lineCap = "round";
-        this.ctx.closePath();
+        if (this.power !== 'rapid') {
+            this.ctx.beginPath();
+            this.ctx.moveTo(~~this.hitX, ~~this.hitY);
+            this.ctx.lineTo(~~(this.x + this.width / 2), ~~(this.y + this.width / 2));
+            this.ctx.stroke();
+            this.ctx.lineCap = "round";
+            this.ctx.closePath();
 
-        this.hitOpacity -= 0.035;
-        this.ctx.lineWidth = this.hitOpacity * 32;
-        if (this.hitOpacity <= 0.1) {
-            this.hitOpacity = 0;
+            this.hitOpacity -= 0.035;
+            this.ctx.lineWidth = this.hitOpacity * 32;
+            if (this.hitOpacity <= 0.1) {
+                this.hitOpacity = 0;
+            }
         }
 
         switch (this.power) {
@@ -169,7 +171,7 @@ Photon.prototype.update = function () {
                 // Cache the old speed for swapping purposes
                 let oldSpeedX = this.speedX,
                     oldSpeedY = this.speedY,
-                    random = Math.random() / 4; // This number is needed to break the repetition of bouncing
+                    random = Math.random() / 2; // This number is needed to break the repetition of bouncing
 
                 // Every color bounces but not ghost and bomb
                 if (this.power !== 'ghost' && !this.canBomb) {
@@ -192,6 +194,8 @@ Photon.prototype.update = function () {
                     if (prevY >= other[i].coll.y + other[i].coll.height) {
                         this.speedY = Math.abs(oldSpeedY) + random;
                     }
+
+                    console.log(Math.abs(this.speedX), Math.abs(this.speedY));
                 }
 
                 // Build a wall 
@@ -238,7 +242,6 @@ Photon.prototype.update = function () {
                     this.power === 'rapid'
                 ) {
                     other[i].life--;
-
                     let Globals = Gate2D.Globals;
 
                     // Gain 75% of the energy back
@@ -246,8 +249,13 @@ Photon.prototype.update = function () {
 
                     let cannon = Gate2D.Objects.get('cannon');
 
+                    // Cooling down
                     if (other[i].tag === 'bonusCool' && cannon.heatSink > 0) {
-                        cannon.heatSink -= other[i].bonusCool;
+                        if (cannon.heatSink - other[i].bonusCool >= 0) {
+                            cannon.heatSink -= other[i].bonusCool;
+                        } else {
+                            cannon.heatSink = 0;
+                        }
                     }
 
                     if (other[i].tag === 'bonusMultiplier') {
@@ -261,7 +269,7 @@ Photon.prototype.update = function () {
                     if (Globals.sameColorHits >= 2) {
                         Globals.bonusMultiplier = 2;
                     }
-                    
+
                     break;
                 }
             }
@@ -274,8 +282,20 @@ Photon.prototype.update = function () {
         }
     }
 
+    // Blow up from too much speed!
+    if (Math.abs(this.speedX) > 30 || Math.abs(this.speedY) > 30) {
+        // Blow up if photon is a bomb
+
+        this.speedX = 0;
+        this.speedY = 0;
+        this.canBomb = true;
+        this.blewUp = true;
+
+        // this.reset();
+    }
+
     // Reset the photon
-    if (this.y > 1100) {
+    if (this.y > 1100 || this.y < 0 || this.x > 750 || this.x < -30) {
         this.reset();
     }
 
@@ -315,7 +335,7 @@ Photon.prototype.fire = function (shootEnergy, direction) {
     }
 
     // Get the direction from the cannon and assign the speed
-    this.movement = Gate2D.Math.direction(direction + 270, 8);
+    this.movement = Gate2D.Math.direction(direction + 270, 10);
 
     // Assign the new speed
     this.speedX = -this.movement.x;

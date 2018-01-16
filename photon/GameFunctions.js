@@ -121,7 +121,6 @@ Gate2D.Misc = {
     touchToPlay: function () {
         Gate2D.Manager.gameStatus('on');
         Gate2D.UI.fadeOut('touch-to-play');
-        document.getElementById('ui').style.display = 'none';
     },
 
     restart: function () {
@@ -131,11 +130,9 @@ Gate2D.Misc = {
     continue: function () {
         Gate2D.Manager.pause(false);
         Gate2D.UI.switch('pause-menu').fadeOut('pause-menu');
-        document.getElementById('ui').style.display = 'none';
     },
 
     pause: function () {
-        document.getElementById('ui').style.display = 'block';
         Gate2D.Manager.pause(true);
         Gate2D.UI.switch('pause-menu').fadeIn('pause-menu');
     }

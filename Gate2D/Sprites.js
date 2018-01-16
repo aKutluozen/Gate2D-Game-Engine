@@ -20,29 +20,20 @@ Gate2D.Sprites = (function () {
          * @param {number}  frames - Amount of frames the animation has - Horizontally
          * @returns {number}
          */
-        animation: function (fps, frames) {
+        animation: function (sprite, cropX, cropY, cropWidth, cropHeight, drawX, drawY, drawWidth, drawHeight, numberOfFrames) {
             // Local variables
-            var frame = 0,
-                animation = null,
+            var currentFrame = 0,
                 states = [];
 
             // Methods
             this.getFrame = function () {
-                return frame;
+                return currentFrame;
             };
 
             this.play = function () {
-                if (!animation) {
-                    animation = window.setInterval(function () {
-                        if (frame < frames) frame++;
-                        else frame = 0;
-                    }, 1000 / fps);
-                }
-            };
-
-            this.stop = function () {
-                window.clearInterval(animation);
-                animation = null;
+                if (currentFrame < numberOfFrames) currentFrame++;
+                else currentFrame = 0;
+                sprite.drawImage(sprite, cropX + (currentFrame * cropWidth), cropY, cropWidth, cropHeight, drawX, drawY, drawWidth, drawHeight);
             };
 
             this.createState = function (name, beginning, end) {
@@ -60,7 +51,7 @@ Gate2D.Sprites = (function () {
                     }
                 }
                 return false;
-            }
+            };
         }
     }
 }());
