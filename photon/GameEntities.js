@@ -22,7 +22,13 @@ Gate2D.Globals.add([
     { rapidPhotonsActive: 0 },
     { bonusMultiplier: 1 },
     { sameColorHits: 0 },
-    { inGameMultiplierOn: false }
+    { inGameMultiplierOn: false },
+
+    // Special power degrees - Will be able to increase these.
+    { maxRapidBullets: 15 }, // 5, 10, 15
+    { maxLumenRadius: 3 }, // 1, 2, 3
+    { maxShieldRounds: 5 }, // 5, 10, 15
+    { shieldUsed: 0 } // This value will add up to maxShieldRounds
     // Create custom game variables here as name-value pairs
     // ...
 ]);
@@ -37,9 +43,9 @@ Gate2D.Objects.createGroup('level1ObjectGroup', [
     { object: new Enemy(0, 0, 2, 128, 128, 'enemy', 'red'), levelID: 8 },
 
     // Bonuses
-    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonusPower'), levelID: 21 },
-    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonusCool'), levelID: 22 },
-    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonusMultiplier'), levelID: 23 },
+    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonusPower'), levelID: 31 },
+    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonusCool'), levelID: 32 },
+    { object: new Enemy(0, -400, 2, 80, 80, 'enemy', 'bonusMultiplier'), levelID: 33 },
 
     { object: new Photon(0, 0, 2, 32, 32, 'photon', 'mainPhoton'), levelID: 2 },
     { object: new Cannon(0, 0, 1, 64, 256, 'cannon', 'player'), levelID: 3 },
@@ -58,6 +64,11 @@ Gate2D.Objects.createGroup('level1ObjectGroup', [
     { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid8'), levelID: 18 },
     { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid9'), levelID: 19 },
     { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid10'), levelID: 20 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid11'), levelID: 21 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid12'), levelID: 22 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid13'), levelID: 23 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid14'), levelID: 24 },
+    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid15'), levelID: 25 },
 ]);
 
 /**
@@ -107,7 +118,7 @@ Gate2D.Levels.add([
             height: 80,     // Number of cells from top to bottom
             gridSize: 16,   // Size of the cells
             map: [
-                0, 11,12,13,14,15,16,17,18,19,20,0, 21, 22, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
+                0, 11,12,13,14,15,16,17,18,19,20,21, 22, 23, 24, 25, 31, 32, 33, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
                 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

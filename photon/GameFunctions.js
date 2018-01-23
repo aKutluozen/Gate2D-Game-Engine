@@ -35,11 +35,26 @@ Gate2D.Misc = {
                 if (i === 3) {
                     _this.isBonusComing(true);
                     break;
-                } 
+                }
                 else {
                     _this.isBonusComing(false);
                 }
             }
+
+            // Decrease the shield number by one.
+            if (Gate2D.Globals.isWallActive) {
+                if (Gate2D.Globals.shieldUsed <= Gate2D.Globals.maxShieldRounds - 1) {
+                    Gate2D.Globals.shieldUsed++;
+                    console.log('wall is up');
+                } else {
+                    Gate2D.Globals.isWallActive = false;
+                    Gate2D.Globals.wallY = 0;
+                    Gate2D.Globals.shieldUsed = 0;
+                    Gate2D.Objects.findByProperty('tag', 'photonWall').active = false;
+                    console.log('wall is off');
+                }
+            }
+
         }, 1000);
     },
 

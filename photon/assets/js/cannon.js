@@ -240,10 +240,10 @@ Cannon.prototype.fire = function (isSpecial) {
     if (isSpecial) {
         if (this.rapidFire) {
             // Grab all the rapid firing photon by their level ID and fire them!
-            for (let i = 10; i--;) {
+            for (let i = Gate2D.Globals.maxRapidBullets; i--;) {
                 (function (index, self) {
                     window.setTimeout(function () {
-                        let photon = Gate2D.Objects.findByProperty('levelID', 20 - index);
+                        let photon = Gate2D.Objects.findByProperty('levelID', 25 - index);
                         photon.fire('special', self.direction);
                         Gate2D.Globals.rapidPhotonsActive++;
                     }, 250 + (250 * index));

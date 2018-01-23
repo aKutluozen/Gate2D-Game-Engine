@@ -53,6 +53,12 @@ function Photon(x, y, z, width, height, name, tag) {
     }
 
     this.active = false;
+
+    // Temp lumen radius
+    this.tempLumenRadius = 1;
+
+    // Cache global object
+    this.Globals = Gate2D.Globals;
 }
 
 // Establish the inheritance
@@ -60,6 +66,7 @@ Photon.prototype = new Gate2D.Entity();
 
 // Define object main methods draw and update
 Photon.prototype.draw = function () {
+
     // Draw the photon only when it is moving
     if (this.speedX || this.speedY || this.power === 'wall') {
 
@@ -117,9 +124,11 @@ Photon.prototype.draw = function () {
     // Expand the explosion
     if (this.blewUp) {
         this.expSize += 4;
-        if (this.expSize > 320) {
+        if (this.expSize > 100 * this.Globals.maxLumenRadius) { // Limit the size here
             this.y = 1200; // Send the photon away
             this.reset();
+            // Give back the old lumen radius if blew up by speed
+            this.Globals.maxLumenRadius = this.tempLumenRadius;
         }
         this.ctx.drawImage(this.img, 0, 464, 160, 160, ~~(this.x - this.expSize / 2) + 16, ~~(this.y - this.expSize / 2) + 16, this.expSize, this.expSize);
     }
@@ -206,9 +215,9 @@ Photon.prototype.update = function () {
                     // Build a wall object here, then reset the ball! Bring it from the ingame wall object
                     let wall = Gate2D.Objects.findByProperty('tag', 'photonWall');
                     wall.active = true;
-                    Gate2D.Globals.isWallActive = true;
+                    this.Globals.isWallActive = true;
                     Gate2D.Objects.findByProperty('tag', 'photonWall').y = this.y;
-                    Gate2D.Globals.wallY = this.y;
+                    this.Globals.wallY = this.y;
                     this.reset();
                 }
 
@@ -219,10 +228,9 @@ Photon.prototype.update = function () {
                 if (this.blewUp) {
                     other[i].life = 0;
 
-                    let Globals = Gate2D.Globals;
                     // Gain 75% of the energy back
-                    Globals.energy += (~~(other[i].fullLife * other[i].fullLife) + 1 + other[i].bonusPower) * Globals.bonusMultiplier;
-                    Globals.score += Globals.bonusMultiplier;
+                    this.Globals.energy += (~~(other[i].fullLife * other[i].fullLife) + 1 + other[i].bonusPower) * this.Globals.bonusMultiplier;
+                    this.Globals.score += this.Globals.bonusMultiplier;
                 }
 
                 // Blow up if photon is a bomb
@@ -242,10 +250,9 @@ Photon.prototype.update = function () {
                     this.power === 'rapid'
                 ) {
                     other[i].life--;
-                    let Globals = Gate2D.Globals;
 
                     // Gain 75% of the energy back
-                    Globals.energy += (~~(other[i].fullLife * 0.75) + 1 + other[i].bonusPower) * Globals.bonusMultiplier;
+                    this.Globals.energy += (~~(other[i].fullLife * 0.75) + other[i].bonusPower) * this.Globals.bonusMultiplier;
 
                     let cannon = Gate2D.Objects.get('cannon');
 
@@ -259,15 +266,15 @@ Photon.prototype.update = function () {
                     }
 
                     if (other[i].tag === 'bonusMultiplier') {
-                        Globals.bonusMultiplier = other[i].bonusMultiplier;
+                        this.Globals.bonusMultiplier = other[i].bonusMultiplier;
                     }
 
-                    Globals.score += Globals.bonusMultiplier;
-                    Globals.sameColorHits++;
+                    this.Globals.score += this.Globals.bonusMultiplier;
+                    this.Globals.sameColorHits++;
 
                     // Initiate the sam color hit bonus multiplier
-                    if (Globals.sameColorHits >= 2) {
-                        Globals.bonusMultiplier = 2;
+                    if (this.Globals.sameColorHits >= 2) {
+                        this.Globals.bonusMultiplier = 2;
                     }
 
                     break;
@@ -283,8 +290,12 @@ Photon.prototype.update = function () {
     }
 
     // Blow up from too much speed!
-    if (Math.abs(this.speedX) > 30 || Math.abs(this.speedY) > 30) {
-        // Blow up if photon is a bomb
+    if (Math.abs(this.speedX) > 11 || Math.abs(this.speedY) > 11) {
+
+        // Cache the old maxLumen value
+        this.tempLumenRadius = this.Globals.maxLumenRadius;
+        // Assign the temporary small lumen radius
+        this.Globals.maxLumenRadius = 1;
 
         this.speedX = 0;
         this.speedY = 0;
@@ -369,8 +380,8 @@ Photon.prototype.reset = function () {
 
     // Reset rapid fire
     if (this.power === 'rapid') {
-        Gate2D.Globals.rapidPhotonsActive--;
-        if (Gate2D.Globals.rapidPhotonsActive === 0) {
+        this.Globals.rapidPhotonsActive--;
+        if (this.Globals.rapidPhotonsActive === 0) {
             Gate2D.Misc.executeLevelup();
             cannon.rapidFire = false;
         }
