@@ -20,6 +20,11 @@ function Wall(x, y, z, width, height) {
     this.active = false;
     this.jitter = 0;
 
+    // Fine adjust the right wall
+    if (x > 360) {
+        x += 24;
+    }
+
     // Define collision area if one is needed
     this.coll = new Gate2D.Physics.AABBCollision(x, y, z, width, height);
 }

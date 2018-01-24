@@ -37,7 +37,7 @@ Gate2D.Loader.addFiles(
         keyboardEnabled: false,
         touchEnabled: true,
         startingLevel: 'Level 1',
-        physicsDebug: true,
+        physicsDebug: false,
         controlsDebug: false
     });
     

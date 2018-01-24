@@ -24,8 +24,8 @@ function Photon(x, y, z, width, height, name, tag) {
     this.speedY = 0;
 
     // Initial position
-    this.initX = x - 8;
-    this.initY = y;
+    this.initX = x - 16;
+    this.initY = y - 8;
 
     // Hit positions for drawing trail
     this.hitX = this.initX + 16;
@@ -174,6 +174,14 @@ Photon.prototype.update = function () {
                 if (prevY >= other[i].coll.y + other[i].coll.height) {
                     this.speedY = Math.abs(this.speedY) + random;
                 }
+
+                // If the photon only hits a wall, reduce the hit number               
+                this.Globals.maxRicochets--;               
+
+                // Make the photon disappear if it is wasted with useless ricochets
+                if (this.Globals.maxRicochets <= 0) {
+                    this.reset();
+                }
             }
 
             if (other[i].name === 'enemy' && !other[i].isDead) {
@@ -203,9 +211,10 @@ Photon.prototype.update = function () {
                     if (prevY >= other[i].coll.y + other[i].coll.height) {
                         this.speedY = Math.abs(oldSpeedY) + random;
                     }
-
-                    console.log(Math.abs(this.speedX), Math.abs(this.speedY));
                 }
+
+                // If the photon hits an enemy, reset the max ricochet number
+                this.Globals.maxRicochets = 8;
 
                 // Build a wall 
                 if (this.power === 'wall') {
@@ -229,7 +238,7 @@ Photon.prototype.update = function () {
                     other[i].life = 0;
 
                     // Gain 75% of the energy back
-                    this.Globals.energy += (~~(other[i].fullLife * other[i].fullLife) + 1 + other[i].bonusPower) * this.Globals.bonusMultiplier;
+                    this.Globals.energy += (~~(other[i].fullLife * other[i].fullLife) + 1 + other[i].bonusPower);
                     this.Globals.score += this.Globals.bonusMultiplier;
                 }
 
@@ -249,10 +258,14 @@ Photon.prototype.update = function () {
                     this.power === 'ghost' ||
                     this.power === 'rapid'
                 ) {
-                    other[i].life--;
-
                     // Gain 75% of the energy back
-                    this.Globals.energy += (~~(other[i].fullLife * 0.75) + other[i].bonusPower) * this.Globals.bonusMultiplier;
+                    if (other[i].life == 1) {
+                        this.Globals.energy += (1 + other[i].bonusPower);
+                    } else {
+                        this.Globals.energy += (~~(other[i].fullLife * 0.75) + other[i].bonusPower);
+                    }
+
+                    other[i].life--;
 
                     let cannon = Gate2D.Objects.get('cannon');
 
@@ -274,7 +287,7 @@ Photon.prototype.update = function () {
 
                     // Initiate the sam color hit bonus multiplier
                     if (this.Globals.sameColorHits >= 2) {
-                        this.Globals.bonusMultiplier = 2;
+                        this.Globals.bonusMultiplier++;
                     }
 
                     break;
@@ -290,7 +303,7 @@ Photon.prototype.update = function () {
     }
 
     // Blow up from too much speed!
-    if (Math.abs(this.speedX) > 11 || Math.abs(this.speedY) > 11) {
+    if (Math.abs(this.speedX) > 20 || Math.abs(this.speedY) > 20) {
 
         // Cache the old maxLumen value
         this.tempLumenRadius = this.Globals.maxLumenRadius;
@@ -301,13 +314,15 @@ Photon.prototype.update = function () {
         this.speedY = 0;
         this.canBomb = true;
         this.blewUp = true;
-
-        // this.reset();
     }
 
     // Reset the photon
     if (this.y > 1100 || this.y < 0 || this.x > 750 || this.x < -30) {
         this.reset();
+    }
+
+    if (this.y > 1100) {
+        console.log(this);
     }
 
     // Update the photon position
@@ -374,6 +389,7 @@ Photon.prototype.reset = function () {
     this.speedX = 0;
     this.speedY = 0;
     this.coll.r = this.initR;
+    this.Globals.maxRicochets = 8;
 
     // Reset the ball trail opacity
     this.hitOpacity = 0.75;

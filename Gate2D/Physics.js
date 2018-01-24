@@ -130,7 +130,7 @@ Gate2D.Physics = (function () {
          * @returns {boolean}
          */
         checkCircleCollision: function (thisEntity, otherEntity) {
-            if (thisEntity.coll.z === otherEntity.coll.z) {
+            // if (thisEntity.coll.z === otherEntity.coll.z) {
                 if (thisEntity.coll.r != undefined && otherEntity.coll.r != undefined) {
                     if (Gate2D.Math.hypotenuse(thisEntity.coll.x - otherEntity.coll.x, thisEntity.coll.y - otherEntity.coll.y) <=
                         (thisEntity.coll.r + otherEntity.coll.r))
@@ -139,9 +139,9 @@ Gate2D.Physics = (function () {
                 } else {
                     console.error('Both objects must have a radius!');
                 }
-            } else {
-                return;
-            }
+            // } else {
+            //     return;
+            // }
         },
 
         /**
@@ -153,16 +153,16 @@ Gate2D.Physics = (function () {
          * @returns {boolean}
          */
         checkAABBCollision: function (thisEntity, otherEntity) {
-            if (thisEntity.coll.z === otherEntity.coll.z) {
+            // if (thisEntity.coll.z === otherEntity.coll.z) {
                 if (thisEntity.coll.x < otherEntity.coll.x + otherEntity.coll.width &&
                     thisEntity.coll.x + thisEntity.coll.width > otherEntity.coll.x &&
                     thisEntity.coll.y < otherEntity.coll.y + otherEntity.coll.height &&
                     thisEntity.coll.y + thisEntity.coll.height > otherEntity.coll.y)
                     return true;
                 else return false;
-            } else {
-                return;
-            }
+            // } else {
+            //     return;
+            // }
         },
 
         /**
@@ -177,7 +177,7 @@ Gate2D.Physics = (function () {
             let circleDistX = Math.abs(circle.coll.x - (rect.coll.x + rect.coll.width / 2)),
                 circleDistY = Math.abs(circle.coll.y - (rect.coll.y + rect.coll.height / 2));
 
-            if (circle.coll.z === rect.coll.z) {
+            // if (circle.coll.z === rect.coll.z) {
                 // Handle collision from left
                 if (circleDistX > (rect.coll.width / 2 + circle.coll.r)) {
                     return false;
@@ -204,9 +204,9 @@ Gate2D.Physics = (function () {
                     Math.pow(circleDistY - rect.coll.height / 2, 2) <=
                     (Math.pow(circle.coll.r, 2))
                 );
-            } else {
-                return;
-            }
+            // } else {
+            //     return;
+            // }
         },
 
         /**

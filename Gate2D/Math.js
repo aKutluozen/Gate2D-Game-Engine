@@ -60,6 +60,16 @@ Gate2D.Math = (function () {
             min = Math.ceil(min);
             max = Math.floor(max);
             return Math.floor(Math.random() * (max - min)) + min;
+        },
+
+        /**
+         * Returns a random element of a given array
+         * 
+         * @param {array}  arr - Array to choose from
+         * @returns {number}
+         */
+        chooseRandom: function (arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
         }
     }
 }());

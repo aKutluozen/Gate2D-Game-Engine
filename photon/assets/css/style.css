@@ -9,7 +9,7 @@
  
  @font-face {
     font-family: Photon;
-    src: url(../fonts/Black_Ops_One/BlackOpsOne-Regular.ttf);
+    src: url(../fonts/upheaval/upheavtt.ttf);
 }
 
 /* GAME ESSENTIALS */
@@ -34,7 +34,7 @@ body {
     cursor: auto;
     height: calc(100vh);
     width: auto;
-    image-rendering: auto;
+    image-rendering: pixelated;
 }
 
 #counter {
@@ -117,11 +117,11 @@ body {
 /* TEXT SIZES */
 
 h1 {
-    font-size: calc(8vw);
+    font-size: calc(9vw);
 }
 
 h2 {
-    font-size: calc(7vw);
+    font-size: calc(8vw);
 }
 
 /* COLORS */

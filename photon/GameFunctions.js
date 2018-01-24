@@ -31,8 +31,8 @@ Gate2D.Misc = {
             Gate2D.Globals.sameColorHits = 0;
 
             // Create random bonus every once in a while
-            for (let i = 0; i < 10; i++) {
-                if (i === 3) {
+            for (let i = 0; i < 20; i += Gate2D.Math.randomNumber(1, 3)) {
+                if (i === 10) {
                     _this.isBonusComing(true);
                     break;
                 }
@@ -45,13 +45,11 @@ Gate2D.Misc = {
             if (Gate2D.Globals.isWallActive) {
                 if (Gate2D.Globals.shieldUsed <= Gate2D.Globals.maxShieldRounds - 1) {
                     Gate2D.Globals.shieldUsed++;
-                    console.log('wall is up');
                 } else {
                     Gate2D.Globals.isWallActive = false;
                     Gate2D.Globals.wallY = 0;
                     Gate2D.Globals.shieldUsed = 0;
                     Gate2D.Objects.findByProperty('tag', 'photonWall').active = false;
-                    console.log('wall is off');
                 }
             }
 
