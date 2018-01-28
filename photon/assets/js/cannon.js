@@ -44,6 +44,11 @@ function Cannon(x, y, z, width, height) {
 
     // Define collision area if one is needed
     this.coll = new Gate2D.Physics.AABBCollision(x, y, z, width, height);
+
+    // Cache buttons used
+    this.fireButton = Gate2D.Controls.getOnScreenButton('buttonSet1', 'fireButton'),
+    this.specialButton = Gate2D.Controls.getOnScreenButton('buttonSet1', 'specialButton'),
+    this.chooseButton = Gate2D.Controls.getOnScreenButton('buttonSet1', 'chooseButton');
 }
 
 // Establish the inheritance
@@ -149,9 +154,6 @@ Cannon.prototype.draw = function () {
 }
 
 Cannon.prototype.update = function () {
-    let fireButton = Gate2D.Controls.getOnScreenButton('fireButton'),
-        specialButton = Gate2D.Controls.getOnScreenButton('specialButton'),
-        chooseButton = Gate2D.Controls.getOnScreenButton('chooseButton');
 
     // If charging mode is on, charge the cannon until it is 100
     if (this.isCharging && !this.overHeat) {
@@ -177,9 +179,9 @@ Cannon.prototype.update = function () {
     if (this.overHeat) {
         Gate2D.Globals.levelUp = true;
         // Disable the button until the cannon is cool again
-        fireButton.status = 'disabled';
-        specialButton.status = 'disabled';
-        chooseButton.status = 'disabled';
+        this.fireButton.status = 'disabled';
+        this.specialButton.status = 'disabled';
+        this.chooseButton.status = 'disabled';
 
         this.direction += Math.sin(this.jitter++) * 1;
 
@@ -193,9 +195,9 @@ Cannon.prototype.update = function () {
                 this.overHeat = false;
                 this.isCharging = false;
                 Gate2D.Globals.levelUp = false;
-                fireButton.status = 'active';
-                specialButton.status = 'active';
-                chooseButton.status = 'active';
+                this.fireButton.status = 'active';
+                this.specialButton.status = 'active';
+                this.chooseButton.status = 'active';
             }
         }
     }
@@ -232,9 +234,6 @@ Cannon.prototype.coolDown = function () {
 
 // Releases the power of the cannon to the photon, disables the fire button momentarily
 Cannon.prototype.fire = function (isSpecial) {
-    var fireButton = Gate2D.Controls.getOnScreenButton('fireButton'),
-        specialButton = Gate2D.Controls.getOnScreenButton('specialButton'),
-        chooseButton = Gate2D.Controls.getOnScreenButton('chooseButton');
 
     // Handle special attack differently
     if (isSpecial) {
@@ -277,10 +276,10 @@ Cannon.prototype.fire = function (isSpecial) {
                 this.heatSink += 20;
             }
 
-            fireButton.status = 'disabled'; // Disable the fire button until the photon is out
-            specialButton.status = 'disabled'; // Disable the fire button until the photon is out
-            chooseButton.status = 'disabled'; // Disable the fire button until the photon is out
-            
+            this.fireButton.status = 'disabled'; // Disable the fire button until the photon is out
+            this.specialButton.status = 'disabled'; // Disable the fire button until the photon is out
+            this.chooseButton.status = 'disabled'; // Disable the fire button until the photon is out
+
             // Release the cannon energy
             this.energy = 0;
         }

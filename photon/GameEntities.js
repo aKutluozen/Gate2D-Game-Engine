@@ -106,6 +106,7 @@ Gate2D.Levels.add([
     {
         // Basic size and background information of a level
         name: 'Level 1',
+        controls: 'buttonSet1',
         width: 720,
         height: 1280,
         x: 0,

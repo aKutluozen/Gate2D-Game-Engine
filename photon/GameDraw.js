@@ -51,7 +51,7 @@ Gate2D.GameDraw = function () {
     }
 
     // Draw onscreen buttons
-    Controls.drawOnScreenButtons();
+    Controls.drawOnScreenButtons('buttonSet1');
 
     // Let the video engine render the screen
     Video.render();

@@ -61,8 +61,10 @@ Gate2D.Manager = (function () {
         /**
          * Sets up the control based on the settings passed
          * This function is internally used. No need to call if from the actual game code.
+         * 
+         * @param {string}  controlGroupName - Name of the control group to be initiated
          */
-        setupControls: function () {
+        setupControls: function (controlGroupName) {
             if (_settings.keyboardEnabled) {
                 Gate2D.Controls.initKeyboardControls(Gate2D.Objects.objects());
             }
@@ -72,7 +74,7 @@ Gate2D.Manager = (function () {
             }
 
             if (_settings.touchEnabled) {
-                Gate2D.Controls.initTouchControls(Gate2D.Objects.objects());
+                Gate2D.Controls.initTouchControls(controlGroupName, Gate2D.Objects.objects());
             }
 
             console.log('Controls are setup. ' +

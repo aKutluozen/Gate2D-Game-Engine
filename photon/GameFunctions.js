@@ -14,9 +14,9 @@ Gate2D.Misc = {
         // Put it back to sleep in a second
         window.setTimeout(function () {
             Gate2D.Globals.levelUp = false;
-            var fireButton = Gate2D.Controls.getOnScreenButton('fireButton'),
-                specialButton = Gate2D.Controls.getOnScreenButton('specialButton'),
-                chooseButton = Gate2D.Controls.getOnScreenButton('chooseButton');
+            var fireButton = Gate2D.Controls.getOnScreenButton('buttonSet1', 'fireButton'),
+                specialButton = Gate2D.Controls.getOnScreenButton('buttonSet1', 'specialButton'),
+                chooseButton = Gate2D.Controls.getOnScreenButton('buttonSet1', 'chooseButton');
 
             fireButton.status = 'active';
             specialButton.status = 'active';
@@ -97,7 +97,7 @@ Gate2D.Misc = {
     // Handle cropping the button for the selected power
     setupSpecialPower: function (name) {
         Gate2D.Globals.specialPower = name;
-        let buttonImage = Gate2D.Controls.getOnScreenButton('specialButton').image,
+        let buttonImage = Gate2D.Controls.getOnScreenButton('buttonSet1', 'specialButton').image,
             cannon = Gate2D.Objects.get('cannon');
 
         // Reset all the cannon features

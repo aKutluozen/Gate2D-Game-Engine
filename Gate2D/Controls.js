@@ -72,9 +72,10 @@ Gate2D.Controls = (function () {
 		 * Sends touch coordinates to whoever is listening
 		 * This function is internally used. No need to call if from the actual game code. 
 		 * 
+		 * @param {String}  name - Name of the control group
 		 * @param {Object}  entities - An array of game objects
 		 */
-		initTouchControls: function (entities) {
+		initTouchControls: function (name, entities) {
 			// Cache 'this' and necessary elements
 			let _this = this,
 				canvas = Gate2D.Video.canvas();
@@ -88,7 +89,7 @@ Gate2D.Controls = (function () {
 								entities[i].handleMouseDown(_this.getTouchPosition(event));
 							}
 						}
-						_this.listenOnScreenButtons(_this.getTouchPosition(event), 'start');
+						_this.listenOnScreenButtons(name, _this.getTouchPosition(event), 'start');
 					}, {
 						passive: true
 					});
@@ -100,7 +101,7 @@ Gate2D.Controls = (function () {
 								entities[i].handleMouseMovement(_this.getTouchPosition(event));
 							}
 						}
-						_this.listenOnScreenButtons(_this.getTouchPosition(event), 'move');
+						_this.listenOnScreenButtons(name, _this.getTouchPosition(event), 'move');
 					}, {
 						passive: true
 					});
@@ -112,7 +113,7 @@ Gate2D.Controls = (function () {
 								entities[i].handleMouseUp();
 							}
 						}
-						_this.listenOnScreenButtons(_this.getTouchPosition(event), 'release');
+						_this.listenOnScreenButtons(name, _this.getTouchPosition(event), 'release');
 					}, {
 						passive: true
 					});
@@ -241,7 +242,7 @@ Gate2D.Controls = (function () {
 				_onScreenButtonsObjects[buttons[i].name] = buttons[i];
 			}
 
-			console.log("Onscreen buttons added:", i);
+			console.log(_onScreenButtonsArray);
 		},
 
 	    /**
@@ -249,19 +250,31 @@ Gate2D.Controls = (function () {
 		 * If so, executes the method of that button based on the event.
 		 * This function is internally used. No need to call if from the actual game code.
 		 * 
+		 * @param {array}   buttonSetName - Set of buttons to be listened
 		 * @param {array}   clickPosition - The position of the event
 		 * @param {array}   type - Type of the event ('start', 'move', 'release')
 		 */
-		listenOnScreenButtons: function (clickPosition, type) {
+		listenOnScreenButtons: function (buttonSetName, clickPosition, type) {
 			if (clickPosition) {
-				for (let i = 0; i < _onScreenButtonsArray.length; i++) {
-					if (clickPosition.x >= _onScreenButtonsArray[i].x &&
-						clickPosition.x <= _onScreenButtonsArray[i].x + _onScreenButtonsArray[i].width &&
-						clickPosition.y >= _onScreenButtonsArray[i].y &&
-						clickPosition.y <= _onScreenButtonsArray[i].y + _onScreenButtonsArray[i].height &&
-						_onScreenButtonsArray[i].status === 'active'
+				let btns = null;
+
+				for (let set of _onScreenButtonsArray) {
+					if (set.name === buttonSetName) {
+						btns = set.buttons;
+						break;
+					} else {
+						return null;
+					}
+				}
+
+				for (let i = 0; i < btns.length; i++) {
+					if (clickPosition.x >= btns[i].x &&
+						clickPosition.x <= btns[i].x + btns[i].width &&
+						clickPosition.y >= btns[i].y &&
+						clickPosition.y <= btns[i].y + btns[i].height &&
+						btns[i].status === 'active'
 					) {
-						_onScreenButtonsArray[i].action(type);
+						btns[i].action(type);
 					}
 				}
 			}
@@ -269,34 +282,47 @@ Gate2D.Controls = (function () {
 
 	    /**
 		 * Draws the touch buttons on the screen
+		 * 
+		 * @param {array}   buttonSetName - Set of buttons to be drawn
 		 */
-		drawOnScreenButtons: function () {
-			for (let i = 0, len = _onScreenButtonsArray.length; i < len; i++) {
-				if (_debug && _onScreenButtonsArray[i].status === 'active') {
-					_Video.drawBox('green', 0.5, _onScreenButtonsArray[i].x, _onScreenButtonsArray[i].y, _onScreenButtonsArray[i].width, _onScreenButtonsArray[i].height);
+		drawOnScreenButtons: function (buttonSetName) {
+			let btns = null;
+
+			for (let set of _onScreenButtonsArray) {
+				if (set.name === buttonSetName) {
+					btns = set.buttons;
+					break;
+				} else {
+					return null;
+				}
+			}
+
+			for (let i = 0, len = btns.length; i < len; i++) {
+				if (_debug && btns[i].status === 'active') {
+					_Video.drawBox('green', 0.5, btns[i].x, btns[i].y, btns[i].width, btns[i].height);
 				}
 
 				// Draw only if it has an image property
-				if (_onScreenButtonsArray[i].image) {
+				if (btns[i].image) {
 					_Video.bufferContext().save();
 
 					// Fade out the disabled button
-					if (_onScreenButtonsArray[i].status === 'disabled') {
+					if (btns[i].status === 'disabled') {
 						_Video.bufferContext().globalAlpha = 0.5;
-					} else if (_onScreenButtonsArray[i].status === 'active') {
+					} else if (btns[i].status === 'active') {
 						_Video.bufferContext().globalAlpha = 1;
 					}
 
 					_Video.bufferContext().drawImage(
-						_onScreenButtonsArray[i].image.image,
-						_onScreenButtonsArray[i].image.cropX,
-						_onScreenButtonsArray[i].image.cropY,
-						_onScreenButtonsArray[i].image.cropWidth,
-						_onScreenButtonsArray[i].image.cropHeight,
-						_onScreenButtonsArray[i].image.drawX,
-						_onScreenButtonsArray[i].image.drawY,
-						_onScreenButtonsArray[i].image.drawWidth,
-						_onScreenButtonsArray[i].image.drawHeight,
+						btns[i].image.image,
+						btns[i].image.cropX,
+						btns[i].image.cropY,
+						btns[i].image.cropWidth,
+						btns[i].image.cropHeight,
+						btns[i].image.drawX,
+						btns[i].image.drawY,
+						btns[i].image.drawWidth,
+						btns[i].image.drawHeight,
 					);
 					_Video.bufferContext().restore();
 				}
@@ -306,10 +332,21 @@ Gate2D.Controls = (function () {
 	    /**
 		 * Returns a button if found
 		 * 
-		 * @param {string}	name - Name of the button
+		 * @param {array}   buttonSetName - Set of buttons to get
+		 * @param {string}	buttonName - Name of the button
 		 */
-		getOnScreenButton: function (name) {
-			return _onScreenButtonsObjects[name] || null;
+		getOnScreenButton: function (buttonSetName, buttonName) {
+			for (let set of _onScreenButtonsArray) {
+				if (set.name === buttonSetName) {
+					for (let button of set.buttons) {
+						if (button.name === buttonName) {
+							return button;
+						}
+					}
+				}
+			}
+
+			return null;
 		},
 
         /**

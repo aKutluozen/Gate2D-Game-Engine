@@ -139,8 +139,8 @@ Gate2D.Levels = (function () {
                 // Connect every object to the buffer context
                 Gate2D.Objects.setupDisplayForObjects();
 
-                // Wake up the controls again
-                Gate2D.Manager.setupControls();
+                // Wake up the controls again - Pass the control set name
+                Gate2D.Manager.setupControls(_current.controls);
 
                 // Assign the camera if there is one
                 if (_current.camera) {

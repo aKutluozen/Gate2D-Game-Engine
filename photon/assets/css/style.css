@@ -21,6 +21,21 @@ body {
     color: white;
 }
 
+#game {
+    visibility: hidden;
+    position: fixed;
+}
+
+#menu {
+    position: fixed;
+    background: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    left: 0px;
+    top: 0px;
+}
+
 #game-canvas {
     position: fixed;
     top: 0;
@@ -88,6 +103,63 @@ body {
     height: 64px;
     border-radius: 32px;
     border-right: 8px solid white;
+}
+
+/* MAIN MENU ITEMS */
+
+.main-menu {
+    /* height: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); */
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, -10%);
+    font-size: calc(20vw);
+}
+
+.start-button {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -40%);
+    font-size: calc(15vw);
+}
+
+.store-button {
+    position: absolute;
+    left: 10%;
+    top: 60%;
+    transform: translate(-10%, -60%);
+    font-size: calc(9vw);
+}
+
+.options-button {
+    position: absolute;
+    right: 10%;
+    top: 60%;
+    transform: translate(10%, -60%);
+    font-size: calc(9vw);
+}
+
+.story-button {
+    position: absolute;
+    left: 20%;
+    top: 80%;
+    transform: translate(-20%, -80%);
+    font-size: calc(8vw);
+}
+
+.credits-button {
+    position: absolute;
+    right: 20%;
+    top: 80%;
+    transform: translate(20%, -80%);
+    font-size: calc(8vw);
 }
 
 /* HUD */
