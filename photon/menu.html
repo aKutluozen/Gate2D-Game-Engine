@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Gate 2D Game Engine - Photon Demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div id="files">
+        <!-- Game files will be loaded here -->
+    </div>
+
+    <!-- Main scripts -->
+    <script src="../Gate2D/Gate2D.js"></script>
+
+    <div class="container">
+
+        <!-- Other game screens -->
+        <div class="main-menu">
+            <div class="logo">FATBOY PHOTON</div>
+            <div class="start-button" onclick="location='index.html'">START</div>
+            <div class="store-button" onclick="showStore()">STORE</div>
+            <div class="options-button">OPTIONS</div>
+            <div class="story-button">STORY</div>
+            <div class="credits-button">CREDITS</div>
+        </div>
+
+        <div id="store-menu" class="hide">
+            <div id="pause-menu">
+                <div class="center-menu store-bg ">
+                    <h1 class="store-header">
+                        <span class="store-title">STORE</span>
+                        <span class="store-credit">$300</span>
+                    </h1>
+                    <div class="store-items">
+                        <div class="items">
+                            <div class="item">
+                                <h3 class="item-title">SUPER LUMEN</h3>
+                                <h4 class="item-price">$100</h4>
+                                <img class="item-picture" src="super_lumen.png">
+                                <div class="item-levels">
+                                    <div class="item-level">
+                                        <div class="item-level-inner">1x</div>
+                                    </div>
+                                    <div class="item-level">
+                                        <div class="item-level-inner">2x</div>
+                                    </div>
+                                    <div class="item-level">
+                                        <div class="item-level-inner">3x</div>
+                                    </div>
+                                </div>
+                                <div class="buy-button" onclick="getItem('super_lumen')">GET IT</div>
+                            </div>
+                            <div class="item">
+                                <h3 class="item-title">PHOTON WALL</h3>
+                                <h4 class="item-price">$100</h4>
+                                <img class="item-picture" src="super_lumen.png">
+                                <div class="item-levels">
+                                    <div class="item-level">
+                                        <div class="item-level-inner">5x</div>
+                                    </div>
+                                    <div class="item-level">
+                                        <div class="item-level-inner">10x</div>
+                                    </div>
+                                    <div class="item-level">
+                                        <div class="item-level-inner">15x</div>
+                                    </div>
+                                </div>
+                                <div class="buy-button" onclick="getItem('photon_wall')">GET IT</div>
+                            </div>
+                            <div class="item">
+                                <h3 class="item-title">RAPID FIRE</h3>
+                                <h4 class="item-price">$100</h4>
+                                <img class="item-picture" src="super_lumen.png">
+                                <div class="item-levels">
+                                    <div class="item-level">
+                                        <div class="item-level-inner">5x</div>
+                                    </div>
+                                    <div class="item-level">
+                                        <div class="item-level-inner">10x</div>
+                                    </div>
+                                    <div class="item-level">
+                                        <div class="item-level-inner">15x</div>
+                                    </div>
+                                </div>
+                                <div class="buy-button" onclick="getItem('rapid_fire')">GET IT</div>
+                            </div>
+                            <div class="item">
+                                <h3 class="item-title">THE GHOST</h3>
+                                <h4 class="item-price">$100</h4>
+                                <img class="item-picture" src="super_lumen.png">
+                                <div class="item-levels">
+                                    <div class="item-level">
+
+                                    </div>
+
+                                </div>
+                                <div class="buy-button" onclick="getItem('ghost')">GET IT</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 onclick="closeStore()">close</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="MainMenu.js"></script>
+</body>
+
+</html>
