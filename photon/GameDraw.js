@@ -43,11 +43,11 @@ Gate2D.GameDraw = function () {
         }
     }
 
-    Video.drawText(Globals.score, gameFont, 54, "white", 24, 16, "left", false);
-    Video.drawText(~~Globals.energy, gameFont, 54, "white", screenWidth / 2, screenHeight - 96, "center", false);
+    Video.drawText(Globals.score, gameFont, 42, "white", 24, 4, "left", false);
+    Video.drawText(~~Globals.energy, gameFont, 42, "white", screenWidth / 2, screenHeight - 56, "center", false);
 
     if (Globals.bonusMultiplier > 1) {
-        Video.drawText(' x ' + Globals.bonusMultiplier, gameFont, 72, "white", 360, 128, "center", false);
+        Video.drawText(' x ' + Globals.bonusMultiplier, gameFont, 72, "white", screenWidth / 2, 64, "center", false);
     }
 
     // Draw onscreen buttons

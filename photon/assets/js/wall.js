@@ -21,8 +21,8 @@ function Wall(x, y, z, width, height) {
     this.jitter = 0;
 
     // Fine adjust the right wall
-    if (x > 360) {
-        x += 24;
+    if (x > 180) {
+        x += 12;
     }
 
     // Define collision area if one is needed
@@ -42,9 +42,9 @@ Wall.prototype.draw = function () {
 
 Wall.prototype.update = function () {
     if (this.active) {
-        if (this.width <= 720) {
-            this.width += 16;
-            this.x -= 8;
+        if (this.width <= 360) {
+            this.width += 8;
+            this.x -= 4;
         }
     }
 }

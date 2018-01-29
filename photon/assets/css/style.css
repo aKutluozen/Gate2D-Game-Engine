@@ -14,6 +14,7 @@
 
 /* GAME ESSENTIALS */
 
+
 body {
     background: black;
     font-family: Photon;
@@ -162,6 +163,97 @@ body {
     font-size: calc(8vw);
 }
 
+/* STORE */
+
+.store-items { 
+    overflow-x: scroll;
+    width: 90%;
+    margin: auto;
+    display: block;
+}
+
+.items {
+    width: 400%;
+}
+
+.item {
+    width: 200px;
+    height: 205px;
+    margin: auto 20px;
+    display: block;
+    float: left;
+    background: rgb(54, 54, 54);
+    color: white;
+}
+
+.buy-button {
+    width: 80px;
+    height: 20px;
+    background: white;
+    color: black;
+    margin: 10px auto;
+    border: none;
+    display: block;
+}
+
+.store-credit {
+    color: goldenrod;
+    float: right;
+    margin-right: 20px;
+}
+
+.store-title {
+    float: left;
+    margin-left: 20px;
+}
+
+.item-title {
+    height: 20px;
+    padding: 0px;
+    margin: 10px 0 0 0;
+}
+
+.item-price {
+    margin: 0px;
+    letter-spacing: 5px;
+    color: goldenrod;
+}
+
+.store-bg {
+    background: rgb(24, 24, 24) !important;
+}
+
+.store-header {
+    height: 40px;
+}
+
+.item-picture {
+    width: 80px;
+    height: 80px;
+    margin: 10px auto;
+}
+
+.item-levels {
+    width: 90%;
+    height: 20px;
+    margin: auto;
+    display: block;
+}
+
+.item-level {
+    width: 33%;
+    height: 100%;
+    display: block;
+    float: left;
+}
+
+.item-level-inner {
+    width: 80%;
+    height: 100%;
+    background: red;
+    margin: auto;
+}
+
 /* HUD */
 
 #hud {
@@ -212,5 +304,15 @@ h2 {
 
 .center-menu h2 {
     color: gray;
+}
+
+/* ACTIONS */
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
 }
 

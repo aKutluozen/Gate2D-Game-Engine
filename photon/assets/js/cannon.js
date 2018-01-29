@@ -22,7 +22,7 @@ function Cannon(x, y, z, width, height) {
 
     this.clicked = false; // Control if the cannon is touched
     this.direction = 0; // Direction of the cannon
-    this.input = { x: 360, y: 0 }; // The object that will save the x, y coordinates of the touch
+    this.input = { x: 180, y: 0 }; // The object that will save the x, y coordinates of the touch
 
     // Canon charge control
     this.isCharging = false; // True when charging
@@ -59,14 +59,14 @@ Cannon.prototype.draw = function () {
     this.ctx.save();
 
     // Rotation and drawing of the cannon
-    this.ctx.translate(this.x - 24 + this.width / 2, this.y + this.height / 2);
+    this.ctx.translate(this.x - 12 + this.width / 2, this.y + this.height / 2);
     this.ctx.rotate(-this.direction * Math.PI / 180);
-    this.ctx.translate(-(this.x - 24 + this.width / 2), -(this.y + this.height / 2));
-    this.ctx.drawImage(this.img, 16, 160, 64, 256, ~~(this.x - 24), ~~(this.y + this.fireAnimation / 32), this.width, this.height);
+    this.ctx.translate(-(this.x - 12 + this.width / 2), -(this.y + this.height / 2));
+    this.ctx.drawImage(this.img, 16, 160, 64, 256, ~~(this.x - 12), ~~(this.y + this.fireAnimation / 16), this.width, this.height);
 
     // Draw the normal guide line
     this.ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-    this.ctx.fillRect(this.x + 7, this.y, 2, -1000);
+    this.ctx.fillRect(this.x + 4, this.y, 2, -1000);
 
     // Handle firing fire animation
     if (this.isFiring) {
@@ -78,52 +78,52 @@ Cannon.prototype.draw = function () {
         }
         // Show the right color of fire
         if (this.charge >= 0 && this.charge < 11) {
-            this.ctx.drawImage(this.img, 96, 224, 32, 128, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+            this.ctx.drawImage(this.img, 96, 224, 32, 128, this.x - 12, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
         } else if (this.charge >= 11 && this.charge < 21) {
-            this.ctx.drawImage(this.img, 128, 224, 32, 128, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+            this.ctx.drawImage(this.img, 128, 224, 32, 128, this.x - 12, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
         } else if (this.charge >= 21 && this.charge < 31) {
-            this.ctx.drawImage(this.img, 160, 224, 32, 128, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+            this.ctx.drawImage(this.img, 160, 224, 32, 128, this.x - 12, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
         } else if (this.charge >= 31 && this.charge < 51) {
             if (this.isBombing) {
-                this.ctx.drawImage(this.img, 160, 224, 32, 128, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+                this.ctx.drawImage(this.img, 160, 224, 32, 128, this.x - 12, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
             } else {
-                this.ctx.drawImage(this.img, 192, 224, 32, 128, this.x - 24, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
+                this.ctx.drawImage(this.img, 192, 224, 32, 128, this.x - 12, ~~(this.y - this.fireAnimation * 1.5 + 16), this.width, ~~(this.fireAnimation * 1.5));
             }
         }
     }
 
     // Show the overheat
     this.ctx.fillStyle = 'rgb(220, 40, 40)';
-    this.ctx.fillRect(~~this.x, ~~(this.y + this.height / 3 + 3 + this.fireAnimation / 32), this.width / 4, -(~~this.heatSink * 0.8));
+    this.ctx.fillRect(~~this.x, ~~(this.y + this.height / 3 + 3 + this.fireAnimation / 32), this.width / 4, -(~~this.heatSink * 0.4));
 
     // Charging animation
     if (this.isCharging && !this.overHeat) {
         this.ctx.save();
 
-        this.ctx.translate(this.x - 24 + this.width / 2, this.y + this.height / 2);
+        this.ctx.translate(this.x - 12 + this.width / 2, this.y + this.height / 2);
         this.ctx.rotate(-this.chargeAnimationDirection * Math.PI / 180);
-        this.ctx.translate(-(this.x - 24 + this.width / 2), -(this.y + this.height / 2));
+        this.ctx.translate(-(this.x - 12 + this.width / 2), -(this.y + this.height / 2));
         this.chargeAnimationDirection += 20 + this.charge;
         this.chargeAnimationDirection %= 360;
 
         // Spinning energy animation
         if (this.charge > 0 && this.charge < 10) {
             this.chargeColor = 'rgba(190, 255, 50, 0.75)';
-            this.ctx.drawImage(this.img, 96, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+            this.ctx.drawImage(this.img, 96, 368, 96, 96, this.x - 14, this.y + 32, 48, 48);
         } else if (this.charge >= 10 && this.charge < 20) {
             this.chargeColor = 'rgba(255, 255, 50, 0.75)';
-            this.ctx.drawImage(this.img, 192, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+            this.ctx.drawImage(this.img, 192, 368, 96, 96, this.x - 14, this.y + 32, 48, 48);
         } else if (this.charge >= 20 && this.charge < 31) {
             this.chargeColor = 'rgba(255, 50, 50, 0.75)';
-            this.ctx.drawImage(this.img, 288, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+            this.ctx.drawImage(this.img, 288, 368, 96, 96, this.x - 14, this.y + 32, 48, 48);
         } else if (this.charge >= 31 && this.charge < 51) {
             if (!this.isBombing) {
                 this.chargeColor = 'rgba(50, 100, 200, 0.75)';
-                this.ctx.drawImage(this.img, 384, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+                this.ctx.drawImage(this.img, 384, 368, 96, 96, this.x - 14, this.y + 32, 48, 48);
             } else {
                 this.chargeColor = 'rgba(255, 50, 50, 0.75)';
-                this.ctx.drawImage(this.img, 288, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
-                this.ctx.drawImage(this.img, 192, 368, 96, 96, this.x - 28, this.y + 64, 96, 96);
+                this.ctx.drawImage(this.img, 288, 368, 96, 96, this.x - 14, this.y + 32, 48, 48);
+                this.ctx.drawImage(this.img, 192, 368, 96, 96, this.x - 14, this.y + 32, 48, 48);
             }
         } else {
             this.chargeColor = 'rgba(0, 0, 0, 0.5)';
@@ -133,7 +133,7 @@ Cannon.prototype.draw = function () {
         // Show the charging in three colors
         this.ctx.fillStyle = this.chargeColor;
         this.ctx.beginPath();
-        this.ctx.arc(this.x + 8, ~~(this.y + this.height / 2 + 2 + this.fireAnimation / 32), 16 * this.charge / 20, 0, 2 * Math.PI);
+        this.ctx.arc(this.x + 4, ~~(this.y + this.height / 2 + 2 + this.fireAnimation / 32), 16 * this.charge / 20, 0, 2 * Math.PI);
         this.ctx.fill();
         this.ctx.closePath();
     }
@@ -142,7 +142,7 @@ Cannon.prototype.draw = function () {
     if (this.overHeat) {
         this.ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
         this.ctx.beginPath();
-        this.ctx.arc(this.x + 8, ~~(this.y + this.height / 2 + 2 + this.fireAnimation / 32), 32, 0, 2 * Math.PI);
+        this.ctx.arc(this.x + 4, ~~(this.y + this.height / 2 + 2 + this.fireAnimation / 32), 32, 0, 2 * Math.PI);
         this.ctx.fill();
         this.ctx.closePath();
     }
@@ -202,7 +202,7 @@ Cannon.prototype.update = function () {
         }
     }
 
-    this.coll.update(this.x - 24, this.y); // Always update the collision area position
+    this.coll.update(this.x - 12, this.y); // Always update the collision area position
 }
 
 // Whenever a touch movement event is sent, response to it by holding the input (x and y values);

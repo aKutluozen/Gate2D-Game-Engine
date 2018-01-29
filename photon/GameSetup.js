@@ -31,8 +31,8 @@ Gate2D.Loader.addFiles(
 
     // Set up and run the engine when all the loading is done
     Gate2D.Manager.setup({
-        screenWidth: 720,
-        screenHeight: 1280,
+        screenWidth: 360,
+        screenHeight: 640,
         mouseEnabled: false,
         keyboardEnabled: false,
         touchEnabled: true,

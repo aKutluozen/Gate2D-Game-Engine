@@ -39,37 +39,37 @@ Gate2D.Globals.add([
  * Level IDs must be assigned here to use them in maps
  */
 Gate2D.Objects.createGroup('level1ObjectGroup', [
-    { object: new Enemy(0, 0, 2, 80, 80, 'enemy', 'green'), levelID: 6 },
-    { object: new Enemy(0, 0, 2, 80, 80, 'enemy', 'yellow'), levelID: 7 },
-    { object: new Enemy(0, 0, 2, 80, 80, 'enemy', 'red'), levelID: 8 },
+    { object: new Enemy(0, 0, 2, 40, 40, 'enemy', 'green'), levelID: 6 },
+    { object: new Enemy(0, 0, 2, 40, 40, 'enemy', 'yellow'), levelID: 7 },
+    { object: new Enemy(0, 0, 2, 40, 40, 'enemy', 'red'), levelID: 8 },
 
     // Bonuses
-    { object: new Enemy(-400, -400, 3, 80, 80, 'enemy', 'bonusPower'), levelID: 31 },
-    { object: new Enemy(-400, -400, 3, 80, 80, 'enemy', 'bonusCool'), levelID: 32 },
-    { object: new Enemy(-400, -400, 3, 80, 80, 'enemy', 'bonusMultiplier'), levelID: 33 },
+    { object: new Enemy(-400, -400, 3, 40, 40, 'enemy', 'bonusPower'), levelID: 31 },
+    { object: new Enemy(-400, -400, 3, 40, 40, 'enemy', 'bonusCool'), levelID: 32 },
+    { object: new Enemy(-400, -400, 3, 40, 40, 'enemy', 'bonusMultiplier'), levelID: 33 },
 
-    { object: new Photon(0, 0, 3, 32, 32, 'photon', 'mainPhoton'), levelID: 2 },
-    { object: new Cannon(352, 920, 1, 64, 256, 'cannon', 'player'), levelID: 3 },
-    { object: new Wall(0, 0, 2, 720, 16, 'wall', 'wallVertical'), levelID: 4 },
-    { object: new Wall(0, 0, 2, 16, 1264, 'wall', 'wallHorizontal'), levelID: 5 },
-    { object: new Wall(344, 1, 2, 32, 32, 'wall', 'photonWall'), levelID: 10 },
+    { object: new Photon(0, 0, 3, 16, 16, 'photon', 'mainPhoton'), levelID: 2 },
+    { object: new Cannon(176, 460, 1, 32, 128, 'cannon', 'player'), levelID: 3 },
+    { object: new Wall(0, 0, 2, 360, 8, 'wall', 'wallVertical'), levelID: 4 },
+    { object: new Wall(0, 0, 2, 8, 632, 'wall', 'wallHorizontal'), levelID: 5 },
+    { object: new Wall(172, 1, 2, 16, 16, 'wall', 'photonWall'), levelID: 10 },
 
     // Rapid fire photons pre instantiated
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid1'), levelID: 11 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid2'), levelID: 12 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid3'), levelID: 13 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid4'), levelID: 14 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid5'), levelID: 15 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid6'), levelID: 16 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid7'), levelID: 17 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid8'), levelID: 18 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid9'), levelID: 19 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid10'), levelID: 20 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid11'), levelID: 21 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid12'), levelID: 22 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid13'), levelID: 23 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid14'), levelID: 24 },
-    { object: new Photon(0, 0, 2, 32, 32, 'photon', 'rapid15'), levelID: 25 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid1'), levelID: 11 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid2'), levelID: 12 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid3'), levelID: 13 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid4'), levelID: 14 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid5'), levelID: 15 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid6'), levelID: 16 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid7'), levelID: 17 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid8'), levelID: 18 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid9'), levelID: 19 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid10'), levelID: 20 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid11'), levelID: 21 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid12'), levelID: 22 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid13'), levelID: 23 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid14'), levelID: 24 },
+    { object: new Photon(0, 0, 2, 16, 16, 'photon', 'rapid15'), levelID: 25 },
 ]);
 
 /**
@@ -81,19 +81,19 @@ Gate2D.Video.createStaticImages([
         name: 'bottomScreen',
         image: Gate2D.Loader.getFile('sprites'),
         cropX: 0, cropY: 1088, cropWidth: 720, cropHeight: 192,
-        drawX: 0, drawY: 1088, drawWidth: 720, drawHeight: 192
+        drawX: 0, drawY: 544, drawWidth: 360, drawHeight: 96
     },
     {
         name: 'controlBackground',
         image: Gate2D.Loader.getFile('sprites'),
         cropX: 160, cropY: 16, cropWidth: 256, cropHeight: 128,
-        drawX: 232, drawY: 1056, drawWidth: 256, drawHeight: 128
+        drawX: 116, drawY: 528, drawWidth: 128, drawHeight: 64
     },
     {
         name: 'topScreen',
         image: Gate2D.Loader.getFile('sprites'),
         cropX: 0, cropY: 986, cropWidth: 720, cropHeight: 100,
-        drawX: 0, drawY: 0, drawWidth: 720, drawHeight: 100
+        drawX: 0, drawY: 0, drawWidth: 360, drawHeight: 50
     },
 ]);
 
@@ -107,8 +107,8 @@ Gate2D.Levels.add([
         // Basic size and background information of a level
         name: 'Level 1',
         controls: 'buttonSet1',
-        width: 720,
-        height: 1280,
+        width: 360,
+        height: 640,
         x: 0,
         y: 0,
         background: 'background',
@@ -118,7 +118,7 @@ Gate2D.Levels.add([
         objectMap: {
             width: 18,      // Number of cells from left to right
             height: 32,     // Number of cells from top to bottom
-            gridSize: 40,   // Size of the cells
+            gridSize: 20,   // Size of the cells
             map: [
                 11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0, 0, 10,
                 5,31,32,33, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5,

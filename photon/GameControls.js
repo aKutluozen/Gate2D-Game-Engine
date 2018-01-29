@@ -13,11 +13,11 @@ Gate2D.Controls.addOnScreenButton(
             buttons: [
                 // Control Button
                 {
-                    name: 'controlButton', status: 'active', x: 180, y: 960, width: 360, height: 320,
+                    name: 'controlButton', status: 'active', x: 90, y: 480, width: 180, height: 160,
                     image: {
                         image: Gate2D.Loader.getFile('sprites'),
                         cropX: 0, cropY: 0, cropWidth: 32, cropHeight: 32,
-                        drawX: 0, drawY: 0, drawWidth: 180, drawHeight: 180
+                        drawX: 0, drawY: 0, drawWidth: 90, drawHeight: 90
                     },
                     action: function (type) {
                         let cannon = Gate2D.Objects.get('cannon');
@@ -44,11 +44,11 @@ Gate2D.Controls.addOnScreenButton(
                 },
                 // Fire Button
                 {
-                    name: 'fireButton', status: 'active', x: 0, y: 1100, width: 180, height: 180,
+                    name: 'fireButton', status: 'active', x: 0, y: 550, width: 90, height: 90,
                     image: {
                         image: Gate2D.Loader.getFile('sprites'),
                         cropX: 0, cropY: 0, cropWidth: 144, cropHeight: 144,
-                        drawX: 16, drawY: 1116, drawWidth: 144, drawHeight: 144
+                        drawX: 8, drawY: 558, drawWidth: 72, drawHeight: 72
                     },
                     trackTouch: false, // Keeps track of touch start, makes sure not every release fires.
                     action: function (type) {
@@ -81,11 +81,11 @@ Gate2D.Controls.addOnScreenButton(
                 },
                 // Special Button
                 {
-                    name: 'specialButton', status: 'active', x: 540, y: 1140, width: 180, height: 180,
+                    name: 'specialButton', status: 'active', x: 270, y: 570, width: 90, height: 90,
                     image: {
                         image: Gate2D.Loader.getFile('sprites'),
                         cropX: 432, cropY: 0, cropWidth: 144, cropHeight: 144,
-                        drawX: 560, drawY: 1116, drawWidth: 144, drawHeight: 144
+                        drawX: 280, drawY: 558, drawWidth: 72, drawHeight: 72
                     },
                     action: function (type) {
                         let cannon = Gate2D.Objects.get('cannon'),
@@ -143,11 +143,11 @@ Gate2D.Controls.addOnScreenButton(
                 },
                 // Weapon choose Button
                 {
-                    name: 'chooseButton', status: 'active', x: 620, y: 1050, width: 64, height: 64,
+                    name: 'chooseButton', status: 'active', x: 310, y: 525, width: 32, height: 32,
                     image: {
                         image: Gate2D.Loader.getFile('sprites'),
                         cropX: 576, cropY: 416, cropWidth: 64, cropHeight: 64,
-                        drawX: 620, drawY: 1050, drawWidth: 64, drawHeight: 64
+                        drawX: 310, drawY: 525, drawWidth: 32, drawHeight: 32
                     },
                     action: function (type) {
                         switch (type) {
@@ -182,11 +182,11 @@ Gate2D.Controls.addOnScreenButton(
                 },
                 // Pause Button
                 {
-                    name: 'pauseButton', status: 'active', x: 608, y: 0, width: 96, height: 96,
+                    name: 'pauseButton', status: 'active', x: 304, y: 0, width: 48, height: 48,
                     image: {
                         image: Gate2D.Loader.getFile('sprites'),
                         cropX: 576, cropY: 0, cropWidth: 96, cropHeight: 96,
-                        drawX: 608, drawY: 0, drawWidth: 96, drawHeight: 96
+                        drawX: 304, drawY: 0, drawWidth: 48, drawHeight: 48
                     },
                     action: function (type) {
                         let Manager = Gate2D.Manager,

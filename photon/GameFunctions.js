@@ -81,8 +81,8 @@ Gate2D.Misc = {
 
         if (showOrHide === true) {
             // Bring the bonus down
-            bonus.y = Gate2D.Math.randomNumber(200, 750);
-            bonus.x = Gate2D.Math.randomNumber(120, 600);
+            bonus.y = Gate2D.Math.randomNumber(100, 325);
+            bonus.x = Gate2D.Math.randomNumber(60, 300);
         } else {
             // Keep the bonus up there
             bonus.y = -400;

@@ -37,6 +37,7 @@ function Enemy(x, y, z, width, height) {
     }
 
     this.fullLife = this.life;
+    this.isHittingOther = false;
 
     // Define collision area if one is needed
     this.coll = new Gate2D.Physics.AABBCollision(x, y, z, width - 16, height - 16);
@@ -143,7 +144,7 @@ Enemy.prototype.update = function () {
         if (!Gate2D.Globals.isWallActive) {
             this.y += 0.25;
         } else {
-            if (this.y < Gate2D.Globals.wallY || this.y > Gate2D.Globals.wallY + 32) {
+            if (this.y < Gate2D.Globals.wallY - 16 || this.y > Gate2D.Globals.wallY) {
                 this.y += 0.25;
             }
         }
@@ -162,23 +163,38 @@ Enemy.prototype.update = function () {
         Gate2D.Manager.gameStatus('over');
     }
 
-    // Check the collisions only when in screen - This check will happen only once
+    // Check the collisions only when in screen - This check will happen only once for game start
     if (this.y > 0 && !this.checkedCollision) {
 
         // Don't let touch to other enemies
         if (other = Gate2D.Physics.checkCollision(this)) {
-            for (let i = 0, len = other.length; i < len; i++) {
-                if (other[i].name === 'enemy') {
-                    this.y = -800;
-                    break;
+            if (!Gate2D.Globals.isWallActive) {
+                for (let i = 0, len = other.length; i < len; i++) {
+                    if (other[i].name === 'enemy') {
+                        this.y = -800;
+                        break;
+                    }
                 }
-            }
-            // Don't run the loop again
-            this.checkedCollision = true;
+                // Don't run the loop again
+                this.checkedCollision = true;
+            } 
         }
         // Don't let it get out from the screen
         if (this.x + this.width >= Gate2D.Video.getScreenWidth()) {
             this.x = Gate2D.Video.getScreenWidth() - this.width;
+        }
+    }
+
+    // Check for collision with other enemies when the wall is on
+    if (Gate2D.Globals.isWallActive) {
+        if (other = Gate2D.Physics.checkCollision(this)) {
+            for (let i = 0, len = other.length; i < len; i++) {
+                if (other[i].name === 'enemy') {
+                    if (this.y <= other[i].y) {
+                        this.y -= 1;
+                    }
+                }
+            }
         }
     }
 

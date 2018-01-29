@@ -24,12 +24,12 @@ function Photon(x, y, z, width, height, name, tag) {
     this.speedY = 0;
 
     // Initial position
-    this.initX = x - 16;
-    this.initY = y - 8;
+    this.initX = x - 8;
+    this.initY = y - 4;
 
     // Hit positions for drawing trail
-    this.hitX = this.initX + 16;
-    this.hitY = this.initY + 16;
+    this.hitX = this.initX + 8;
+    this.hitY = this.initY + 8;
     this.hitOpacity = 0.75; // This will be recharged each time and will be reduced to 0 in drawing
 
     // Special power characteristics of the photon
@@ -45,10 +45,10 @@ function Photon(x, y, z, width, height, name, tag) {
 
     // If a rapid photon, don't be active yet
     if (this.tag.substring(0, 5) === 'rapid') {
-        this.initX = 344;
-        this.initY = 1040;
-        this.hitX = this.initX + 16;
-        this.hitY = this.initY + 16;
+        this.initX = 172;
+        this.initY = 520;
+        this.hitX = this.initX + 8;
+        this.hitY = this.initY + 8;
         this.power = 'rapid';
     }
 
@@ -80,7 +80,7 @@ Photon.prototype.draw = function () {
             this.ctx.closePath();
 
             this.hitOpacity -= 0.035;
-            this.ctx.lineWidth = this.hitOpacity * 32;
+            this.ctx.lineWidth = this.hitOpacity * 16;
             if (this.hitOpacity <= 0.1) {
                 this.hitOpacity = 0;
             }
@@ -123,14 +123,14 @@ Photon.prototype.draw = function () {
 
     // Expand the explosion
     if (this.blewUp) {
-        this.expSize += 4;
-        if (this.expSize > 100 * this.Globals.maxLumenRadius) { // Limit the size here
-            this.y = 1200; // Send the photon away
+        this.expSize += 1;
+        if (this.expSize > 60 * this.Globals.maxLumenRadius) { // Limit the size here
+            this.y = 600; // Send the photon away
             this.reset();
             // Give back the old lumen radius if blew up by speed
             this.Globals.maxLumenRadius = this.tempLumenRadius;
         }
-        this.ctx.drawImage(this.img, 0, 464, 160, 160, ~~(this.x - this.expSize / 2) + 16, ~~(this.y - this.expSize / 2) + 16, this.expSize, this.expSize);
+        this.ctx.drawImage(this.img, 0, 464, 160, 160, ~~(this.x - this.expSize / 2) + 8, ~~(this.y - this.expSize / 2) + 8, this.expSize, this.expSize);
     }
 
     this.coll.draw();
@@ -231,7 +231,7 @@ Photon.prototype.update = function () {
                 }
 
                 // Wake the animation of the photon
-                other[i].isHitAnimationNumber = 40;
+                other[i].isHitAnimationNumber = 20;
 
                 // Kill everything if blew up
                 if (this.blewUp) {
@@ -303,7 +303,7 @@ Photon.prototype.update = function () {
     }
 
     // Blow up from too much speed!
-    if (Math.abs(this.speedX) > 20 || Math.abs(this.speedY) > 20) {
+    if (Math.abs(this.speedX) > 10 || Math.abs(this.speedY) > 10) {
 
         // Cache the old maxLumen value
         this.tempLumenRadius = this.Globals.maxLumenRadius;
@@ -317,12 +317,8 @@ Photon.prototype.update = function () {
     }
 
     // Reset the photon
-    if (this.y > 1100 || this.y < 0 || this.x > 750 || this.x < -30) {
+    if (this.y > 550 || this.y < 0 || this.x > 375 || this.x < -15) {
         this.reset();
-    }
-
-    if (this.y > 1100) {
-        console.log(this);
     }
 
     // Update the photon position
@@ -361,7 +357,7 @@ Photon.prototype.fire = function (shootEnergy, direction) {
     }
 
     // Get the direction from the cannon and assign the speed
-    this.movement = Gate2D.Math.direction(direction + 270, 10);
+    this.movement = Gate2D.Math.direction(direction + 270, 5);
 
     // Assign the new speed
     this.speedX = -this.movement.x;
@@ -384,8 +380,8 @@ Photon.prototype.reset = function () {
     // Reset position, speed and sizes
     this.x = this.initX;
     this.y = this.initY;
-    this.hitX = this.initX + 16;
-    this.hitY = this.initY + 16;
+    this.hitX = this.initX + 8;
+    this.hitY = this.initY + 8;
     this.speedX = 0;
     this.speedY = 0;
     this.coll.r = this.initR;
