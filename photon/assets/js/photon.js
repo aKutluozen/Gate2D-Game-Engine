@@ -180,6 +180,7 @@ Photon.prototype.update = function () {
 
                 // Make the photon disappear if it is wasted with useless ricochets
                 if (this.Globals.maxRicochets <= 0) {
+                    console.log('bu oldu...');
                     this.reset();
                 }
             }

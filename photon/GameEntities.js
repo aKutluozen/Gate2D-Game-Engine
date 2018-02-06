@@ -120,8 +120,8 @@ Gate2D.Levels.add([
             height: 32,     // Number of cells from top to bottom
             gridSize: 20,   // Size of the cells
             map: [
-                11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,0, 0, 10,
-                5,31,32,33, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 0, 0, 10,
+                5, 31, 32, 33, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5,
                 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -157,21 +157,42 @@ Gate2D.Levels.add([
 
         initAction: function () {
             // Put the big size first - Least frequent one - stop at 144
-            for (let i = 36, len = this.objectMap.map.length; i < 108; i += Gate2D.Math.chooseRandom([2, 8])) {
-                if (i % 18 == 0) { i += 18; } // Jump to a new line so there can be corridors
-                this.objectMap.map[i] = 8;
+            for (let i = 36, len = this.objectMap.map.length; i < 108; i += 2) {
+                if (i % 18 == 0) {
+                    i += 18;
+                }
+
+                if (i % Gate2D.Math.chooseRandom([4, 10, 2]) != 0) {
+                    this.objectMap.map[i] = 8;
+                } else {
+                    console.log(i);
+                }
             }
 
             // Then the middle size
-            for (let i = 108, len = this.objectMap.map.length; i < 216; i += Gate2D.Math.chooseRandom([2, 6])) {
-                if (i % 18 == 0) { i += 18; } // Jump to a new line so there can be corridors
-                this.objectMap.map[i] = 7;
+            for (let i = 108, len = this.objectMap.map.length; i < 216; i += 2) {
+                if (i % 18 == 0) {
+                    i += 18;
+                }
+
+                if (i % Gate2D.Math.chooseRandom([4, 10, 2]) != 0) {
+                    this.objectMap.map[i] = 7;
+                } else {
+                    console.log(i);
+                }
             }
 
             // // Then the smallest size - Most frequent one
-            for (let i = 216, len = this.objectMap.map.length; i < 324; i += Gate2D.Math.chooseRandom([2, 4])) {
-                if (i % 18 == 0) { i += 18; } // Jump to a new line so there can be corridors
-                this.objectMap.map[i] = 6;
+            for (let i = 216, len = this.objectMap.map.length; i < 324; i += 2) {
+                if (i % 18 == 0) {
+                    i += 18;
+                }
+
+                if (i % Gate2D.Math.chooseRandom([2, 3, 4, 5]) != 0) {
+                    this.objectMap.map[i] = 6;
+                } else {
+                    console.log(i);
+                }
             }
         }
     },

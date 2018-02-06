@@ -40,7 +40,7 @@ function Enemy(x, y, z, width, height) {
     this.isHittingOther = false;
 
     // Define collision area if one is needed
-    this.coll = new Gate2D.Physics.AABBCollision(x, y, z, width - 16, height - 16);
+    this.coll = new Gate2D.Physics.AABBCollision(x, y, z, width - 1, height - 1);
 }
 
 // Establish the inheritance
@@ -72,25 +72,31 @@ Enemy.prototype.draw = function () {
         // Select a color based on the tag
         switch (this.tag) {
             case 'green': {
-                this.ctx.drawImage(this.img, 192, 160, 32, 32,
-                    ~~this.x - this.isHitAnimationNumber / 2,
-                    ~~this.y - this.isHitAnimationNumber / 2,
-                    this.width + this.isHitAnimationNumber,
-                    this.height + this.isHitAnimationNumber);
+                this.ctx.fillStyle = "green";
+                this.ctx.fillRect(this.x, this.y, this.width, this.height);
+                // this.ctx.drawImage(this.img, 192, 160, 32, 32,
+                //     ~~this.x - this.isHitAnimationNumber / 2,
+                //     ~~this.y - this.isHitAnimationNumber / 2,
+                //     this.width + this.isHitAnimationNumber,
+                //     this.height + this.isHitAnimationNumber);
             } break;
             case 'yellow': {
-                this.ctx.drawImage(this.img, 240, 160, 64, 64,
-                    ~~this.x - this.isHitAnimationNumber / 2,
-                    ~~this.y - this.isHitAnimationNumber / 2,
-                    this.width + this.isHitAnimationNumber,
-                    this.height + this.isHitAnimationNumber);
+                this.ctx.fillStyle = "yellow";
+                this.ctx.fillRect(this.x, this.y, this.width, this.height);
+                // this.ctx.drawImage(this.img, 192, 160, 32, 32,
+                //     ~~this.x - this.isHitAnimationNumber / 2,
+                //     ~~this.y - this.isHitAnimationNumber / 2,
+                //     this.width + this.isHitAnimationNumber,
+                //     this.height + this.isHitAnimationNumber);
             } break;
             case 'red': {
-                this.ctx.drawImage(this.img, 320, 160, 128, 128,
-                    ~~this.x - this.isHitAnimationNumber / 2,
-                    ~~this.y - this.isHitAnimationNumber / 2,
-                    this.width + this.isHitAnimationNumber,
-                    this.height + this.isHitAnimationNumber);
+                this.ctx.fillStyle = "red";
+                this.ctx.fillRect(this.x, this.y, this.width, this.height);
+                // this.ctx.drawImage(this.img, 192, 160, 32, 32,
+                //     ~~this.x - this.isHitAnimationNumber / 2,
+                //     ~~this.y - this.isHitAnimationNumber / 2,
+                //     this.width + this.isHitAnimationNumber,
+                //     this.height + this.isHitAnimationNumber);
             } break;
             case 'bonusPower': {
                 this.ctx.drawImage(this.img, 464, 160, 80, 80,
@@ -159,7 +165,7 @@ Enemy.prototype.update = function () {
     }
 
     // Handle game over if the enemies are so close to the player
-    if (this.y + this.height >= 1088 && !this.isDead) {
+    if (this.y + this.height >= 544 && !this.isDead) {
         Gate2D.Manager.gameStatus('over');
     }
 
@@ -199,5 +205,5 @@ Enemy.prototype.update = function () {
     }
 
     // Always update the collision area position
-    this.coll.update(this.x + 8, this.y + 8);
+    this.coll.update(this.x, this.y);
 }
